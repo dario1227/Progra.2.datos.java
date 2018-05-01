@@ -14,8 +14,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //Cambiar a Login.fxml para probar metodos o a Main.fxml para reproductor
         Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Odyssey++");
         primaryStage.setScene(new Scene(root, 1040, 650));
         primaryStage.setResizable(false);
         primaryStage.show();

@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            xmlns="http://javafx.com/javafx"
-            fx:controller="view.Login"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8.0.141" fx:controller="view.LoginController">
+    <children>
+        <JFXPasswordField fx:id="PasswordField" layoutX="235.0" layoutY="230.0"/>
+        <JFXButton fx:id="loginBtn" buttonType="RAISED" layoutX="281.0" layoutY="306.0"
+                   style="-fx-background-radius: 50;" text="LOGIN">
+            <ripplerFill>
+                <LinearGradient endX="1.0" endY="0.9326923076923077">
+                    <stops>
+                        <Stop color="#d70000"/>
+                        <Stop color="#007cff" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </ripplerFill>
+        </JFXButton>
+        <JFXTextField fx:id="userField" layoutX="235.0" layoutY="158.0"/>
+        <FontAwesomeIconView glyphName="USER" layoutX="199.0" layoutY="187.0"/>
+        <FontAwesomeIconView glyphName="KEY" layoutX="204.0" layoutY="259.0"/>
+    </children>
 </AnchorPane>
