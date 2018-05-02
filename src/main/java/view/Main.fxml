@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
@@ -86,7 +85,7 @@
                                        layoutY="516.0" mouseTransparent="true" styleClass="label-author" text="Album"
                                        textAlignment="CENTER" AnchorPane.bottomAnchor="118.0"
                                        AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"/>
-                                <ListView fx:id="GeneticAnswers" layoutY="79.0" prefHeight="150.0" prefWidth="200.0"
+                                <ListView fx:id="Friends" layoutY="79.0" prefHeight="150.0" prefWidth="200.0"
                                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                                           AnchorPane.topAnchor="95.0"/>
                                 <FontAwesomeIconView fill="#40edbd" glyphName="SEARCH" layoutX="8.0" layoutY="85.0"
@@ -143,13 +142,6 @@
                                 <Label layoutX="34.0" layoutY="15.0" styleClass="label-new-playlist" text="Odyssey"/>
                                 <JFXTextField focusColor="#5dffc9" layoutX="31.0" layoutY="66.0" promptText="Guess Game"
                                               style="-fx-background-radius: 35;"/>
-                                <HBox layoutX="2.0" layoutY="257.0" prefHeight="47.0" prefWidth="240.0">
-                                    <children>
-                                        <JFXButton prefHeight="35.0" prefWidth="85.0" text="Yes"/>
-                                        <JFXButton text="Better"/>
-                                        <JFXButton text="Worse"/>
-                                    </children>
-                                </HBox>
                             </children>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0"
