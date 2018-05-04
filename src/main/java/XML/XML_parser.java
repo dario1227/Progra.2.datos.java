@@ -31,7 +31,7 @@ public static void prueba(){
     Attr attr = doc.createAttribute("id");
     attr.setValue("1");
     staff.setAttributeNode(attr);
-
+//
     // shorten way
     // staff.setAttribute("id", "1");
 
