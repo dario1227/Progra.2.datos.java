@@ -8,13 +8,12 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 
-
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/8.0.141" fx:controller="view.LoginController">
     <children>
-        <JFXPasswordField fx:id="PasswordField" layoutX="235.0" layoutY="230.0"/>
+        <JFXPasswordField fx:id="passwordField" layoutX="235.0" layoutY="230.0"/>
         <JFXButton fx:id="loginBtn" buttonType="RAISED" layoutX="281.0" layoutY="306.0"
-                   style="-fx-background-radius: 50;" text="LOGIN">
+                   onMouseClicked="#setPasswordField" style="-fx-background-radius: 50;" text="LOGIN">
             <ripplerFill>
                 <LinearGradient endX="1.0" endY="0.9326923076923077">
                     <stops>

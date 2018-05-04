@@ -19,7 +19,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         XML_parser.prueba();
         //Cambiar a Login.fxml para probar metodos o a Main.fxml para reproductor
-        Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         primaryStage.setTitle("Odyssey++");
         primaryStage.setScene(new Scene(root, 1040, 650));
         primaryStage.setResizable(false);
