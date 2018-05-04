@@ -1,5 +1,6 @@
 package view;
 
+import XML.XML_parser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +17,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        XML_parser.prueba();
         //Cambiar a Login.fxml para probar metodos o a Main.fxml para reproductor
         Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
         primaryStage.setTitle("Odyssey++");
