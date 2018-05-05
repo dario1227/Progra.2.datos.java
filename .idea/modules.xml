@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Odyssey.iml" filepath="$PROJECT_DIR$/.idea/modules/Odyssey.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Odyssey_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Odyssey_main.iml" group="Odyssey" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Odyssey_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Odyssey_test.iml" group="Odyssey" />
       <module fileurl="file://$PROJECT_DIR$/src/main/main.iml" filepath="$PROJECT_DIR$/src/main/main.iml" />
