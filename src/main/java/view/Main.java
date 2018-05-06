@@ -23,7 +23,7 @@ public class Main extends Application {
         //primaryStage.setTitle("Odyssey++");
         //primaryStage.setScene(new Scene(root, 1040, 650));
         //primaryStage.setResizable(false);
-        //primaryStage.show();
+       // primaryStage.show();
         ClientServer.run();
     }
 }
