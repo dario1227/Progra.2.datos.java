@@ -11,6 +11,7 @@ plugins {
 }
 
 // Define the main class for the application
+//FOR LOGIN view.Main
 mainClassName = 'player.OdysseyPlayer'
 
 dependencies {
