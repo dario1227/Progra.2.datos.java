@@ -1,5 +1,6 @@
 package view;
 
+import Server.ClientServer;
 import XML.XML_parser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,18 +12,18 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         String str = "";
-
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        XML_parser.prueba();
+        //XML_parser.prueba();
         //Cambiar a Login.fxml para probar metodos o a Main.fxml para reproductor
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        primaryStage.setTitle("Odyssey++");
-        primaryStage.setScene(new Scene(root, 1040, 650));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        //Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        //primaryStage.setTitle("Odyssey++");
+        //primaryStage.setScene(new Scene(root, 1040, 650));
+        //primaryStage.setResizable(false);
+        //primaryStage.show();
+        ClientServer.run();
     }
 }
