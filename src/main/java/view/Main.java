@@ -8,7 +8,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 public class Main extends Application {
+
 
     public static void main(String[] args) {
         String str = "";
@@ -28,6 +30,8 @@ public class Main extends Application {
         //primaryStage.setScene(new Scene(root, 1040, 650));
         //primaryStage.setResizable(false);
        // primaryStage.show();
-        ClientServer.run();
+        ClientServer client = new ClientServer();
+        Thread clientThread = new Thread(client);
+        clientThread.start();
     }
 }

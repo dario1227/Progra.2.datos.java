@@ -1,34 +1,53 @@
 package Server;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class ClientServer {
+public class ClientServer implements Runnable {
+    private static final int serverPort = 5000;
+    private static final String serverHost = "localhost";
 
-            public static void run() throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException{
-                //get the localhost IP address, if server is running on some other IP, you need to use that
-                InetAddress host = InetAddress.getLocalHost();
-                Socket socket = null;
-                ObjectOutputStream oos = null;
-                ObjectInputStream ois = null;
-                    socket = new Socket(host.getHostName(), 5000);
-                    PrintStream PS =new PrintStream(socket.getOutputStream());
-                    PS.println("HELLO TO SERVER FROM CLIENT");
-                    System.out.println("Sending request to Socket Server");
-                    oos = new ObjectOutputStream(socket.getOutputStream());
-                    //read the server response message
-                Thread.sleep(100);
-                    ois = new ObjectInputStream(socket.getInputStream());
-                    String message = (String) ois.readObject();
-                    System.out.println("Message: " + message);
-                    //close resources
-                    ois.close();
-                    oos.close();
-                    Thread.sleep(100);
+    private static Socket socket;
+    private static DataInputStream clientInput;
+    private static DataOutputStream clientOutput;
+
+    private static String message;
+
+    private static int userID;
+
+    @Override
+    public void run() {
+
+        try {
+            socket = new Socket(serverHost, serverPort);
+            System.out.println("Connection succesfull.");
+
+            clientInput = new DataInputStream(socket.getInputStream());
+            clientOutput = new DataOutputStream(socket.getOutputStream());
+
+            clientOutput.writeUTF("C_Message1");
+            System.out.println("Connected to server!");
+
+            while (true){
+                message = clientInput.readUTF();
+
+                if (message.equals("S_Message1")){
+                    clientOutput.writeUTF("C_Message2");
+                }
+                else if (message.equals("S_Message2")){
+                    System.out.println("Accepted on table!");
+                }
+                else if (message.equals("S_Message3")){
+                    System.out.println("Rejected");
                 }
             }
+        } catch (UnknownHostException e) {
+            System.out.println("Cannot find host.");
+        } catch (IOException e) {
+            System.out.println("IO Exception thrown");
+
+        }
+    }
+}
