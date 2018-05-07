@@ -1,12 +1,11 @@
 package Server;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class ClientServer implements Runnable {
-    private static final int serverPort = 5000;
+    private static final int serverPort = 5700;
     private static final String serverHost = "localhost";
 
     private static Socket socket;
@@ -32,16 +31,7 @@ public class ClientServer implements Runnable {
 
             while (true){
                 message = clientInput.readUTF();
-
-                if (message.equals("S_Message1")){
-                    clientOutput.writeUTF("C_Message2");
-                }
-                else if (message.equals("S_Message2")){
-                    System.out.println("Accepted on table!");
-                }
-                else if (message.equals("S_Message3")){
-                    System.out.println("Rejected");
-                }
+                System.out.print(message);
             }
         } catch (UnknownHostException e) {
             System.out.println("Cannot find host.");

@@ -31,7 +31,6 @@ public class Main extends Application {
         //primaryStage.setResizable(false);
        // primaryStage.show();
         ClientServer client = new ClientServer();
-        Thread clientThread = new Thread(client);
-        clientThread.start();
+        client.run();
     }
 }
