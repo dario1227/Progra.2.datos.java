@@ -19,10 +19,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        XML_parser.createAccount("Caca","23","23","HFHDHDHD");
-        XML_parser.loginRequest("MEME","MSMEMSMSM");
-        XML_parser.get_songs("Caca","2");
-        XML_parser.chunk("MEME.mp3","2");
+        //XML_parser.createAccount("Caca","23","23","HFHDHDHD");
+        //XML_parser.loginRequest("MEME","MSMEMSMSM");
+        //XML_parser.get_songs("Caca","2");
+        //XML_parser.chunk("MEME.mp3","2");
         //XML_parser.prueba();
         //Cambiar a Login.fxml para probar metodos o a Main.fxml para reproductor
         //Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
@@ -31,6 +31,7 @@ public class Main extends Application {
         //primaryStage.setResizable(false);
        // primaryStage.show();
         ClientServer client = new ClientServer();
-        client.run();
+        Thread clientThread = new Thread(client);
+        clientThread.start();
     }
 }
