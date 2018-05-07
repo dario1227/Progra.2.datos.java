@@ -22,6 +22,7 @@ public class ClientServer {
                     System.out.println("Sending request to Socket Server");
                     oos = new ObjectOutputStream(socket.getOutputStream());
                     //read the server response message
+                Thread.sleep(100);
                     ois = new ObjectInputStream(socket.getInputStream());
                     String message = (String) ois.readObject();
                     System.out.println("Message: " + message);
