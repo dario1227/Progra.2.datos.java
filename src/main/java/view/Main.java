@@ -22,6 +22,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        ClientServer.Server = new ClientServer();
 //        System.out.print(cosa.charAt(cosa.length()));
 //        byte bytes[] = Base64.getDecoder().decode(cosa);
 //        try (FileOutputStream fos = new FileOutputStream("cosa.mp3")) {
@@ -39,8 +40,7 @@ public class Main extends Application {
         //primaryStage.setScene(new Scene(root, 1040, 650));
         //primaryStage.setResizable(false);
        // primaryStage.show();
-       ClientServer client = new ClientServer();
-       Thread clientThread = new Thread(client);
-        clientThread.start();
+        ClientServer.Server.send("YOUR MOM GAY");
+        ClientServer.Server.receive();
     }
 }
