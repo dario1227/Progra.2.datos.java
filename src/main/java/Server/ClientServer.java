@@ -1,5 +1,7 @@
 package Server;
 
+import XML.XML_parser;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -24,7 +26,10 @@ public class ClientServer implements Runnable {
         clientInput = new DataInputStream(socket.getInputStream());
         clientOutput = new DataOutputStream(socket.getOutputStream());
         PrintStream ps = new PrintStream(socket.getOutputStream());
-            String buff="ADIOS";
+           String buff=XML_parser.getXML_Archive("/home/kenneth/CLionProjects/Progra.2.datos.c-/cmake-build-debug/LOLA.mp3");
+           System.out.print(buff);
+           System.out.print(buff.length());
+           // String buff = "23";
             clientOutput.write(buff.getBytes());
         System.out.println("Connected to server!");
         while(true){

@@ -1,5 +1,5 @@
 package XML;
-import java.io.File;
+import java.io.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,7 +22,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
-import java.io.StringWriter;
 import java.util.Base64;
 
 public class XML_parser {
@@ -202,4 +201,63 @@ public static void pruebamp3(){
     }catch (Exception e){
 
     }
-}}
+}
+public static String getFile(String path)throws IOException {
+
+    File file = new File(path);
+    byte[] bytes = loadFile(file);
+    byte[] encoded = Base64.getEncoder().encode(bytes);
+    String encodedString = new String(encoded);
+
+    return encodedString;
+}
+    private static byte[] loadFile(File file) throws IOException {
+        InputStream is = new FileInputStream(file);
+
+        long length = file.length();
+        if (length > Integer.MAX_VALUE) {
+            // File is too large
+        }
+        byte[] bytes = new byte[(int)length];
+
+        int offset = 0;
+        int numRead = 0;
+        while (offset < bytes.length
+                && (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
+            offset += numRead;
+        }
+
+        if (offset < bytes.length) {
+            throw new IOException("Could not completely read file "+file.getName());
+        }
+
+        is.close();
+        return bytes;
+    }
+    public static String getXML_Archive(String path){
+        try {
+            String file = getFile(path);
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.newDocument();
+            final int mid = file.length() / 2; //get the middle of the String
+            String[] parts = {file.substring(0, mid),file.substring(mid)};
+            Element root = doc.createElement("Root");
+            Attr atributo = doc.createAttribute("Operation");
+            atributo.setValue("Upload");
+            Element file_node = doc.createElement("Archive");
+            file_node.setAttribute("File",file);
+            root.appendChild(file_node);
+            doc.appendChild(root);
+            DOMSource domSource = new DOMSource(doc);
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            StringWriter sw = new StringWriter();
+            StreamResult sr = new StreamResult(sw);
+            transformer.transform(domSource, sr);
+            System.out.println(sw.toString());
+            return  sw.toString();
+        }catch (Exception e){
+return null;
+        }
+    }
+}
