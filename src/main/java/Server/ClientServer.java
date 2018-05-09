@@ -1,7 +1,7 @@
 package Server;
 
 import XML.XML_parser;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+//import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.*;
 import java.net.Socket;
@@ -30,11 +30,11 @@ public class ClientServer {
 
     }
 
-    public void  receive() throws IOException {
-        while (true) {
-           message =  this.clientInput.read();
-            System.out.print((char) message);
-        }
-    }
+//    public void  receive() throws IOException {
+//        while (true) {
+//           message =  this.clientInput.read();
+//            System.out.print((char) message);
+//        }
+//    }
 
 }

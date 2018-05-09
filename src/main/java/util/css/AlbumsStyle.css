@@ -38,7 +38,7 @@
 }
 
 .list-cell:even {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: #121212;
 }
 
 .list-cell:odd {
@@ -50,7 +50,7 @@
 }
 
 .albumList .list-cell {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: #121212;
 }
 
 .list-view *.scroll-bar:horizontal *.increment-button,
@@ -142,7 +142,7 @@
 }
 
 .table-row-cell:even {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: #121212;
 }
 
 .table-row-cell:odd {
@@ -162,7 +162,7 @@
 }
 
 .table-row-cell:even:filled {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: #121212;
 }
 
 .table-row-cell:odd:filled {
@@ -280,7 +280,7 @@
 }
 
 .separator:horizontal:hover {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: #121212;
 }
 
 .separator:horizontal:pressed {
@@ -296,7 +296,7 @@
 }
 
 .sub-view .scroll-bar:vertical .track {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: #121212;
     -fx-background-radius: 0;
     -fx-background-insets: 0;
 }
@@ -387,7 +387,7 @@
 }
 
 .table-row-cell:even {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: #121212;
 }
 
 .table-row-cell:odd {
@@ -437,7 +437,7 @@
 }
 
 .table-view .scroll-bar:vertical .track {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: #121212;
     -fx-background-radius: 0;
     -fx-background-insets: 0;
 }
