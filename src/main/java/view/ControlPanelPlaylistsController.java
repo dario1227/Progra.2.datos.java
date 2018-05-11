@@ -3,7 +3,7 @@ package view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import player.MusicPlayer;
+import player.OdysseyPlayer;
 import model.Library;
 import util.SubView;
 import util.XMLEditor;
@@ -25,7 +25,7 @@ public class ControlPanelPlaylistsController implements Initializable {
 
     @FXML
     private void playSong(Event e) {
-        SubView controller = MusicPlayer.getMainController().getSubViewController();
+		SubView controller = OdysseyPlayer.getMainController().getSubViewController();
         controller.play();
         e.consume();
     }
@@ -35,7 +35,7 @@ public class ControlPanelPlaylistsController implements Initializable {
         // Gets the play lists controller sub view, which keeps track of the currently selected song.
         // A PlayListsController object will always be returned since this button will only be visible
         // when the user selects a song while in a play list.
-        PlaylistsController controller = (PlaylistsController) MusicPlayer.getMainController().getSubViewController();
+		PlaylistsController controller = (PlaylistsController) OdysseyPlayer.getMainController().getSubViewController();
 
         // Retrieves play list and song id to search for the song in the xml file.
         int selectedPlayListId = controller.getSelectedPlaylist().getId();

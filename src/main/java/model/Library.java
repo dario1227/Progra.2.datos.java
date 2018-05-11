@@ -32,7 +32,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import player.MusicPlayer;
+import player.OdysseyPlayer;
 import util.ImportMusicTask;
 import util.Resources;
 import javafx.collections.FXCollections;
@@ -653,7 +653,7 @@ public final class Library {
                     playingList.removeChild(nodes.item(0));
                 }
 
-                for (Song song : MusicPlayer.getNowPlayingList()) {
+                for (Song song : OdysseyPlayer.getNowPlayingList()) {
                     Element id = doc.createElement(ID);
                     id.setTextContent(Integer.toString(song.getId()));
                     playingList.appendChild(id);

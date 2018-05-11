@@ -6,9 +6,9 @@ import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 
 import model.*;
+import player.OdysseyPlayer;
 import util.Search;
 
-import player.MusicPlayer;
 import util.CustomSliderSkin;
 import util.Resources;
 import util.SubView;
@@ -253,13 +253,13 @@ public class MainController implements Initializable {
         PseudoClass active = PseudoClass.getPseudoClass("active");
         loopButton.setOnMouseClicked(x -> {
             sideBar.requestFocus();
-            MusicPlayer.toggleLoop();
-            loopButton.pseudoClassStateChanged(active, MusicPlayer.isLoopActive());
+            OdysseyPlayer.toggleLoop();
+            loopButton.pseudoClassStateChanged(active, OdysseyPlayer.isLoopActive());
         });
         shuffleButton.setOnMouseClicked(x -> {
             sideBar.requestFocus();
-            MusicPlayer.toggleShuffle();
-            shuffleButton.pseudoClassStateChanged(active, MusicPlayer.isShuffleActive());
+            OdysseyPlayer.toggleShuffle();
+            shuffleButton.pseudoClassStateChanged(active, OdysseyPlayer.isShuffleActive());
         });
 
         timeSlider.setFocusTraversable(false);
@@ -271,7 +271,7 @@ public class MainController implements Initializable {
 
                         int seconds = (int) Math.round(timeSlider.getValue() / 4.0);
                         timeSlider.setValue(seconds * 4);
-                        MusicPlayer.seek(seconds);
+                        OdysseyPlayer.seek(seconds);
                     }
                 }
         );
@@ -285,7 +285,7 @@ public class MainController implements Initializable {
 
                         int seconds = (int) Math.round(current / 4.0);
                         timeSlider.setValue(seconds * 4);
-                        MusicPlayer.seek(seconds);
+                        OdysseyPlayer.seek(seconds);
                     }
                 }
         );
@@ -311,7 +311,7 @@ public class MainController implements Initializable {
                 SearchResult result = Search.getResult();
                 Platform.runLater(() -> {
                     showSearchResults(result);
-                    MusicPlayer.getStage().toFront();
+                    OdysseyPlayer.getStage().toFront();
                 });
                 int height = 0;
                 int artists = result.getArtistResults().size();
@@ -325,13 +325,13 @@ public class MainController implements Initializable {
             }
         });
 
-        MusicPlayer.getStage().xProperty().addListener((observable, oldValue, newValue) -> {
+        OdysseyPlayer.getStage().xProperty().addListener((observable, oldValue, newValue) -> {
             if (searchPopup.isShowing() && !searchHideAnimation.getStatus().equals(Status.RUNNING)) {
                 searchHideAnimation.play();
             }
         });
 
-        MusicPlayer.getStage().yProperty().addListener((observable, oldValue, newValue) -> {
+        OdysseyPlayer.getStage().yProperty().addListener((observable, oldValue, newValue) -> {
             if (searchPopup.isShowing() && !searchHideAnimation.getStatus().equals(Status.RUNNING)) {
                 searchHideAnimation.play();
             }
@@ -363,7 +363,7 @@ public class MainController implements Initializable {
     private void createVolumePopup() {
         try {
 
-            Stage stage = MusicPlayer.getStage();
+            Stage stage = OdysseyPlayer.getStage();
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource(Resources.FXML + "VolumePopup.fxml"));
             HBox view = loader.load();
             volumePopupController = loader.getController();
@@ -393,7 +393,7 @@ public class MainController implements Initializable {
     private void createSearchPopup() {
         try {
 
-            Stage stage = MusicPlayer.getStage();
+            Stage stage = OdysseyPlayer.getStage();
             VBox view = new VBox();
             view.getStylesheets().add(Resources.CSS + "MainStyle.css");
             view.getStyleClass().add("searchPopup");
@@ -415,7 +415,7 @@ public class MainController implements Initializable {
 
     public void updateNowPlayingButton() {
 
-        Song song = MusicPlayer.getNowPlaying();
+        Song song = OdysseyPlayer.getNowPlaying();
         if (song != null) {
             nowPlayingTitle.setText(song.getTitle());
             nowPlayingArtist.setText(song.getArtist());
@@ -429,7 +429,7 @@ public class MainController implements Initializable {
 
     public void initializeTimeSlider() {
 
-        Song song = MusicPlayer.getNowPlaying();
+        Song song = OdysseyPlayer.getNowPlaying();
         if (song != null) {
             timeSlider.setMin(0);
             timeSlider.setMax(song.getLengthInSeconds() * 4);
@@ -450,7 +450,7 @@ public class MainController implements Initializable {
 
     public void initializeTimeLabels() {
 
-        Song song = MusicPlayer.getNowPlaying();
+        Song song = OdysseyPlayer.getNowPlaying();
         if (song != null) {
             timePassed.setText("0:00");
             timeRemaining.setText(song.getLength());
@@ -462,8 +462,8 @@ public class MainController implements Initializable {
 
     public void updateTimeLabels() {
 
-        timePassed.setText(MusicPlayer.getTimePassed());
-        timeRemaining.setText(MusicPlayer.getTimeRemaining());
+        timePassed.setText(OdysseyPlayer.getTimePassed());
+        timeRemaining.setText(OdysseyPlayer.getTimeRemaining());
     }
 
     @SuppressWarnings("unchecked")
@@ -487,7 +487,7 @@ public class MainController implements Initializable {
                     ClipboardContent content = new ClipboardContent();
                     content.putString("Playlist");
                     db.setContent(content);
-                    MusicPlayer.setDraggedItem(playlist);
+                    OdysseyPlayer.setDraggedItem(playlist);
                     db.setDragView(cell.snapshot(null, null), 125, 25);
                     event.consume();
                 });
@@ -532,7 +532,7 @@ public class MainController implements Initializable {
                     new Thread(() -> {
                         switch (dragString) {
                             case "Artist":
-                                Artist artist = (Artist) MusicPlayer.getDraggedItem();
+                                Artist artist = (Artist) OdysseyPlayer.getDraggedItem();
                                 for (Album album : artist.getAlbums()) {
                                     for (Song song : album.getSongs()) {
                                         if (!playlist.getSongs().contains(song)) {
@@ -542,7 +542,7 @@ public class MainController implements Initializable {
                                 }
                                 break;
                             case "Album":
-                                Album album = (Album) MusicPlayer.getDraggedItem();
+                                Album album = (Album) OdysseyPlayer.getDraggedItem();
                                 for (Song song : album.getSongs()) {
                                     if (!playlist.getSongs().contains(song)) {
                                         playlist.addSong(song);
@@ -550,7 +550,7 @@ public class MainController implements Initializable {
                                 }
                                 break;
                             case "Playlist":
-                                Playlist list = (Playlist) MusicPlayer.getDraggedItem();
+                                Playlist list = (Playlist) OdysseyPlayer.getDraggedItem();
                                 for (Song song : list.getSongs()) {
                                     if (!playlist.getSongs().contains(song)) {
                                         playlist.addSong(song);
@@ -558,13 +558,13 @@ public class MainController implements Initializable {
                                 }
                                 break;
                             case "Song":
-                                Song song = (Song) MusicPlayer.getDraggedItem();
+                                Song song = (Song) OdysseyPlayer.getDraggedItem();
                                 if (!playlist.getSongs().contains(song)) {
                                     playlist.addSong(song);
                                 }
                                 break;
                             case "List":
-                                ObservableList<Song> songs = (ObservableList<Song>) MusicPlayer.getDraggedItem();
+                                ObservableList<Song> songs = (ObservableList<Song>) OdysseyPlayer.getDraggedItem();
                                 for (Song s : songs) {
                                     if (!playlist.getSongs().contains(s)) {
                                         playlist.addSong(s);
@@ -670,7 +670,7 @@ public class MainController implements Initializable {
                     ClipboardContent content = new ClipboardContent();
                     content.putString("Playlist");
                     db.setContent(content);
-                    MusicPlayer.setDraggedItem(playlist);
+                    OdysseyPlayer.setDraggedItem(playlist);
                     SnapshotParameters sp = new SnapshotParameters();
                     sp.setTransform(Transform.scale(1.5, 1.5));
                     db.setDragView(cell.snapshot(sp, null));
@@ -719,7 +719,7 @@ public class MainController implements Initializable {
                     new Thread(() -> {
                         switch (dragString) {
                             case "Artist":
-                                Artist artist = (Artist) MusicPlayer.getDraggedItem();
+                                Artist artist = (Artist) OdysseyPlayer.getDraggedItem();
                                 for (Album album : artist.getAlbums()) {
                                     for (Song song : album.getSongs()) {
                                         if (!playlist.getSongs().contains(song)) {
@@ -729,7 +729,7 @@ public class MainController implements Initializable {
                                 }
                                 break;
                             case "Album":
-                                Album album = (Album) MusicPlayer.getDraggedItem();
+                                Album album = (Album) OdysseyPlayer.getDraggedItem();
                                 for (Song song : album.getSongs()) {
                                     if (!playlist.getSongs().contains(song)) {
                                         playlist.addSong(song);
@@ -737,7 +737,7 @@ public class MainController implements Initializable {
                                 }
                                 break;
                             case "Playlist":
-                                Playlist list = (Playlist) MusicPlayer.getDraggedItem();
+                                Playlist list = (Playlist) OdysseyPlayer.getDraggedItem();
                                 for (Song song : list.getSongs()) {
                                     if (!playlist.getSongs().contains(song)) {
                                         playlist.addSong(song);
@@ -745,13 +745,13 @@ public class MainController implements Initializable {
                                 }
                                 break;
                             case "Song":
-                                Song song = (Song) MusicPlayer.getDraggedItem();
+                                Song song = (Song) OdysseyPlayer.getDraggedItem();
                                 if (!playlist.getSongs().contains(song)) {
                                     playlist.addSong(song);
                                 }
                                 break;
                             case "List":
-                                ObservableList<Song> songs = (ObservableList<Song>) MusicPlayer.getDraggedItem();
+                                ObservableList<Song> songs = (ObservableList<Song>) OdysseyPlayer.getDraggedItem();
                                 for (Song s : songs) {
                                     if (!playlist.getSongs().contains(s)) {
                                         playlist.addSong(s);
@@ -931,7 +931,7 @@ public class MainController implements Initializable {
         sideBar.getChildren().get(2).getStyleClass().setAll("sideBarItemSelected");
 
         ArtistsMainController artistsMainController = (ArtistsMainController) loadView("ArtistsMain");
-        Song song = MusicPlayer.getNowPlaying();
+        Song song = OdysseyPlayer.getNowPlaying();
         Artist artist = Library.getArtist(song.getArtist());
         Album album = artist.getAlbums().stream().filter(x -> x.getTitle().equals(song.getAlbum())).findFirst().get();
         artistsMainController.selectArtist(artist);
@@ -971,10 +971,10 @@ public class MainController implements Initializable {
 
         sideBar.requestFocus();
 
-        if (MusicPlayer.isPlaying()) {
-            MusicPlayer.pause();
+        if (OdysseyPlayer.isPlaying()) {
+            OdysseyPlayer.pause();
         } else {
-            MusicPlayer.play();
+            OdysseyPlayer.play();
         }
     }
 
@@ -982,14 +982,14 @@ public class MainController implements Initializable {
     private void back() {
 
         sideBar.requestFocus();
-        MusicPlayer.back();
+        OdysseyPlayer.back();
     }
 
     @FXML
     private void skip() {
 
         sideBar.requestFocus();
-        MusicPlayer.skip();
+        OdysseyPlayer.skip();
     }
 
     @FXML
@@ -1003,7 +1003,7 @@ public class MainController implements Initializable {
 
     public void volumeClick() {
         if (!volumePopup.isShowing()) {
-            Stage stage = MusicPlayer.getStage();
+            Stage stage = OdysseyPlayer.getStage();
             volumePopup.setX(stage.getX() + stage.getWidth() - 265);
             volumePopup.setY(stage.getY() + stage.getHeight() - 115);
             volumePopup.show();
@@ -1120,7 +1120,7 @@ public class MainController implements Initializable {
             VBox.setMargin(label, new Insets(10, 10, 10, 10));
         }
         if (!searchPopup.isShowing()) {
-            Stage stage = MusicPlayer.getStage();
+            Stage stage = OdysseyPlayer.getStage();
             searchPopup.setX(stage.getX() + 18);
             searchPopup.setY(stage.getY() + 80);
             searchPopup.show();

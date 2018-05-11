@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
-import player.MusicPlayer;
+import player.OdysseyPlayer;
 import model.Album;
 import model.Library;
 import model.Song;
@@ -285,11 +285,11 @@ public class AlbumsController implements Initializable, SubView {
                 if (songTable.getSelectionModel().getSelectedIndices().size() > 1) {
                     content.putString("List");
                     db.setContent(content);
-                    MusicPlayer.setDraggedItem(songTable.getSelectionModel().getSelectedItems());
+                    OdysseyPlayer.setDraggedItem(songTable.getSelectionModel().getSelectedItems());
                 } else {
                     content.putString("Song");
                     db.setContent(content);
-                    MusicPlayer.setDraggedItem(row.getItem());
+                    OdysseyPlayer.setDraggedItem(row.getItem());
                 }
                 ImageView image = new ImageView(row.snapshot(null, null));
                 Rectangle2D rectangle = new Rectangle2D(0, 0, 250, 50);
@@ -321,7 +321,7 @@ public class AlbumsController implements Initializable, SubView {
             @Override
             public void handle(MouseEvent e) {
 
-                expandedHeight = MusicPlayer.getStage().getHeight() - e.getSceneY() - 75;
+                expandedHeight = OdysseyPlayer.getStage().getHeight() - e.getSceneY() - 75;
 
                 if (expandedHeight > gridBox.getHeight() * 0.75) {
                     expandedHeight = gridBox.getHeight() * 0.75;
@@ -463,7 +463,7 @@ public class AlbumsController implements Initializable, SubView {
             ClipboardContent content = new ClipboardContent();
             content.putString("Album");
             db.setContent(content);
-            MusicPlayer.setDraggedItem(album);
+            OdysseyPlayer.setDraggedItem(album);
             db.setDragView(cell.snapshot(null, null), cell.widthProperty().divide(2).get(), cell.heightProperty().divide(2).get());
             event.consume();
         });
@@ -519,14 +519,14 @@ public class AlbumsController implements Initializable, SubView {
 
         Song song = selectedSong;
         ObservableList<Song> songList = songTable.getItems();
-        if (MusicPlayer.isShuffleActive()) {
+        if (OdysseyPlayer.isShuffleActive()) {
             Collections.shuffle(songList);
             songList.remove(song);
             songList.add(0, song);
         }
-        MusicPlayer.setNowPlayingList(songList);
-        MusicPlayer.setNowPlaying(song);
-        MusicPlayer.play();
+        OdysseyPlayer.setNowPlayingList(songList);
+        OdysseyPlayer.setNowPlaying(song);
+        OdysseyPlayer.play();
     }
 
     @Override

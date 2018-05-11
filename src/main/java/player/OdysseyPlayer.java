@@ -41,7 +41,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-public class MusicPlayer extends Application {
+public class OdysseyPlayer extends Application {
 
     private static MainController mainController;
     private static MediaPlayer mediaPlayer;
@@ -69,14 +69,14 @@ public class MusicPlayer extends Application {
     private static int lastIdAssigned;
 
     public static void main(String[] args) {
-        Application.launch(MusicPlayer.class);
+        Application.launch(OdysseyPlayer.class);
     }
 
     private static void checkLibraryXML() {
         // Finds the jar file and the path of its parent folder.
         File musicPlayerJAR = null;
         try {
-            musicPlayerJAR = new File(MusicPlayer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+            musicPlayerJAR = new File(OdysseyPlayer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -222,7 +222,7 @@ public class MusicPlayer extends Application {
 
     private static void createLibraryXML() {
         try {
-            FXMLLoader loader = new FXMLLoader(MusicPlayer.class.getResource(Resources.FXML + "ImportMusicDialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(OdysseyPlayer.class.getResource(Resources.FXML + "ImportMusicDialog.fxml"));
             BorderPane importView = loader.load();
 
             // Create the dialog Stage.
@@ -334,7 +334,7 @@ public class MusicPlayer extends Application {
     }
 
     public static void mute(boolean isMuted) {
-        MusicPlayer.isMuted = !isMuted;
+        OdysseyPlayer.isMuted = !isMuted;
         if (mediaPlayer != null) {
             mediaPlayer.setMute(!isMuted);
         }
@@ -515,10 +515,10 @@ public class MusicPlayer extends Application {
         timerCounter = 0;
         secondsPlayed = 0;
 
-        MusicPlayer.stage = stage;
-        MusicPlayer.stage.setTitle("Music Player");
-        MusicPlayer.stage.getIcons().add(new Image(this.getClass().getResource(Resources.IMG + "icon.png").toString()));
-        MusicPlayer.stage.setOnCloseRequest(event -> {
+        OdysseyPlayer.stage = stage;
+        OdysseyPlayer.stage.setTitle("Odyssey++");
+        OdysseyPlayer.stage.getIcons().add(new Image(this.getClass().getResource(Resources.IMG + "icon.png").toString()));
+        OdysseyPlayer.stage.setOnCloseRequest(event -> {
             Platform.exit();
             System.exit(0);
         });

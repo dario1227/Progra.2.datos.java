@@ -3,7 +3,7 @@ package view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import player.MusicPlayer;
+import player.OdysseyPlayer;
 import model.Library;
 import model.Playlist;
 import model.Song;
@@ -49,7 +49,7 @@ public class ControlPanelController implements Initializable {
 
     @FXML
     private void playSong(Event e) {
-        SubView controller = MusicPlayer.getMainController().getSubViewController();
+        SubView controller = OdysseyPlayer.getMainController().getSubViewController();
         controller.play();
         e.consume();
     }
@@ -62,7 +62,7 @@ public class ControlPanelController implements Initializable {
         double y = mouseEvent.getScreenY();
 
         // Retrieves the selected song to add to the desired playlist.
-        Song selectedSong = MusicPlayer.getMainController().getSubViewController().getSelectedSong();
+        Song selectedSong = OdysseyPlayer.getMainController().getSubViewController().getSelectedSong();
 
         ObservableList<Playlist> playlists = Library.getPlaylists();
 
@@ -81,7 +81,7 @@ public class ControlPanelController implements Initializable {
         MenuItem playing = new MenuItem("Playing");
         playing.setStyle("-fx-text-fill: black");
         playing.setOnAction(e1 -> {
-            MusicPlayer.addSongToNowPlayingList(selectedSong);
+            OdysseyPlayer.addSongToNowPlayingList(selectedSong);
         });
 
         contextMenu.getItems().add(playing);

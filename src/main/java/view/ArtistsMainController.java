@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 
-import player.MusicPlayer;
+import player.OdysseyPlayer;
 import model.Album;
 import model.Artist;
 import model.Library;
@@ -189,7 +189,7 @@ public class ArtistsMainController implements Initializable, SubView {
                     songs.addAll(album.getSongs());
                 }
 
-                if (MusicPlayer.isShuffleActive()) {
+                if (OdysseyPlayer.isShuffleActive()) {
                     Collections.shuffle(songs);
                 } else {
                     Collections.sort(songs, (first, second) -> {
@@ -205,9 +205,9 @@ public class ArtistsMainController implements Initializable, SubView {
                 }
 
                 Song song = songs.get(0);
-                MusicPlayer.setNowPlayingList(songs);
-                MusicPlayer.setNowPlaying(song);
-                MusicPlayer.play();
+                OdysseyPlayer.setNowPlayingList(songs);
+                OdysseyPlayer.setNowPlaying(song);
+                OdysseyPlayer.play();
 
             } else {
 
@@ -252,15 +252,15 @@ public class ArtistsMainController implements Initializable, SubView {
 
                 ArrayList<Song> songs = selectedAlbum.getSongs();
 
-                if (MusicPlayer.isShuffleActive()) {
+                if (OdysseyPlayer.isShuffleActive()) {
                     Collections.shuffle(songs);
                 } else {
                     Collections.sort(songs);
                 }
 
-                MusicPlayer.setNowPlayingList(songs);
-                MusicPlayer.setNowPlaying(songs.get(0));
-                MusicPlayer.play();
+                OdysseyPlayer.setNowPlayingList(songs);
+                OdysseyPlayer.setNowPlaying(songs.get(0));
+                OdysseyPlayer.play();
 
             } else {
 
@@ -363,11 +363,11 @@ public class ArtistsMainController implements Initializable, SubView {
                 if (songTable.getSelectionModel().getSelectedIndices().size() > 1) {
                     content.putString("List");
                     db.setContent(content);
-                    MusicPlayer.setDraggedItem(songTable.getSelectionModel().getSelectedItems());
+                    OdysseyPlayer.setDraggedItem(songTable.getSelectionModel().getSelectedItems());
                 } else {
                     content.putString("Song");
                     db.setContent(content);
-                    MusicPlayer.setDraggedItem(row.getItem());
+                    OdysseyPlayer.setDraggedItem(row.getItem());
                 }
                 ImageView image = new ImageView(row.snapshot(null, null));
                 Rectangle2D rectangle = new Rectangle2D(0, 0, 250, 50);
@@ -566,8 +566,8 @@ public class ArtistsMainController implements Initializable, SubView {
         new Thread(() -> {
             try {
                 if (fromMainController) {
-                    MusicPlayer.getMainController().getLatch().await();
-                    MusicPlayer.getMainController().resetLatch();
+                    OdysseyPlayer.getMainController().getLatch().await();
+                    OdysseyPlayer.getMainController().resetLatch();
                 } else {
                     loadedLatch.await();
                     loadedLatch = new CountDownLatch(1);
@@ -593,7 +593,7 @@ public class ArtistsMainController implements Initializable, SubView {
             }
         }
 
-        if (MusicPlayer.isShuffleActive()) {
+        if (OdysseyPlayer.isShuffleActive()) {
             Collections.shuffle(songs);
             songs.remove(song);
             songs.add(0, song);
@@ -610,9 +610,9 @@ public class ArtistsMainController implements Initializable, SubView {
             });
         }
 
-        MusicPlayer.setNowPlayingList(songs);
-        MusicPlayer.setNowPlaying(song);
-        MusicPlayer.play();
+        OdysseyPlayer.setNowPlayingList(songs);
+        OdysseyPlayer.setNowPlaying(song);
+        OdysseyPlayer.play();
     }
 
     @Override
@@ -696,7 +696,7 @@ public class ArtistsMainController implements Initializable, SubView {
                 ClipboardContent content = new ClipboardContent();
                 content.putString("Artist");
                 db.setContent(content);
-                MusicPlayer.setDraggedItem(artist);
+                OdysseyPlayer.setDraggedItem(artist);
                 db.setDragView(this.snapshot(null, null), 125, 25);
                 event.consume();
             });
@@ -744,7 +744,7 @@ public class ArtistsMainController implements Initializable, SubView {
                 ClipboardContent content = new ClipboardContent();
                 content.putString("Album");
                 db.setContent(content);
-                MusicPlayer.setDraggedItem(album);
+                OdysseyPlayer.setDraggedItem(album);
                 db.setDragView(this.snapshot(null, null), 75, 75);
                 event.consume();
             });

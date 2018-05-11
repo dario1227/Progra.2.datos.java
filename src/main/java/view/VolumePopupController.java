@@ -3,7 +3,7 @@ package view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import player.MusicPlayer;
+import player.OdysseyPlayer;
 import util.CustomSliderSkin;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
@@ -54,7 +54,7 @@ public class VolumePopupController implements Initializable {
 
     @FXML
     private void volumeClick() {
-        MusicPlayer.getMainController().volumeClick();
+		OdysseyPlayer.getMainController().volumeClick();
     }
 
     @FXML
@@ -67,6 +67,6 @@ public class VolumePopupController implements Initializable {
         volumeSlider.pseudoClassStateChanged(muted, !isMuted);
         frontVolumeTrack.pseudoClassStateChanged(muted, !isMuted);
         volumeLabel.pseudoClassStateChanged(muted, !isMuted);
-        MusicPlayer.mute(isMuted);
+		OdysseyPlayer.mute(isMuted);
     }
 }

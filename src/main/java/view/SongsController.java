@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
-import player.MusicPlayer;
+import player.OdysseyPlayer;
 import model.Library;
 import model.Song;
 import util.ClippedTableCell;
@@ -174,11 +174,11 @@ public class SongsController implements Initializable, SubView {
                 if (tableView.getSelectionModel().getSelectedIndices().size() > 1) {
                     content.putString("List");
                     db.setContent(content);
-                    MusicPlayer.setDraggedItem(tableView.getSelectionModel().getSelectedItems());
+                    OdysseyPlayer.setDraggedItem(tableView.getSelectionModel().getSelectedItems());
                 } else {
                     content.putString("Song");
                     db.setContent(content);
-                    MusicPlayer.setDraggedItem(row.getItem());
+                    OdysseyPlayer.setDraggedItem(row.getItem());
                 }
                 ImageView image = new ImageView(row.snapshot(null, null));
                 Rectangle2D rectangle = new Rectangle2D(0, 0, 250, 50);
@@ -255,14 +255,14 @@ public class SongsController implements Initializable, SubView {
 
         Song song = selectedSong;
         ObservableList<Song> songList = tableView.getItems();
-        if (MusicPlayer.isShuffleActive()) {
+        if (OdysseyPlayer.isShuffleActive()) {
             Collections.shuffle(songList);
             songList.remove(song);
             songList.add(0, song);
         }
-        MusicPlayer.setNowPlayingList(songList);
-        MusicPlayer.setNowPlaying(song);
-        MusicPlayer.play();
+        OdysseyPlayer.setNowPlayingList(songList);
+        OdysseyPlayer.setNowPlaying(song);
+        OdysseyPlayer.play();
     }
 
     @Override

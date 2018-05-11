@@ -32,7 +32,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import player.MusicPlayer;
+import player.OdysseyPlayer;
 import model.Library;
 import model.Song;
 
@@ -246,7 +246,7 @@ public class XMLEditor {
             }
 
             // Calculates the new xml file number, taking into account the new songs.
-            int newXMLFileNum = MusicPlayer.getXMLFileNum() + songFilesToAdd.size();
+            int newXMLFileNum = OdysseyPlayer.getXMLFileNum() + songFilesToAdd.size();
 
             // Creates node to update xml file number.
             expr = xpath.compile("/library/musicLibrary/fileNum");
@@ -254,8 +254,8 @@ public class XMLEditor {
 
             // Updates the fileNum field in the xml file.
             fileNum.setTextContent(Integer.toString(newXMLFileNum));
-            // Updates the xmlFileNum in MusicPlayer.
-            MusicPlayer.setXMLFileNum(newXMLFileNum);
+            // Updates the xmlFileNum in OdysseyPlayer.
+            OdysseyPlayer.setXMLFileNum(newXMLFileNum);
 
             // Gets the new last id assigned after adding all the new songs.
             int newLastIdAssigned = songsToAdd.get(songsToAdd.size() - 1).getId();
@@ -266,8 +266,8 @@ public class XMLEditor {
 
             // Updates the last id in the xml file.
             lastId.setTextContent(Integer.toString(newLastIdAssigned));
-            // Updates the lastId in MusicPlayer.
-            MusicPlayer.setLastIdAssigned(newLastIdAssigned);
+            // Updates the lastId in OdysseyPlayer.
+            OdysseyPlayer.setLastIdAssigned(newLastIdAssigned);
 
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -328,8 +328,8 @@ public class XMLEditor {
                 ex.printStackTrace();
             }
         }
-        // Updates the lastIdAssigned in MusicPlayer to account for the new songs.
-        MusicPlayer.setLastIdAssigned(lastIdAssigned);
+        // Updates the lastIdAssigned in OdysseyPlayer to account for the new songs.
+        OdysseyPlayer.setLastIdAssigned(lastIdAssigned);
     }
 
     private static int xmlLastIdAssignedFinder() {
@@ -368,7 +368,7 @@ public class XMLEditor {
 
     private static void deleteSongFromXML() {
         // Gets the currentXMLFileNum.
-        int currentXMLFileNum = MusicPlayer.getXMLFileNum();
+        int currentXMLFileNum = OdysseyPlayer.getXMLFileNum();
 
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -400,7 +400,7 @@ public class XMLEditor {
             }
 
             // If the last node to be deleted was the last song node,
-            // then the new last assigned id is found and updated in the MusicPlayer and xml file.
+            // then the new last assigned id is found and updated in the OdysseyPlayer and xml file.
             if (deleteSongNode == lastSongNode) {
                 int newLastIdAssigned = xmlNewLastIdAssignedFinder();
 
@@ -408,8 +408,8 @@ public class XMLEditor {
                 expr = xpath.compile("/library/musicLibrary/lastId");
                 Node lastId = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
 
-                // Updates the lastId in MusicPlayer and in the xml file.
-                MusicPlayer.setLastIdAssigned(newLastIdAssigned);
+                // Updates the lastId in OdysseyPlayer and in the xml file.
+                OdysseyPlayer.setLastIdAssigned(newLastIdAssigned);
                 lastId.setTextContent(Integer.toString(newLastIdAssigned));
             }
 
@@ -417,8 +417,8 @@ public class XMLEditor {
             XPathExpression fileNumExpr = xpath.compile("/library/musicLibrary/fileNum");
             Node fileNum = ((NodeList) fileNumExpr.evaluate(doc, XPathConstants.NODESET)).item(0);
 
-            // Updates the fileNum in MusicPlayer and in the xml file.
-            MusicPlayer.setXMLFileNum(currentXMLFileNum);
+            // Updates the fileNum in OdysseyPlayer and in the xml file.
+            OdysseyPlayer.setXMLFileNum(currentXMLFileNum);
             fileNum.setTextContent(Integer.toString(currentXMLFileNum));
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();

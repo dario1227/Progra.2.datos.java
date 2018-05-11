@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
-import player.MusicPlayer;
+import player.OdysseyPlayer;
 import model.Artist;
 import model.Library;
 import model.Song;
@@ -99,7 +99,7 @@ public class ArtistsController implements Initializable, SubView {
         cell.setAlignment(Pos.CENTER);
         cell.setOnMouseClicked(event -> {
 
-            MainController mainController = MusicPlayer.getMainController();
+            MainController mainController = OdysseyPlayer.getMainController();
             ArtistsMainController artistsMainController = (ArtistsMainController) mainController.loadView("ArtistsMain");
 
             VBox artistCell = (VBox) event.getSource();
@@ -115,7 +115,7 @@ public class ArtistsController implements Initializable, SubView {
             ClipboardContent content = new ClipboardContent();
             content.putString("Artist");
             db.setContent(content);
-            MusicPlayer.setDraggedItem(artist);
+            OdysseyPlayer.setDraggedItem(artist);
             db.setDragView(cell.snapshot(null, null), cell.widthProperty().divide(2).get(), cell.heightProperty().divide(2).get());
             event.consume();
         });
@@ -145,7 +145,7 @@ public class ArtistsController implements Initializable, SubView {
             }
         }
 
-        ScrollPane scrollpane = MusicPlayer.getMainController().getScrollPane();
+        ScrollPane scrollpane = OdysseyPlayer.getMainController().getScrollPane();
 
         double row = (index / 5) * cellHeight;
         double finalVvalue = row / (grid.getHeight() - scrollpane.getHeight());

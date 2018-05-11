@@ -1,10 +1,9 @@
 package util;
 
-import player.MusicPlayer;
+import player.OdysseyPlayer;
 import model.Song;
 import view.PlaylistsController;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -36,7 +35,7 @@ public class ControlPanelTableCell<S, T> extends TableCell<S, T> {
         } else {
             String fileName;
             // Selects the correct control panel based on whether the user is in a play list or not.
-            if (MusicPlayer.getMainController().getSubViewController() instanceof PlaylistsController) {
+            if (OdysseyPlayer.getMainController().getSubViewController() instanceof PlaylistsController) {
                 fileName = Resources.FXML + "ControlPanelPlaylists.fxml";
             } else {
                 fileName = Resources.FXML + "ControlPanel.fxml";
