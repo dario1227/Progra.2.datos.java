@@ -4,15 +4,14 @@ plugins {
 
     id 'idea'
 
-    id "com.github.ben-manes.versions" version '0.17.0'
-
     // Apply the application plugin to add support for building an application
     id 'application'
 }
 
 // Define the main class for the application
 //FOR LOGIN view.Main
-mainClassName = 'view.Main'
+//mainClassName = 'view.Main'
+mainClassName = 'player.MusicPlayer'
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
