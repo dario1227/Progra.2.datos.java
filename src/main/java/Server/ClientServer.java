@@ -1,7 +1,6 @@
 package Server;
 
 import XML.XML_parser;
-//import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.*;
 import java.net.Socket;
@@ -9,9 +8,9 @@ import java.net.UnknownHostException;
 
 public class ClientServer {
     public static ClientServer Server;
-    private Socket socket;
-    private InputStream clientInput;
-    private OutputStream clientOutput;
+    public Socket socket;
+    public InputStream clientInput;
+    public OutputStream clientOutput;
 
     private int message;
 
@@ -30,11 +29,16 @@ public class ClientServer {
 
     }
 
-//    public void  receive() throws IOException {
-//        while (true) {
-//           message =  this.clientInput.read();
-//            System.out.print((char) message);
-//        }
-//    }
+    public void  receive() throws IOException {
+        while (true) {
+           message =  this.clientInput.read();
+            if((char)message == '#')
+            {
+                break;
+            }
+            System.out.print((char) message);
+
+        }
+    }
 
 }
