@@ -2,30 +2,23 @@ package XML;
 import java.io.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import com.google.common.io.Files;
-import org.omg.CORBA.PUBLIC_MEMBER;
+import Server.ClientServer;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+
 import java.io.File;
 import java.util.Base64;
 
 public class XML_parser {
-    public static void loginRequest(String username,String password){
+    public static boolean loginRequest(String username,String password){
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -46,9 +39,30 @@ public class XML_parser {
             StreamResult sr = new StreamResult(sw);
             transformer.transform(domSource, sr);
             System.out.println(sw.toString());
+            ClientServer.Server.send(sw.toString());
+            String cosa = ClientServer.Server.receive();
+            BufferedWriter out = new BufferedWriter(new FileWriter("tetst.txt"));
+            out.write(cosa);
+            out.close();
+            InputSource source = new InputSource();
+            source.setCharacterStream(new StringReader(cosa));
+            doc = docBuilder.parse(source);
+             domSource = new DOMSource(doc);
+             transformer = TransformerFactory.newInstance().newTransformer();
+             sw = new StringWriter();
+             sr = new StreamResult(sw);
+            transformer.transform(domSource, sr);
+            System.out.println(sw.toString());
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("Root");
+            System.out.print(nList.getLength());
+            Element rootnode =(Element)nList.item(0);
+            String result =rootnode.getAttribute("Result");
+            System.out.print(result.contains("false"));
+            return result.contains("true");
         }
         catch (Exception e){
-
+return false;
         }
     }
     public static void get_songs(String method,String page){
@@ -70,11 +84,12 @@ public class XML_parser {
         StreamResult sr = new StreamResult(sw);
         transformer.transform(domSource, sr);
         System.out.println(sw.toString());
+
         }catch (Exception e){
 
         }
     }
-    public static void createAccount(String username,String id,String age,String password){
+    public static boolean createAccount(String username, String id, String age, String password){
         try{
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -97,10 +112,30 @@ public class XML_parser {
         StreamResult sr = new StreamResult(sw);
         transformer.transform(domSource, sr);
         System.out.println(sw.toString());
+            ClientServer.Server.send(sw.toString());
+        String recibido = ClientServer.Server.receive();
+        System.out.print("LOL");
+            InputSource source = new InputSource();
+            source.setCharacterStream(new StringReader(recibido));
+            doc = docBuilder.parse(source);
+            domSource = new DOMSource(doc);
+            transformer = TransformerFactory.newInstance().newTransformer();
+            sw = new StringWriter();
+            sr = new StreamResult(sw);
+            transformer.transform(domSource, sr);
+            System.out.println(sw.toString());
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("Root");
+            System.out.print(nList.getLength());
+            Element rootnode =(Element)nList.item(0);
+            String result =rootnode.getAttribute("Result");
+            System.out.print(result.contains("false"));
+            return result.contains("true");
         }
         catch (Exception e){
 
         }
+        return false;
     }
     public static void chunk(String filename,String chunk){
         try {

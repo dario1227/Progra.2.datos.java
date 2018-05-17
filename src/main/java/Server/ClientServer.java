@@ -21,6 +21,7 @@ public class ClientServer {
         System.out.println("Connected to server!");
         this.clientInput = new DataInputStream(socket.getInputStream());
         this.clientOutput = new DataOutputStream(socket.getOutputStream());
+        send("Connected");
 
     }
 
@@ -29,16 +30,25 @@ public class ClientServer {
 
     }
 
-    public void  receive() throws IOException {
+    public String  receive() throws IOException {
+        String recivido="";
         while (true) {
            message =  this.clientInput.read();
             if((char)message == '#')
             {
                 break;
             }
+            recivido+=message;
+            recivido+=',';
             System.out.print((char) message);
 
-        }
+        }String[] byteValues = recivido.substring(0, recivido.length()).split(",");
+        byte[] bytes = new byte[byteValues.length];
+
+        for (int i=0, len=bytes.length; i<len; i++) {
+            bytes[i] = Byte.parseByte(byteValues[i].trim());
+        } String prueba = new String(bytes);
+        return  prueba;
     }
 
 }

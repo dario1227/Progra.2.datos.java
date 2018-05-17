@@ -22,7 +22,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         ClientServer.Server = new ClientServer();
+        XML_parser.loginRequest("kenneth","darksouls");
+        XML_parser.createAccount("Manolo","23","23","juano");
 //        System.out.print(cosa.charAt(cosa.length()));
 //        byte bytes[] = Base64.getDecoder().decode(cosa);
 //        try (FileOutputStream fos = new FileOutputStream("cosa.mp3")) {
@@ -40,10 +43,10 @@ public class Main extends Application {
         //primaryStage.setScene(new Scene(root, 1040, 650));
         //primaryStage.setResizable(false);
        // primaryStage.show();
-        ClientServer.Server.send("YOUR MOM GAY");
-        ClientServer.Server.receive();
-        String cosa = XML_parser.getXML_Archive("/home/kenneth/Desktop/Tool - Pushit.mp3");
+//        ClientServer.Server.send("YOUR MOM GAY");
+//        ClientServer.Server.receive();
+       // String cosa = XML_parser.getXML_Archive("/home/kenneth/Desktop/Tool - Pushit.mp3");
        // System.out.print("\n"+cosa);
-        ClientServer.Server.send(cosa);
+      //  ClientServer.Server.send(cosa);
     }
 }
