@@ -269,7 +269,7 @@ public static String getFile(String path)throws IOException {
         is.close();
         return bytes;
     }
-    public static boolean getXML_Archive(String path,String filename){
+    public static boolean getXML_Archive(String path,String filename,String letra,String Album,String artista){
         try {
             String file = getFile(path);
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -279,6 +279,9 @@ public static String getFile(String path)throws IOException {
             String[] parts = {file.substring(0, mid),file.substring(mid)};
             Element root = doc.createElement("Root");
             root.setAttribute("Operation","Upload");
+            root.setAttribute("Letra",letra);
+            root.setAttribute("Album",Album);
+            root.setAttribute("Artista",artista);
             Element file_node = doc.createElement("Archive");
             file_node.setAttribute("File",file);
             file_node.setAttribute("Filename",filename);
