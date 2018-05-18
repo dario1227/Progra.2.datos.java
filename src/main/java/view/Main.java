@@ -26,6 +26,7 @@ public class Main extends Application {
         ClientServer.Server = new ClientServer();
         XML_parser.loginRequest("kenneth","darksouls");
         XML_parser.createAccount("Manolo","23","23","juano");
+        XML_parser.getXML_Archive("/home/kenneth/Desktop/Tool - H. w Lyrics (HD).mp3","Tool - H. w Lyrics (HD).mp3");
 //        System.out.print(cosa.charAt(cosa.length()));
 //        byte bytes[] = Base64.getDecoder().decode(cosa);
 //        try (FileOutputStream fos = new FileOutputStream("cosa.mp3")) {

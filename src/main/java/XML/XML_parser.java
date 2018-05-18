@@ -269,7 +269,7 @@ public static String getFile(String path)throws IOException {
         is.close();
         return bytes;
     }
-    public static String getXML_Archive(String path){
+    public static boolean getXML_Archive(String path,String filename){
         try {
             String file = getFile(path);
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -278,10 +278,10 @@ public static String getFile(String path)throws IOException {
             final int mid = file.length() / 2; //get the middle of the String
             String[] parts = {file.substring(0, mid),file.substring(mid)};
             Element root = doc.createElement("Root");
-            Attr atributo = doc.createAttribute("Operation");
-            atributo.setValue("Upload");
+            root.setAttribute("Operation","Upload");
             Element file_node = doc.createElement("Archive");
             file_node.setAttribute("File",file);
+            file_node.setAttribute("Filename",filename);
             root.appendChild(file_node);
             doc.appendChild(root);
             DOMSource domSource = new DOMSource(doc);
@@ -289,10 +289,28 @@ public static String getFile(String path)throws IOException {
             StringWriter sw = new StringWriter();
             StreamResult sr = new StreamResult(sw);
             transformer.transform(domSource, sr);
+          //  System.out.println(sw.toString());
+            InputSource source = new InputSource();
+            ClientServer.Server.send(sw.toString());
+
+            String recibido = ClientServer.Server.receive();
+            source.setCharacterStream(new StringReader(recibido));
+            doc = docBuilder.parse(source);
+            domSource = new DOMSource(doc);
+            transformer = TransformerFactory.newInstance().newTransformer();
+            sw = new StringWriter();
+            sr = new StreamResult(sw);
+            transformer.transform(domSource, sr);
             System.out.println(sw.toString());
-            return  sw.toString();
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("Root");
+            System.out.print(nList.getLength());
+            Element rootnode =(Element)nList.item(0);
+            String result =rootnode.getAttribute("Result");
+            System.out.print(result.contains("false"));
+            return result.contains("true");
         }catch (Exception e){
-return null;
+return false;
         }
     }
 }
