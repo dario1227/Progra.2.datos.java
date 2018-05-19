@@ -15,6 +15,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Base64;
 
 public class XML_parser {
@@ -65,7 +66,13 @@ public class XML_parser {
 return false;
         }
     }
-    public static void get_songs(String method,String page){
+
+    /**
+     *
+     * @param method, hay 4 metodos, Autor,Album,Nombre y Letra
+     * @param page
+     */
+    public static ArrayList<Canciones> get_songs(String method,String page){
         try{
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -84,9 +91,43 @@ return false;
         StreamResult sr = new StreamResult(sw);
         transformer.transform(domSource, sr);
         System.out.println(sw.toString());
-
+        ClientServer.Server.send(sw.toString());
+            String recibido = ClientServer.Server.receive();
+            System.out.print("LOL");
+            InputSource source = new InputSource();
+            source.setCharacterStream(new StringReader(recibido));
+            doc = docBuilder.parse(source);
+            domSource = new DOMSource(doc);
+            transformer = TransformerFactory.newInstance().newTransformer();
+            sw = new StringWriter();
+            sr = new StreamResult(sw);
+            transformer.transform(domSource, sr);
+            System.out.println(sw.toString());
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("Root");
+            System.out.print(nList.getLength());
+            Element rootnode =(Element)nList.item(0);
+            String result =rootnode.getAttribute("Result");
+            if(result.contains("true")){
+                NodeList nodos = rootnode.getElementsByTagName("Cancion");
+                int x = 0;
+                ArrayList<Canciones> lista = new ArrayList<Canciones>();
+                while(x<nodos.getLength()){
+                    Element nodo =(Element) nodos.item(x);
+                    String name = nodo.getAttribute("Nombre");
+                    String letra = nodo.getAttribute("Letra");
+                    String album = nodo.getAttribute("Album");
+                    String artista  = nodo.getAttribute("Artista");
+                    String calificacion = nodo.getAttribute("Calificacion");
+                    lista.add(new Canciones(name,album,artista,letra,calificacion));
+                    x++;
+                }
+                return  lista;
+            }else{
+                return null;
+            }
         }catch (Exception e){
-
+return null;
         }
     }
     public static boolean createAccount(String username, String id, String age, String password){
@@ -276,7 +317,6 @@ public static String getFile(String path)throws IOException {
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.newDocument();
             final int mid = file.length() / 2; //get the middle of the String
-            String[] parts = {file.substring(0, mid),file.substring(mid)};
             Element root = doc.createElement("Root");
             root.setAttribute("Operation","Upload");
             root.setAttribute("Letra",letra);
