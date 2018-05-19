@@ -70,9 +70,9 @@ return false;
     /**
      *
      * @param method, hay 4 metodos, Autor,Album,Nombre y Letra
-     * @param page
+     * @param page inicia desde el numero 1 no de 0
      */
-    public static ArrayList<Canciones> get_songs(String method,String page){
+    public static ArrayList<Canciones> get_songs(String method,String page,String parametro){
         try{
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -83,6 +83,7 @@ return false;
         atributo.setValue("Songs");
         root.setAttributeNode(atributo);
         root.setAttribute("Method",method);
+        root.setAttribute("Busqueda",parametro);
         root.setAttribute("Page",page);
         doc.appendChild(root);
         DOMSource domSource = new DOMSource(doc);
@@ -111,14 +112,19 @@ return false;
             if(result.contains("true")){
                 NodeList nodos = rootnode.getElementsByTagName("Cancion");
                 int x = 0;
+
+                System.out.println(nodos.getLength());
                 ArrayList<Canciones> lista = new ArrayList<Canciones>();
                 while(x<nodos.getLength()){
+                    System.out.print("MEMEMEMEMEMEMEMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+
                     Element nodo =(Element) nodos.item(x);
                     String name = nodo.getAttribute("Nombre");
                     String letra = nodo.getAttribute("Letra");
                     String album = nodo.getAttribute("Album");
                     String artista  = nodo.getAttribute("Artista");
                     String calificacion = nodo.getAttribute("Calificacion");
+
                     lista.add(new Canciones(name,album,artista,letra,calificacion));
                     x++;
                 }

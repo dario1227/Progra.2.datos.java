@@ -25,9 +25,10 @@ public class Main extends Application {
 
         ClientServer.Server = new ClientServer();
         XML_parser.loginRequest("kenneth","darksouls");
-        XML_parser.createAccount("Manolo","23","23","juano");
-        XML_parser.getXML_Archive("/home/kenneth/Desktop/Tool - H. w Lyrics (HD).mp3","Tool - H. w Lyrics (HD).mp3","MAMA yo no fui dile que yo no fui","Mama","Mamas and the papas");
-//        System.out.print(cosa.charAt(cosa.length()));
+      //  XML_parser.createAccount("Manolo","23","23","juano");
+       // XML_parser.getXML_Archive("/home/kenneth/Desktop/Tool - H. w Lyrics (HD).mp3","Tool - H. w Lyrics (HD).mp3","MAMA yo no fui dile que yo no fui","Mama","Mamas and the papas");
+        XML_parser.get_songs("Nombre","1","MEME");
+        //        System.out.print(cosa.charAt(cosa.length()));
 //        byte bytes[] = Base64.getDecoder().decode(cosa);
 //        try (FileOutputStream fos = new FileOutputStream("cosa.mp3")) {
 //            fos.write(bytes);
