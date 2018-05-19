@@ -1,9 +1,14 @@
+@font-face {
+    font-family: "Custom";
+    src: url("/util/font/FiraSans-Light.ttf");
+}
+
 .mainWindow {
     -fx-background-color: #ffffff;
 }
 
 .label, .letter, .text-field {
-    -fx-font-family: verdana;
+    -fx-font-family: Custom;
     -fx-font-size: 18px;
 }
 
@@ -25,7 +30,7 @@
 }
 
 .bottomBarLabel {
-    -fx-font-family: verdana;
+    -fx-font-family: Custom;
     -fx-font-size: 12px;
     -fx-font-weight: normal;
     -fx-text-fill: #ffffff;
@@ -40,11 +45,11 @@
 }
 
 .sideBarItemSelected > .label {
-    -fx-text-fill: #3AD36A;
+    -fx-text-fill: #01579b;
 }
 
 .sideBarItemSelected > .iconContainer > .icon {
-    -fx-fill: #3AD36A;
+    -fx-fill: #01579b;
 }
 
 .controlPane:hover > .control,
@@ -75,11 +80,11 @@
 }
 
 .bottomBar {
-    -fx-background-color: #3AD36A;
+    -fx-background-color: #01579b;
 }
 
 .bottomBarItem:hover {
-    -fx-background-color: #00E86E;
+    -fx-background-color: #0277bd;
 }
 
 .separator .line {
@@ -88,7 +93,7 @@
 }
 
 .slider .thumb {
-    -fx-background-color: #3AD36A;
+    -fx-background-color: #01579b;
     -fx-background-radius: 0;
     -fx-background-insets: 0;
     -fx-border-width: 2;
@@ -126,7 +131,7 @@
     -fx-background-radius: 0;
     -fx-background-insets: 0;
     -fx-border-width: 2;
-    -fx-border-color: #3AD36A;
+    -fx-border-color: #01579b;
     -fx-padding: 10;
     -fx-shape: " M 100, 100 m -75, 0 a 75, 75 0 1, 0 150, 0 a 75, 75 0 1, 0 -150, 0 ";
 }
@@ -136,7 +141,7 @@
 }
 
 .volumeSlider .thumb:pressed {
-    -fx-border-color: #3AD36A;
+    -fx-border-color: #01579b;
 }
 
 .volumeSlider .track {
@@ -159,11 +164,11 @@
 }
 
 .frontVolumeTrack {
-    -fx-background-color: #3AD36A;
+    -fx-background-color: #01579b;
 }
 
 .block {
-    -fx-background-color: #3AD36A;
+    -fx-background-color: #01579b;
 }
 
 .popup {
@@ -179,11 +184,11 @@
 }
 
 .volumeIcon {
-    -fx-fill: #3AD36A;
+    -fx-fill: #01579b;
 }
 
 .volumeLabel {
-    -fx-text-fill: #3AD36A;
+    -fx-text-fill: #01579b;
 }
 
 .volumeLabel:muted {
@@ -230,7 +235,7 @@
     -fx-background-color: #ffffff;
     -fx-border-width: 2;
     -fx-border-color: #dadada;
-    -fx-accent: #3AD36A;
+    -fx-accent: #01579b;
     -fx-padding: 0 5 0 5;
 }
 
@@ -243,8 +248,8 @@
 }
 
 .searchLabel {
-    -fx-font-family: verdana;
+    -fx-font-family: Custom;
     -fx-font-size: 12px;
     -fx-font-weight: normal;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
