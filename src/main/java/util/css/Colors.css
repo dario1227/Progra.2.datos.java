@@ -1,0 +1,15 @@
+:root {
+
+    --dark: #181818;
+    --green: #3AD36A;
+    --hover: #282828;
+    --magnesium: #B3B3B3;
+    --onyx: #121212;
+    --font: "Fira Sans";
+
+}
+
+@font-face {
+    src: url("/util/font/FiraSans-Light.ttf");
+}
+

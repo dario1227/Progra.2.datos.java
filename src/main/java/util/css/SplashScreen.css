@@ -1,13 +1,18 @@
+@font-face {
+    font-family: "Custom";
+    src: url("/util/font/FiraSans-Light.ttf");
+}
+
 .vbox {
-    -fx-background-color: #181818;
+    -fx-background-color: white;
 }
 
 .label {
-    -fx-text-fill: #3AD36A;
+    -fx-text-fill: #01579b;
     -fx-font-size: 14px;
-    -fx-font-family: verdana;
+    -fx-font-family: Custom;
 }
 
 .progress-indicator {
-    -fx-progress-color: #3AD36A;
+    -fx-progress-color: #01579b;
 }
