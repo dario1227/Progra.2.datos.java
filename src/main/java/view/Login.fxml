@@ -7,13 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="300.0" prefWidth="400.0"
             xmlns="http://javafx.com/javafx/8.0.141" fx:controller="view.LoginController">
     <children>
-        <JFXPasswordField fx:id="passwordField" layoutX="235.0" layoutY="230.0"/>
-        <JFXButton fx:id="loginBtn" buttonType="RAISED" layoutX="281.0" layoutY="306.0"
+        <JFXPasswordField fx:id="passwordField" layoutX="137.0" layoutY="137.0" promptText="Password">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </JFXPasswordField>
+        <JFXButton fx:id="loginBtn" buttonType="RAISED" layoutX="154.0" layoutY="212.0"
                    onMouseClicked="#setPasswordField" style="-fx-background-radius: 50;" text="LOGIN">
+            <font>
+                <Font size="18.0"/>
+            </font>
             <ripplerFill>
                 <LinearGradient endX="1.0" endY="0.9326923076923077">
                     <stops>
@@ -23,8 +31,12 @@
                 </LinearGradient>
             </ripplerFill>
         </JFXButton>
-        <JFXTextField fx:id="userField" layoutX="235.0" layoutY="158.0"/>
-        <FontAwesomeIconView glyphName="USER" layoutX="199.0" layoutY="187.0"/>
-        <FontAwesomeIconView glyphName="KEY" layoutX="204.0" layoutY="259.0"/>
+        <JFXTextField fx:id="userField" layoutX="137.0" layoutY="65.0" promptText="Username">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </JFXTextField>
+        <FontAwesomeIconView glyphName="USER" layoutX="101.0" layoutY="94.0"/>
+        <FontAwesomeIconView glyphName="KEY" layoutX="106.0" layoutY="166.0"/>
     </children>
 </AnchorPane>

@@ -10,8 +10,8 @@ plugins {
 
 // Define the main class for the application
 //FOR LOGIN view.Main
-//mainClassName = 'view.Main'
-mainClassName = 'player.OdysseyPlayer'
+mainClassName = 'view.Main'
+//mainClassName = 'player.OdysseyPlayer'
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.

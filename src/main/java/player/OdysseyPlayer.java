@@ -8,11 +8,7 @@ import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.logging.LogManager;
 
 import javax.xml.stream.XMLInputFactory;
@@ -355,18 +351,7 @@ public class OdysseyPlayer extends Application {
         if (isShuffleActive) {
             Collections.shuffle(nowPlayingList);
         } else {
-            Collections.sort(nowPlayingList, (first, second) -> {
-                int result = Library.getAlbum(first.getAlbum()).compareTo(Library.getAlbum(second.getAlbum()));
-                if (result != 0) {
-                    return result;
-                }
-                result = Library.getAlbum(first.getAlbum()).compareTo(Library.getAlbum(second.getAlbum()));
-                if (result != 0) {
-                    return result;
-                }
-                result = first.compareTo(second);
-                return result;
-            });
+            Collections.sort(nowPlayingList, Comparator.comparing((Song song) -> Library.getAlbum(song.getAlbum())).thenComparing(song -> Library.getAlbum(song.getAlbum())).thenComparing(song -> song));
         }
 
         nowPlayingIndex = nowPlayingList.indexOf(nowPlaying);
@@ -499,7 +484,7 @@ public class OdysseyPlayer extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
 
         // Suppresses warning caused by converting music library data into xml file.
         LogManager.getLogManager().reset();
