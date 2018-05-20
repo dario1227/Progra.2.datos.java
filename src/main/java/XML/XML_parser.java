@@ -203,6 +203,28 @@ return null;
             StreamResult sr = new StreamResult(sw);
             transformer.transform(domSource, sr);
             System.out.println(sw.toString());
+            ClientServer.Server.send(sw.toString());
+            String result =   ClientServer.Server.receive();
+            InputSource source = new InputSource();
+            source.setCharacterStream(new StringReader(result));
+            doc = docBuilder.parse(source);
+            domSource = new DOMSource(doc);
+            transformer = TransformerFactory.newInstance().newTransformer();
+            sw = new StringWriter();
+            sr = new StreamResult(sw);
+            transformer.transform(domSource, sr);
+            System.out.println(sw.toString());
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("Root");
+            System.out.print(nList.getLength());
+            Element rootnode =(Element)nList.item(0);
+            String cosa = rootnode.getAttribute("Data");
+            byte[] decodedBytes = Base64.getDecoder().decode(cosa);
+            FileOutputStream outputStream = new FileOutputStream("CANCION.mp3");
+            outputStream.write(decodedBytes);
+            outputStream.close();
+System.out.print("LLEGO AL FINAL");
+
         }catch (Exception e){
 
         }
@@ -276,10 +298,10 @@ public static void pruebamp3(){
         Element archive = (Element)nList.item(0);
         String meme = archive.getAttribute("version");
         System.out.print(meme);
-//        byte[] decodedBytes = Base64.getDecoder().decode(meme);
-//        File fileToWriteTo = new File("prueba.mp3");
+       byte[] decodedBytes = Base64.getDecoder().decode(meme);
+        File fileToWriteTo = new File("prueba.mp3");
 
-    //    Files.write(decodedBytes, fileToWriteTo);
+       // File.write(decodedBytes, fileToWriteTo);
     }catch (Exception e){
 
     }
