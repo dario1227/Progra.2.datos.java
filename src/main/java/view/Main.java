@@ -28,17 +28,16 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         ClientServer.Server = new ClientServer();
-        ClientServer.Server.receive();
-        ///XML_parser.loginRequest("kenneth", "darksouls");
-        // XML_parser.createAccount("Manolo","23","23","juano");
-        ///XML_parser.getXML_Archive(
+        XML_parser.loginRequest("kenneth", "darksouls");
+         XML_parser.createAccount("Manolo","23","23","juano");
+        //XML_parser.getXML_Archive(
         ///"/home/kenneth/Desktop/Caravan Palace - Lone Digger-[AudioTrimmer.com].mp3",
         ///"Caravan Palace - Lone Digger-[AudioTrimmer.com].mp3",
         ///"MAMA yo no fui dile que yo no fui",
         ///"Mama",
         ///"Mamas and the papas");
         ///XML_parser.get_songs("Nombre", "1", "MEME");
-        ///XML_parser.chunk("Caravan Palace - Lone Digger-[AudioTrimmer.com].mp3", "1");
+        XML_parser.chunk("Caravan Palace - Lone Digger-[AudioTrimmer.com].mp3", "1");
         ///System.out.print("TERMINO ALELUYA");
         //        System.out.print(cosa.charAt(cosa.length()));
         //        byte bytes[] = Base64.getDecoder().decode(cosa);

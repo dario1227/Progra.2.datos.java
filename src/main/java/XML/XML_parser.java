@@ -61,6 +61,7 @@ public class XML_parser {
       Element rootnode = (Element) nList.item(0);
       String result = rootnode.getAttribute("Result");
       System.out.print(result.contains("false"));
+      System.out.println("Se ejectuor bien");
       return result.contains("true");
     } catch (Exception e) {
       return false;
