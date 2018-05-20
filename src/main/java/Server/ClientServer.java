@@ -5,6 +5,7 @@ import XML.XML_parser;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.zip.DeflaterOutputStream;
 
 public class ClientServer {
     public static ClientServer Server;
@@ -15,6 +16,7 @@ public class ClientServer {
     private int message;
 
     private static int userID;
+    byte[] buf=new byte[7000000];
 
     public ClientServer() throws IOException {
         this.socket = new Socket("localhost", 5400);
@@ -33,7 +35,7 @@ public class ClientServer {
     public String  receive() throws IOException {
         String recivido="";
         while (true) {
-           message =  this.clientInput.read();
+           message =  this.clientInput.read(buf, 0,buf.length);
             if((char)message == '#')
             {
                 break;
