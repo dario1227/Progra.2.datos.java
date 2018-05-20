@@ -27,7 +27,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        ///ClientServer.Server = new ClientServer();
+        ClientServer.Server = new ClientServer();
         ///XML_parser.loginRequest("kenneth", "darksouls");
         // XML_parser.createAccount("Manolo","23","23","juano");
         ///XML_parser.getXML_Archive(
