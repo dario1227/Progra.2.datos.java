@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 
+import javafx.scene.Parent;
 import model.*;
 import player.OdysseyPlayer;
 import util.Search;
@@ -290,10 +291,6 @@ public class MainController implements Initializable {
                 }
         );
 
-        unloadLettersAnimation.setOnFinished(x -> {
-            letterBox.setPrefHeight(0);
-            letterSeparator.setPrefHeight(0);
-        });
 
         searchBox.textProperty().addListener((observable, oldText, newText) -> {
             String text = newText.trim();
@@ -337,10 +334,6 @@ public class MainController implements Initializable {
             }
         });
 
-        for (Node node : letterBox.getChildren()) {
-            Label label = (Label) node;
-            label.prefWidthProperty().bind(letterBox.widthProperty().subtract(50).divide(26).subtract(1));
-        }
 
         updateNowPlayingButton();
         initializeTimeSlider();
@@ -1162,4 +1155,19 @@ public class MainController implements Initializable {
     private void setSlideDirection() {
         isSideBarExpanded = !isSideBarExpanded;
     }
+
+    @FXML
+    public void startGenericView() throws Exception {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Generic.fxml"));
+            Parent root1 = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Generic Search");
+            stage.setScene(new Scene(root1, 600, 400));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

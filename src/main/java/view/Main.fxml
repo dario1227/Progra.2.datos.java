@@ -16,6 +16,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainWindow" maxHeight="1.7976931348623157E308"
             maxWidth="1.7976931348623157E308" minHeight="450.0" minWidth="600.0" prefHeight="600.0" prefWidth="900.0"
             styleClass="mainWindow" stylesheets="@../util/css/MainStyle.css" xmlns="http://javafx.com/javafx/8.0.141"
@@ -405,9 +412,28 @@
                               maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="50.0"
                               BorderPane.alignment="CENTER">
                             <children>
+                                <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
                                 <Label alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity"
                                        onMouseClicked="#letterClicked" prefHeight="50.0" styleClass="letter" text="USER"
                                        textOverrun="CLIP"/>
+                                <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
+                                <JFXButton fx:id="genericBtn" contentDisplay="RIGHT" onAction="#startGenericView"
+                                           text="Generic">
+                                    <HBox.margin>
+                                        <Insets right="10.0"/>
+                                    </HBox.margin>
+                                    <ripplerFill>
+                                        <LinearGradient endX="1.0" endY="1.0">
+                                            <stops>
+                                                <Stop color="#280cff"/>
+                                                <Stop color="#0cc8f0" offset="1.0"/>
+                                            </stops>
+                                        </LinearGradient>
+                                    </ripplerFill>
+                                    <graphic>
+                                        <FontAwesomeIconView glyphName="SEARCH"/>
+                                    </graphic>
+                                </JFXButton>
                             </children>
                         </HBox>
                         <Separator fx:id="letterSeparator" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
