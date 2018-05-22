@@ -848,7 +848,7 @@ public class MainController implements Initializable {
 
             Task<Void> task = new Task<Void>() {
                 @Override
-                protected Void call() throws Exception {
+                protected Void call() {
                     Platform.runLater(() -> {
                         Library.getSongs().stream().filter(x -> x.getSelected()).forEach(x -> x.setSelected(false));
                         subViewRoot.setVisible(false);
@@ -1157,9 +1157,9 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void startGenericView() throws Exception {
+    public void startGenericView() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Generic.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Genetic.fxml"));
             Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Generic Search");

@@ -60,7 +60,7 @@ public class Main extends Application {
         // XML_parser.chunk("MEME.mp3","2");
         // XML_parser.prueba();
         // Cambiar a Login.fxml para probar metodos o a Main.fxml para reproductor
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Genetic.fxml"));
         mStage = primaryStage;
         mStage.setTitle("Odyssey++");
         mStage.setScene(new Scene(root, 400, 300));
