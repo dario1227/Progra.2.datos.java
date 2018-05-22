@@ -1,6 +1,15 @@
 package view;
 
+import XML.XML_parser;
 import model.Library;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.TagException;
 import util.ImportMusicTask;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +17,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+
+import static model.Library.isSupportedFileType;
 
 /**
  * Dialog to import music library.
@@ -22,6 +43,10 @@ public class ImportMusicDialogController {
 
     private Stage dialogStage;
     private boolean musicImported = false;
+
+    private String songName = "";
+    private String artistName = "";
+    private String extLyrics = "";
 
     /**
      * Sets the stage of this dialog.
@@ -41,6 +66,82 @@ public class ImportMusicDialogController {
         return musicImported;
     }
 
+    private void addlyrics() {
+
+        String BASE_URL = "http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect";
+
+        try {
+            String parameters =
+                    "?artist="
+                            + URLEncoder.encode(artistName, "UTF-8")
+                            + "&song="
+                            + URLEncoder.encode(songName, "UTF-8");
+            URL url = new URL(BASE_URL + parameters);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+            StringBuffer content = new StringBuffer();
+
+            int size;
+            char[] buf = new char[4096];
+            while ((size = in.read(buf)) != -1) {
+                content.append(new String(buf, 0, size));
+            }
+            in.close();
+
+            extLyrics = content.toString();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void uploadServer(File file) {
+
+        try {
+            AudioFile audioFile = AudioFileIO.read(file);
+            Tag tag = audioFile.getTag();
+
+            String fullpath = "", path = "", album = "", artist = "", lyrics = "", song = "";
+
+            path = file.getName();
+            fullpath = file.getAbsolutePath();
+            album = tag.getFirst(FieldKey.ALBUM);
+            artist = tag.getFirst(FieldKey.ARTIST);
+            song = tag.getFirst(FieldKey.TITLE);
+
+            if (!song.equals("")) {
+                songName = song;
+            }
+
+            if (!artist.equals("")) {
+                artistName = artist;
+            }
+            lyrics = tag.getFirst(FieldKey.LYRICS);
+
+            if (lyrics.equals("")) {
+                addlyrics();
+                lyrics = extLyrics;
+            }
+
+            if (fullpath != "" || path != "") {
+                XML_parser.getXML_Archive(fullpath, path, lyrics, album, artist);
+            }
+        } catch (CannotReadException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TagException e) {
+            e.printStackTrace();
+        } catch (ReadOnlyFileException e) {
+            e.printStackTrace();
+        } catch (InvalidAudioFrameException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void handleImport() {
         try {
@@ -48,27 +149,45 @@ public class ImportMusicDialogController {
             // Show file explorer.
             String musicDirectory = directoryChooser.showDialog(dialogStage).getPath();
 
-            // Creates a task that is used to import the music library.
-            ImportMusicTask<Boolean> task = new ImportMusicTask<Boolean>() {
-                @Override
-                protected Boolean call() throws Exception {
-                    // Creates library.xml file from user music library.
+            // SERVER!!!!!!!!!!!!!!!!!!!!!!!!
+            File directory = new File(Paths.get(musicDirectory).toUri());
+            File[] files = directory.listFiles();
+
+            assert files != null;
+            for (File file : files) {
+                if (file.isFile() && isSupportedFileType(file.getName())) {
                     try {
-                        Library.importMusic(musicDirectory, this);
-                        return true;
+                        uploadServer(file);
+                        System.out.println(file.getName());
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
                     }
                 }
-            };
+            }
+
+            // Creates a task that is used to import the music library.
+            ImportMusicTask<Boolean> task =
+                    new ImportMusicTask<Boolean>() {
+                        @Override
+                        protected Boolean call() throws Exception {
+                            // Creates library.xml file from user music library.
+                            try {
+                                Library.importMusic(musicDirectory, this);
+                                return true;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                return false;
+                            }
+                        }
+                    };
 
             // When the task (music importing) ends, the dialog is closed.
-            task.setOnSucceeded((x) -> {
-                // Sets the music as imported successfully and closes the dialog.
-                musicImported = true;
-                dialogStage.close();
-            });
+            task.setOnSucceeded(
+                    (x) -> {
+                        // Sets the music as imported successfully and closes the dialog.
+                        musicImported = true;
+                        dialogStage.close();
+                    });
 
             task.updateProgress(0, 1);
 

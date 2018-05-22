@@ -38,6 +38,9 @@ import util.Resources;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
+import XML.XML_parser;
+
 public final class Library {
 
     private static final String ID = "id";
@@ -50,6 +53,7 @@ public final class Library {
     private static final String PLAYCOUNT = "playCount";
     private static final String PLAYDATE = "playDate";
     private static final String LOCATION = "location";
+    private static final String LYRICS = "lyrics";
 
     private static ArrayList<Song> songs;
     private static ArrayList<Artist> artists;
@@ -137,6 +141,7 @@ public final class Library {
     private static int writeXML(File directory, Document doc, Element songs, int i) {
         File[] files = directory.listFiles();
 
+        assert files != null;
         for (File file : files) {
             if (file.isFile() && isSupportedFileType(file.getName())) {
                 try {
@@ -159,6 +164,8 @@ public final class Library {
                     Element playDate = doc.createElement("playDate");
                     Element location = doc.createElement("location");
 
+                    Element lyrics = doc.createElement("lyrics");
+
                     id.setTextContent(Integer.toString(i++));
                     title.setTextContent(tag.getFirst(FieldKey.TITLE));
                     String artistTitle = tag.getFirst(FieldKey.ALBUM_ARTIST);
@@ -168,6 +175,14 @@ public final class Library {
                     artist.setTextContent(
                             (artistTitle == null || artistTitle.equals("") || artistTitle.equals("null")) ? "" : artistTitle
                     );
+
+
+                    String songLyrics = tag.getFirst(FieldKey.LYRICS);
+                    if (songLyrics != null || !songLyrics.equals("") || !songLyrics.equals("null")) {
+                        lyrics.setTextContent(songLyrics);
+                    }
+
+
                     album.setTextContent(tag.getFirst(FieldKey.ALBUM));
                     length.setTextContent(Integer.toString(header.getTrackLength()));
                     String track = tag.getFirst(FieldKey.TRACK);
@@ -182,6 +197,20 @@ public final class Library {
                     playDate.setTextContent(LocalDateTime.now().toString());
                     location.setTextContent(Paths.get(file.getAbsolutePath()).toString());
 
+                    //SERVER
+//                    XML_parser.getXML_Archive(
+//                            location.getFirstChild().getUserData("data").toString(),
+//                            file.getName(),
+//                            songLyrics,
+//                            album.getFirstChild().getUserData("data").toString(),
+//                            artist.getFirstChild().getUserData("data").toString());
+
+//                    System.out.println(location.getUserData("data").toString());
+//                    System.out.println(file.getName());
+//                    System.out.println(songLyrics);
+//                    System.out.println(album.getUserData("data").toString());
+//                    System.out.println(artist.getUserData("data").toString());
+
                     song.appendChild(id);
                     song.appendChild(title);
                     song.appendChild(artist);
@@ -192,6 +221,7 @@ public final class Library {
                     song.appendChild(playCount);
                     song.appendChild(playDate);
                     song.appendChild(location);
+                    song.appendChild(lyrics);
 
                     task.updateProgress(i, Library.maxProgress);
 
@@ -218,12 +248,12 @@ public final class Library {
         switch (extension) {
             // MP3
             case "mp3":
-                // MP4
-            case "mp4":
-            case "m4a":
-            case "m4v":
-                // WAV
-            case "wav":
+//                // MP4
+//            case "mp4":
+//            case "m4a":
+//            case "m4v":
+//                // WAV
+//            case "wav":
                 return true;
             default:
                 return false;

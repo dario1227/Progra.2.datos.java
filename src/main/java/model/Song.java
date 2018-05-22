@@ -46,6 +46,7 @@ public final class Song implements Comparable<Song> {
     private String location;
     private SimpleBooleanProperty playing;
     private SimpleBooleanProperty selected;
+    private SimpleStringProperty lyrics;
 
     /**
      * Constructor for the song class.
