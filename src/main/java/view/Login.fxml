@@ -16,8 +16,16 @@
             <font>
                 <Font size="14.0"/>
             </font>
+            <focusColor>
+                <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="#02e8fa"/>
+                        <Stop color="#2304eb" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </focusColor>
         </JFXPasswordField>
-        <JFXButton fx:id="loginBtn" buttonType="RAISED" layoutX="154.0" layoutY="212.0"
+        <JFXButton fx:id="loginBtn" buttonType="RAISED" layoutX="160.0" layoutY="220.0"
                    onMouseClicked="#setPasswordField" style="-fx-background-radius: 50;" text="LOGIN">
             <font>
                 <Font size="18.0"/>
@@ -35,8 +43,30 @@
             <font>
                 <Font size="14.0"/>
             </font>
+            <focusColor>
+                <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="#0140fc"/>
+                        <Stop color="#24eeee" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </focusColor>
         </JFXTextField>
-        <FontAwesomeIconView glyphName="USER" layoutX="101.0" layoutY="94.0"/>
-        <FontAwesomeIconView glyphName="KEY" layoutX="106.0" layoutY="166.0"/>
+        <FontAwesomeIconView glyphName="USER" layoutX="101.0" layoutY="94.0" size="16.0"/>
+        <FontAwesomeIconView glyphName="KEY" layoutX="106.0" layoutY="166.0" size="16.0"/>
+        <JFXButton fx:id="regBtn" buttonType="RAISED" layoutX="287.0" layoutY="253.0" onMouseClicked="#newRegister"
+                   style="-fx-background-radius: 50;" text="Register">
+            <font>
+                <Font size="18.0"/>
+            </font>
+            <ripplerFill>
+                <LinearGradient endX="1.0" endY="0.9326923076923077">
+                    <stops>
+                        <Stop color="#d70000"/>
+                        <Stop color="#007cff" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </ripplerFill>
+        </JFXButton>
     </children>
 </AnchorPane>

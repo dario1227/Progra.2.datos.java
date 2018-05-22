@@ -22,7 +22,7 @@
                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                   </padding>
                   <graphic>
-                     <FontAwesomeIconView glyphName="" />
+                     <FontAwesomeIconView glyphName="ARROW_RIGHT"/>
                   </graphic>
                </Label>
                <Label fx:id="answerLabel">
@@ -30,7 +30,8 @@
                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                   </padding>
                </Label>
-               <JFXButton fx:id="guessBtn" contentDisplay="RIGHT" onAction="#genericSearch" text="Guess">
+               <JFXButton fx:id="guessBtn" buttonType="RAISED" contentDisplay="RIGHT" onAction="#genericSearch"
+                          text="Guess">
                   <graphic>
                      <FontAwesomeIconView glyphName="QUESTION" />
                   </graphic>

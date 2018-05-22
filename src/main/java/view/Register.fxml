@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="500.0"
+            xmlns="http://javafx.com/javafx/8.0.141" fx:controller="view.RegisterController">
+    <children>
+        <JFXTextField fx:id="regUserText" layoutX="180.0" layoutY="68.0" promptText="Username">
+            <focusColor>
+                <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="RED"/>
+                        <Stop color="#f7e70c" offset="0.48"/>
+                        <Stop color="#f108ff" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </focusColor>
+        </JFXTextField>
+        <FontAwesomeIconView glyphName="USER" layoutX="135.0" layoutY="98.0" size="16.0"/>
+        <JFXPasswordField fx:id="regPassText" layoutX="180.0" layoutY="138.0" promptText="Password">
+            <focusColor>
+                <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="RED"/>
+                        <Stop color="#f7e70c" offset="0.48"/>
+                        <Stop color="#f108ff" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </focusColor>
+        </JFXPasswordField>
+        <JFXTextField fx:id="regAgeText" layoutX="180.0" layoutY="216.0" promptText="Age">
+            <focusColor>
+                <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="RED"/>
+                        <Stop color="#f7e70c" offset="0.48"/>
+                        <Stop color="#f108ff" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </focusColor>
+        </JFXTextField>
+        <FontAwesomeIconView glyphName="KEY" layoutX="135.0" layoutY="168.0" size="16.0"/>
+        <FontAwesomeIconView glyphName="CALENDAR" layoutX="136.0" layoutY="247.0" size="16.0"/>
+        <JFXButton fx:id="createBtn" layoutX="189.0" layoutY="303.0" onAction="#createHandler"
+                   style="-fx-background-radius: 50;" text="CREATE ACCOUNT">
+            <ripplerFill>
+                <LinearGradient cycleMethod="REFLECT" endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="#fc0000"/>
+                        <Stop color="#e4ee25" offset="0.5014814814814815"/>
+                        <Stop color="#fb00ff" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </ripplerFill>
+        </JFXButton>
+    </children>
+</AnchorPane>

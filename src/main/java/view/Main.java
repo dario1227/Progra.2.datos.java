@@ -27,7 +27,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        ClientServer.Server = new ClientServer();
+        //ClientServer.Server = new ClientServer();
         //XML_parser.createAccount("alaba", "0", "666", "GG");
         //XML_parser.getXML_Archive(
 //                "/home/germago/Music/1 song/04 Addicted To You.mp3",
