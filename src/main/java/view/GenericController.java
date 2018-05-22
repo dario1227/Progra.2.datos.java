@@ -1,3 +1,5 @@
+package view;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
@@ -26,7 +28,7 @@ public class GenericController {
     @FXML
     void genericSearch(ActionEvent event) {
 
-    	String s = genericTextField.getText();
-    	answerLabel.setText(s)
-
+        String s = genericTextField.getText();
+        answerLabel.setText(s);
     }
+}
