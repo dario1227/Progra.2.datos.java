@@ -1,8 +1,5 @@
 package util;
 
-import player.OdysseyPlayer;
-import model.Song;
-import view.PlaylistsController;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -11,23 +8,28 @@ import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.TableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import model.Song;
+import player.OdysseyPlayer;
+import view.PlaylistsController;
 
 public class ControlPanelTableCell<S, T> extends TableCell<S, T> {
-
-    private ChangeListener<Boolean> listener = (observable, oldValue, newValue) ->
-            ControlPanelTableCell.this.updateItem(ControlPanelTableCell.this.getItem(), ControlPanelTableCell.this.isEmpty());
-
+    
+    private ChangeListener<Boolean> listener =
+        (observable, oldValue, newValue) ->
+            ControlPanelTableCell.this.updateItem(
+                ControlPanelTableCell.this.getItem(), ControlPanelTableCell.this.isEmpty());
+    
     @Override
-    protected void updateItem(T item, boolean empty) {
-
+    protected void updateItem (T item, boolean empty) {
+        
         super.updateItem(item, empty);
-
+    
         Song song = (Song) this.getTableRow().getItem();
-
+    
         if (empty || item == null || song == null) {
             setText(null);
             setGraphic(null);
-        } else if (!song.getSelected()) {
+        } else if (! song.getSelected()) {
             setText(item.toString());
             setGraphic(null);
             song.selectedProperty().removeListener(listener);

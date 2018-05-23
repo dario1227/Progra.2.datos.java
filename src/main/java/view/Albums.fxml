@@ -2,10 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.StackPane?>
-
 <StackPane xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../util/css/AlbumsStyle.css"
            xmlns="http://javafx.com/javafx/8" fx:controller="view.AlbumsController">
     <children>

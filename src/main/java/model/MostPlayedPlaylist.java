@@ -1,24 +1,25 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class MostPlayedPlaylist extends Playlist {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-    MostPlayedPlaylist(int id) {
+public class MostPlayedPlaylist extends Playlist {
+    
+    MostPlayedPlaylist (int id) {
         super(id, "Most Played", "You have not played any songs yet");
     }
 
     @Override
-    public ObservableList<Song> getSongs() {
+    public ObservableList<Song> getSongs () {
 
         List<Song> songs = new ArrayList<>(Library.getSongs());
-        songs = songs.stream()
+        songs =
+            songs
+                .stream()
                 .filter(x -> x.getPlayCount() > 0)
                 .sorted((x, y) -> Integer.compare(y.getPlayCount(), x.getPlayCount()))
                 .collect(Collectors.toList());

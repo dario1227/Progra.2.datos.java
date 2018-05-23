@@ -17,18 +17,18 @@ public class RegisterController {
     public JFXTextField regAgeText;
     @FXML
     public JFXButton createBtn;
-
+    
     @FXML
-    private void createHandler(ActionEvent ac) throws Exception {
+    private void createHandler (ActionEvent ac) {
         String user = regUserText.getText();
         String pass = regPassText.getText();
         String age = regAgeText.getText();
         if ((user != null) && (pass != null) && (age != null)) {
             if (XML_parser.createAccount(user, id.toString(), age, pass)) {
                 id++;
-                //TODO SUCCESS DIALOG
+                // TODO SUCCESS DIALOG
             } else {
-                //TODO Error Dialog
+                // TODO Error Dialog
             }
         }
     }

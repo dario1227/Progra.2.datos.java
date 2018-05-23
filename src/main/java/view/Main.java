@@ -1,32 +1,28 @@
 package view;
 
 import Server.ClientServer;
-import XML.XML_parser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.FileOutputStream;
-import java.util.Base64;
-
 public class Main extends Application {
-
+    
     private static Stage mStage;
-
-
-    public static void main(String[] args) {
+    
+    
+    public static void main (String[] args) {
         launch(args);
     }
-
-    public static Stage getmStage() {
+    
+    public static Stage getmStage () {
         return mStage;
     }
-
+    
     @Override
-    public void start(Stage primaryStage) throws Exception {
-
+    public void start (Stage primaryStage) throws Exception {
+        
         ClientServer.Server = new ClientServer();
         //XML_parser.createAccount("alaba", "0", "666", "GG");
 //        XML_parser.getXML_Archive(
@@ -51,7 +47,7 @@ public class Main extends Application {
         ///"Mama",
         ///"Mamas and the papas");
         ///XML_parser.get_songs("Nombre", "1", "MEME");
-     //   XML_parser.chunk("Tool - H. w Lyrics (HD).mp3", "1");
+        //   XML_parser.chunk("Tool - H. w Lyrics (HD).mp3", "1");
         //System.out.print("TERMINO ALELUYA");
         //        System.out.print(cosa.charAt(cosa.length()));
         //        byte bytes[] = Base64.getDecoder().decode(cosa);
