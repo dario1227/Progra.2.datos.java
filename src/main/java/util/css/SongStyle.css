@@ -3,7 +3,6 @@
     src: url("/util/font/FiraSans-Light.ttf");
 }
 
-
 .table-view {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
@@ -128,7 +127,7 @@
 
 .table-view .scroll-bar:horizontal .increment-button,
 .table-view .scroll-bar:horizontal .decrement-button,
-.table-view .scroll-bar:horizontal .increment-arrow, 
+.table-view .scroll-bar:horizontal .increment-arrow,
 .table-view .scroll-bar:horizontal .decrement-arrow {
     -fx-background-color: transparent;
     -fx-background-radius: 0;

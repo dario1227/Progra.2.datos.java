@@ -31,20 +31,20 @@ public class LoginController {
      * metodo. IMPORTANTE SIEMPRE PONER @FXML
      */
     @FXML
-    private void setPasswordField() throws Exception {
+    private void setPasswordField () {
         String user = userField.getText();
         String pass = passwordField.getText();
         if ((user != null) && (pass != null)) {
             if (XML_parser.loginRequest(user, pass)) {
                 openPlayer();
             } else {
-                //TODO Error Dialog
+                // TODO Error Dialog
             }
         }
     }
 
     @FXML
-    private void newRegister() throws Exception {
+    private void newRegister () {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Register.fxml"));
             Parent root1 = fxmlLoader.load();
@@ -57,9 +57,8 @@ public class LoginController {
         }
     }
 
-
     // RUN THIS WHEN THE LOGIN IS CORRECT
-    private void openPlayer() {
+    private void openPlayer () {
         OdysseyPlayer player = new OdysseyPlayer();
         Main.getmStage().setResizable(true);
         player.start(Main.getmStage());

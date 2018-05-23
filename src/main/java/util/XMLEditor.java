@@ -1,12 +1,17 @@
 package util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import model.Library;
+import model.Song;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.AudioHeader;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import player.OdysseyPlayer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,37 +26,34 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
-
-import org.jaudiotagger.audio.AudioFile;
-import org.jaudiotagger.audio.AudioFileIO;
-import org.jaudiotagger.audio.AudioHeader;
-import org.jaudiotagger.tag.FieldKey;
-import org.jaudiotagger.tag.Tag;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import player.OdysseyPlayer;
-import model.Library;
-import model.Song;
+import java.io.File;
+import java.io.FileInputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class XMLEditor {
 
     private static String musicDirectory;
 
     // Initializes array lists to store the file names of the songs in the xml file.
-    // This array lists will be checked to determine if a song has been added or deleted from the music directory.
+    // This array lists will be checked to determine if a song has been added or deleted from the
+    // music directory.
     private static ArrayList<String> xmlSongsFileNames = new ArrayList<>();
     // Stores the file paths of the xml songs.
-    // This is important if a song has to be removed from the xml file as it is used to find the node to remove.
+    // This is important if a song has to be removed from the xml file as it is used to find the node
+    // to remove.
     private static ArrayList<String> xmlSongsFilePaths = new ArrayList<>();
 
     // Initializes array lists to store the filenames of the songs in the music directory.
-    // This array lists will be checked to determine if a song has been added or deleted from the music directory.
+    // This array lists will be checked to determine if a song has been added or deleted from the
+    // music directory.
     private static ArrayList<String> musicDirFileNames = new ArrayList<>();
     // Stores files in the music directory.
-    // This is important if a song has to be added to the xml file and it is used to find the file to add.
+    // This is important if a song has to be added to the xml file and it is used to find the file to
+    // add.
     private static ArrayList<File> musicDirFiles = new ArrayList<>();
 
     // Initializes array list with song files of songs to be added to library.xml
@@ -65,16 +67,16 @@ public class XMLEditor {
     // Initializes booleans used to determine how the library.xml file needs to be edited.
     private static boolean addSongs;
     private static boolean deleteSongs;
-
-    public static ArrayList<Song> getNewSongs() {
+    
+    public static ArrayList<Song> getNewSongs () {
         return songsToAdd;
     }
-
-    public static void setMusicDirectory(Path musicDirectoryPath) {
+    
+    public static void setMusicDirectory (Path musicDirectoryPath) {
         musicDirectory = musicDirectoryPath.toString();
     }
-
-    public static void addDeleteChecker() {
+    
+    public static void addDeleteChecker () {
         // Finds the file name of the songs in the library xml file and
         // stores them in the xmlSongsFileNames array list.
         xmlSongsFilePathFinder();
@@ -90,7 +92,7 @@ public class XMLEditor {
         for (String songFileName : musicDirFileNames) {
             // If the song file name is not in the xmlSongsFilenames,
             // then it was added to the music directory and needs to be added to the xml file.
-            if (!xmlSongsFileNames.contains(songFileName)) {
+            if (! xmlSongsFileNames.contains(songFileName)) {
                 // Adds the song file that needs to be added to the array list in XMLEditor.
                 songFilesToAdd.add(musicDirFiles.get(i));
                 addSongs = true;
@@ -106,7 +108,7 @@ public class XMLEditor {
         for (String songFileName : xmlSongsFileNames) {
             // If the songFileName is not in the musicDirFileNames,
             // then it was deleted from the music directory and needs to be deleted from the xml file.
-            if (!musicDirFileNames.contains(songFileName)) {
+            if (! musicDirFileNames.contains(songFileName)) {
                 // Adds the songs that needs to be deleted to the array list in XMLEditor.
                 songPathsToDelete.add(xmlSongsFilePaths.get(j));
                 deleteSongs = true;
@@ -125,10 +127,9 @@ public class XMLEditor {
             // Deletes song from library xml file.
             deleteSongFromXML();
         }
-
     }
-
-    private static void xmlSongsFilePathFinder() {
+    
+    private static void xmlSongsFilePathFinder () {
         try {
             // Creates reader for xml file.
             XMLInputFactory factory = XMLInputFactory.newInstance();
@@ -151,8 +152,9 @@ public class XMLEditor {
                     // Retrieves the song location and adds it to the corresponding array list.
                     songLocation = reader.getText();
                     xmlSongsFilePaths.add(songLocation);
-
-                    // Retrieves the file name from the file path and adds it to the xmlSongsFileNames array list.
+    
+                    // Retrieves the file name from the file path and adds it to the xmlSongsFileNames array
+                    // list.
                     int i = songLocation.lastIndexOf("\\");
                     String songFileName = songLocation.substring(i + 1, songLocation.length());
                     xmlSongsFileNames.add(songFileName);
@@ -164,8 +166,8 @@ public class XMLEditor {
             e.printStackTrace();
         }
     }
-
-    private static void musicDirFileFinder(File musicDirectoryFile) {
+    
+    private static void musicDirFileFinder (File musicDirectoryFile) {
         // Lists all the files in the music directory and stores them in an array.
         File[] files = musicDirectoryFile.listFiles();
 
@@ -182,8 +184,8 @@ public class XMLEditor {
             }
         }
     }
-
-    private static void addSongToXML() {
+    
+    private static void addSongToXML () {
         // Initializes the array list with song objects to add to the xml file.
         createNewSongObject();
 
@@ -269,7 +271,6 @@ public class XMLEditor {
             // Updates the lastId in OdysseyPlayer.
             OdysseyPlayer.setLastIdAssigned(newLastIdAssigned);
 
-
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -283,14 +284,15 @@ public class XMLEditor {
             ex.printStackTrace();
         }
     }
-
-    private static void createNewSongObject() {
+    
+    private static void createNewSongObject () {
 
         // Searches the xml file to get the last id assigned.
         int lastIdAssigned = xmlLastIdAssignedFinder();
 
         // Loops through each song file that needs to be added and creates a song object for each.
-        // Each song object is added to an array list and returned so that they can be added to the xml file.
+        // Each song object is added to an array list and returned so that they can be added to the xml
+        // file.
         for (File songFile : songFilesToAdd) {
             try {
                 AudioFile audioFile = AudioFileIO.read(songFile);
@@ -298,29 +300,46 @@ public class XMLEditor {
                 AudioHeader header = audioFile.getAudioHeader();
 
                 // Gets song properties.
-                int id = ++lastIdAssigned;
+                int id = ++ lastIdAssigned;
                 String title = tag.getFirst(FieldKey.TITLE);
                 // Gets the artist, empty string assigned if song has no artist.
                 String artistTitle = tag.getFirst(FieldKey.ALBUM_ARTIST);
                 if (artistTitle == null || artistTitle.equals("") || artistTitle.equals("null")) {
                     artistTitle = tag.getFirst(FieldKey.ARTIST);
                 }
-                String artist = (artistTitle == null || artistTitle.equals("") || artistTitle.equals("null")) ? "" : artistTitle;
+                String artist =
+                    (artistTitle == null || artistTitle.equals("") || artistTitle.equals("null"))
+                        ? ""
+                        : artistTitle;
                 String album = tag.getFirst(FieldKey.ALBUM);
                 // Gets the track length (as an int), converts to long and saves it as a duration object.
                 Duration length = Duration.ofSeconds((long) header.getTrackLength());
                 // Gets the track number and converts to an int. Assigns 0 if a track number is null.
                 String track = tag.getFirst(FieldKey.TRACK);
-                int trackNumber = Integer.parseInt((track == null || track.equals("") || track.equals("null")) ? "0" : track);
+                int trackNumber =
+                    Integer.parseInt(
+                        (track == null || track.equals("") || track.equals("null")) ? "0" : track);
                 // Gets disc number and converts to int. Assigns 0 if the disc number is null.
                 String disc = tag.getFirst(FieldKey.DISC_NO);
-                int discNumber = Integer.parseInt((disc == null || disc.equals("") || disc.equals("null")) ? "0" : disc);
+                int discNumber =
+                    Integer.parseInt((disc == null || disc.equals("") || disc.equals("null")) ? "0" : disc);
                 int playCount = 0;
                 LocalDateTime playDate = LocalDateTime.now();
                 String location = Paths.get(songFile.getAbsolutePath()).toString();
 
                 // Creates a new song object for the added song and adds it to the newSongs array list.
-                Song newSong = new Song(id, title, artist, album, length, trackNumber, discNumber, playCount, playDate, location);
+                Song newSong =
+                    new Song(
+                        id,
+                        title,
+                        artist,
+                        album,
+                        length,
+                        trackNumber,
+                        discNumber,
+                        playCount,
+                        playDate,
+                        location);
 
                 // Adds the new song to the songsToAdd array list.
                 songsToAdd.add(newSong);
@@ -331,8 +350,8 @@ public class XMLEditor {
         // Updates the lastIdAssigned in OdysseyPlayer to account for the new songs.
         OdysseyPlayer.setLastIdAssigned(lastIdAssigned);
     }
-
-    private static int xmlLastIdAssignedFinder() {
+    
+    private static int xmlLastIdAssignedFinder () {
         try {
             // Creates reader for xml file.
             XMLInputFactory factory = XMLInputFactory.newInstance();
@@ -365,8 +384,8 @@ public class XMLEditor {
             return 0;
         }
     }
-
-    private static void deleteSongFromXML() {
+    
+    private static void deleteSongFromXML () {
         // Gets the currentXMLFileNum.
         int currentXMLFileNum = OdysseyPlayer.getXMLFileNum();
 
@@ -382,7 +401,8 @@ public class XMLEditor {
             int xmlLastIdAssigned = xmlLastIdAssignedFinder();
 
             // Finds the song node corresponding to the last assigned id.
-            XPathExpression expr = xpath.compile("/library/songs/song[id/text() = \"" + xmlLastIdAssigned + "\"]");
+            XPathExpression expr =
+                xpath.compile("/library/songs/song[id/text() = \"" + xmlLastIdAssigned + "\"]");
             Node lastSongNode = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
 
             // Loops through the songPathsToDelete array list and removes the nodes from the xml file.
@@ -434,8 +454,8 @@ public class XMLEditor {
             ex.printStackTrace();
         }
     }
-
-    private static int xmlNewLastIdAssignedFinder() {
+    
+    private static int xmlNewLastIdAssignedFinder () {
         try {
             // Creates reader for xml file.
             XMLInputFactory factory = XMLInputFactory.newInstance();
@@ -462,7 +482,7 @@ public class XMLEditor {
                     location = reader.getText();
                     // If the current location is does not correspond to one of the files to be deleted,
                     // then the current id is assigned as the newLastIdAssigned.
-                    if (!songPathsToDelete.contains(location)) {
+                    if (! songPathsToDelete.contains(location)) {
                         xmlNewLastIdAssigned = currentSongId;
                     }
                 } else if (reader.isEndElement() && reader.getName().getLocalPart().equals("songs")) {
@@ -479,8 +499,8 @@ public class XMLEditor {
             return 0;
         }
     }
-
-    public static void deleteSongFromPlaylist(int selectedPlayListId, int selectedSongId) {
+    
+    public static void deleteSongFromPlaylist (int selectedPlayListId, int selectedSongId) {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -488,9 +508,15 @@ public class XMLEditor {
 
             XPathFactory xPathfactory = XPathFactory.newInstance();
             XPath xpath = xPathfactory.newXPath();
-
-            // Finds the node with the song id for the selected song in the selected play list for removal.
-            String query = "/library/playlists/playlist[@id='" + selectedPlayListId + "']/songId[text() = '" + selectedSongId + "']";
+    
+            // Finds the node with the song id for the selected song in the selected play list for
+            // removal.
+            String query =
+                "/library/playlists/playlist[@id='"
+                    + selectedPlayListId
+                    + "']/songId[text() = '"
+                    + selectedSongId
+                    + "']";
             XPathExpression expr = xpath.compile(query);
             Node deleteSongNode = (Node) expr.evaluate(doc, XPathConstants.NODE);
 
@@ -510,8 +536,8 @@ public class XMLEditor {
             ex.printStackTrace();
         }
     }
-
-    public static void deletePlaylistFromXML(int selectedPlayListId) {
+    
+    public static void deletePlaylistFromXML (int selectedPlayListId) {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
