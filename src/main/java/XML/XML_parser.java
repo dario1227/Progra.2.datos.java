@@ -69,10 +69,12 @@ public class XML_parser {
   }
 
   /**
-   * @param method, hay 4 metodos, Autor,Album,Nombre y Letra
+   * @param method, hay 4 metodos, Autor,Album,Nombre ,Letra y Nada
    * @param page    inicia desde el numero 1 no de 0
+   * @param  orden true o false en forma de string obvio
+   * @param parametro es el nombre del archivo/album etc
    */
-  public static ArrayList<Canciones> get_songs(String method, String page, String parametro) {
+  public static ArrayList<Canciones> get_songs(String method, String page, String parametro,String orden) {
     try {
       DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -84,6 +86,7 @@ public class XML_parser {
       root.setAttributeNode(atributo);
       root.setAttribute("Method", method);
       root.setAttribute("Busqueda", parametro);
+      root.setAttribute("Orden",orden);
       root.setAttribute("Page", page);
       doc.appendChild(root);
       DOMSource domSource = new DOMSource(doc);
@@ -114,6 +117,9 @@ public class XML_parser {
         int x = 0;
 
         System.out.println(nodos.getLength());
+        if(nodos.getLength()==0){
+          return null;
+        }
         ArrayList<Canciones> lista = new ArrayList<Canciones>();
         while (x < nodos.getLength()) {
           System.out.print(
