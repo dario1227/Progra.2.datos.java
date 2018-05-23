@@ -67,7 +67,7 @@ public class XML_parser {
       return false;
     }
   }
-
+//
   /**
    * @param method, hay 4 metodos, Autor,Album,Nombre ,Letra y Nada
    * @param page    inicia desde el numero 1 no de 0
