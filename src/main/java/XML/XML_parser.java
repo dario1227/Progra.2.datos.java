@@ -68,6 +68,26 @@ public class XML_parser {
     }
   }
 ////
+  public static boolean sendFriendRequest(String enviador,String destinatario){
+    try{
+    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+    Document doc = docBuilder.newDocument();
+
+    Element root = doc.createElement("Root");
+    Attr atributo = doc.createAttribute("Operation");
+    atributo.setValue("Log");
+    root.setAttributeNode(atributo);
+    Element user = doc.createElement("User");
+    user.setAttribute("Enviador", enviador);
+    user.setAttribute("Destinatario", destinatario);
+    root.appendChild(user);
+    return true;
+    }
+    catch(Exception e){
+      return false;
+    }
+  }
   /**
    * @param method, hay 4 metodos, Autor,Album,Nombre ,Letra y Nada
    * @param page    inicia desde el numero 1 no de 0
