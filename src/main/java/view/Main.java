@@ -27,14 +27,20 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        //ClientServer.Server = new ClientServer();
+        ClientServer.Server = new ClientServer();
         //XML_parser.createAccount("alaba", "0", "666", "GG");
-        //XML_parser.getXML_Archive(
-//                "/home/germago/Music/1 song/04 Addicted To You.mp3",
-//                "04 Addicted To You.mp3",
-//                "GG",
-//                "True",
-//                "Avicii"
+//        XML_parser.getXML_Archive(
+//                "/home/kenneth/Desktop/Tool - H. w Lyrics (HD).mp3",
+//                "Tool - H. w Lyrics (HD).mp3",
+//                "What's coming through is a lie\n" +
+//                        "What's holding up is a mirror\n" +
+//                        "But what's singing songs is a snake\n" +
+//                        "Looking to turn this piss to wine\n" +
+//                        "\n" +
+//                        "They're both totally void of hate\n" +
+//                        "But killing me just the same",
+//                "Cosa",
+//                "Tool"
 //        );
 //        XML_parser.loginRequest("kenneth", "darksouls");
 //         XML_parser.createAccount("Manolo","23","23","juano");
@@ -45,7 +51,7 @@ public class Main extends Application {
         ///"Mama",
         ///"Mamas and the papas");
         ///XML_parser.get_songs("Nombre", "1", "MEME");
-        //XML_parser.chunk("Caravan Palace - Lone Digger-[AudioTrimmer.com].mp3", "1");
+     //   XML_parser.chunk("Tool - H. w Lyrics (HD).mp3", "1");
         //System.out.print("TERMINO ALELUYA");
         //        System.out.print(cosa.charAt(cosa.length()));
         //        byte bytes[] = Base64.getDecoder().decode(cosa);

@@ -1,13 +1,19 @@
 package Structures;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Genetic_algorithm {
     String cancion;
-    ListaSimple<String> lista;
-    ListaSimple<Palabra> analizadas;
-    Genetic_algorithm(String cancion_to){
+    ArrayList<String> lista;
+    ArrayList<Palabra> analizadas;
+    ArrayList<Palabra> usadas;
+
+    public Genetic_algorithm(String cancion_to){
         cancion =cancion_to;
-        lista = new ListaSimple<>();
-        analizadas = new ListaSimple<>();
+        lista = new ArrayList<String>();
+        analizadas = new ArrayList<>();
+        usadas = new ArrayList<>();
     }
  public    void analize_cancion(){
         int largo =cancion.length();
@@ -16,7 +22,8 @@ public class Genetic_algorithm {
         while (index<largo){
             while(cancion.charAt(index)==' '){
                 if(index!=0&&!to_append.toString().isEmpty()){
-                    analizadas.append(new Palabra(to_append.toString()));
+                    System.out.print(to_append.toString());
+                    analizadas.add(new Palabra(to_append.toString()));
                     to_append=new StringBuilder();
                 }
                 index++;
@@ -28,41 +35,52 @@ public class Genetic_algorithm {
                 to_append.append(cancion.charAt(index));
                 index++;
                 if(index==largo){
-                    analizadas.append(new Palabra(to_append.toString()));
+                    analizadas.add(new Palabra(to_append.toString()));
                     return;
                 }
             }
         }
         return;
     }
+    public  Palabra random(){
+        Random rand = new Random();
+        int randomness = rand.nextInt(analizadas.size());
+        Palabra sacada = analizadas.get(randomness);
+        usadas.add(sacada);
+        analizadas.remove(sacada);
+        return sacada;
+    }
  public    Palabra palabra_mas_coincidencia(){
-        int largo = analizadas.largo;
+        int largo = analizadas.size();
         int index = 0 ;
-        Palabra mayor=analizadas.getvalue(0);
-        while (index<analizadas.largo){
-            if(analizadas.getvalue(index).parecido>mayor.parecido){
-                mayor=analizadas.getvalue(index);
+        Palabra mayor=analizadas.get(0);
+        while (index<analizadas.size()){
+            if(analizadas.get(index).parecido>mayor.parecido){
+                mayor=analizadas.get(index);
             }
             index++;
         }
+        usadas.add(mayor);
+        analizadas.remove(mayor);
         return  mayor;
     }
     public void reordenate(String palabra,ListaSimple<Integer> indices){
-        ListaSimple<Palabra> lista = new ListaSimple<>();
+        System.out.print(palabra);
+        ArrayList<Palabra> lista = new ArrayList<>();
         int index = 0;
-        while (index<analizadas.largo){
+        while (index<analizadas.size()){
             int index2 = 0;
-            Palabra palabra_analize = analizadas.getvalue(index);
+            Palabra palabra_analize = analizadas.get(index);
             while (index2<indices.largo){
-                if(index2>=palabra.length()||index2>=palabra_analize.palabra.length()){
-                    break;
+                if(indices.getvalue(index2)>=palabra.length()||indices.getvalue(index2)>=palabra_analize.palabra.length()){
+                    System.out.print("Me exedi");
                 }
-                if(palabra_analize.palabra.charAt(indices.getvalue(index2))==palabra.charAt(indices.getvalue(index2))){
+                else if (palabra_analize.palabra.charAt(indices.getvalue(index2))==palabra.charAt(indices.getvalue(index2))){
                     palabra_analize.parecido++;
                 }
                 index2++;
             }
-            lista.append(palabra_analize);
+            lista.add(palabra_analize);
             index++;
         }
         analizadas=lista;
