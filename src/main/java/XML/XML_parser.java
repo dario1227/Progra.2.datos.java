@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 
 public class XML_parser {
+  static int size_actual;
   public static boolean loginRequest(String username, String password) {
     try {
       DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -258,6 +259,57 @@ public class XML_parser {
     }
   }
 
+  /**
+   *
+   * @param filename NOMBRE CON MP3 y
+   * @param chunk minimo 0 maximo 49
+   * @return
+   */
+  public static byte[] get_chunk_bytes(String filename, String chunk) {
+    try {
+      DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+      Document doc = docBuilder.newDocument();
+      Element root = doc.createElement("Root");
+      Attr atributo = doc.createAttribute("Operation");
+      atributo.setValue("Chunk");
+      root.setAttributeNode(atributo);
+      root.setAttribute("Filename", filename);
+      root.setAttribute("Chunk", chunk);
+      doc.appendChild(root);
+      DOMSource domSource = new DOMSource(doc);
+      Transformer transformer = TransformerFactory.newInstance().newTransformer();
+      StringWriter sw = new StringWriter();
+      StreamResult sr = new StreamResult(sw);
+      transformer.transform(domSource, sr);
+      System.out.println(sw.toString());
+      ClientServer.Server.send(sw.toString());
+      String result = ClientServer.Server.receive();
+      InputSource source = new InputSource();
+      source.setCharacterStream(new StringReader(result));
+      doc = docBuilder.parse(source);
+      domSource = new DOMSource(doc);
+      transformer = TransformerFactory.newInstance().newTransformer();
+      sw = new StringWriter();
+      sr = new StreamResult(sw);
+      transformer.transform(domSource, sr);
+      System.out.println(sw.toString());
+      doc.getDocumentElement().normalize();
+      NodeList nList = doc.getElementsByTagName("Root");
+      System.out.print(nList.getLength());
+      Element rootnode = (Element) nList.item(0);
+      String cosa = rootnode.getAttribute("Data");
+      size_actual = Integer.getInteger(rootnode.getAttribute("Filesize"));
+      byte[] decodedBytes = Base64.getDecoder().decode(cosa);
+      FileOutputStream outputStream = new FileOutputStream("CANCION.mp3");
+      outputStream.write(decodedBytes);
+      outputStream.close();
+      System.out.print("LLEGO AL FINAL");
+      return decodedBytes;
+    } catch (Exception e) {
+return null;
+    }
+  }
   public static void prueba() {
     try {
       DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
