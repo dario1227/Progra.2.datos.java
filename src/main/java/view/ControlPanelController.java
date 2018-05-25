@@ -33,16 +33,16 @@ public class ControlPanelController implements Initializable {
     private ContextMenu contextMenu;
     
     private Animation showMenuAnimation =
-        new Transition() {
-            {
-                setCycleDuration(Duration.millis(250));
-                setInterpolator(Interpolator.EASE_BOTH);
-            }
+            new Transition() {
+                {
+                    setCycleDuration(Duration.millis(250));
+                    setInterpolator(Interpolator.EASE_BOTH);
+                }
             
-            protected void interpolate (double frac) {
-                contextMenu.setOpacity(frac);
-            }
-        };
+                protected void interpolate (double frac) {
+                    contextMenu.setOpacity(frac);
+                }
+            };
     
     @Override
     public void initialize (URL location, ResourceBundle resources) {
@@ -72,7 +72,7 @@ public class ControlPanelController implements Initializable {
         for (Playlist playlist : playlists) {
             String title = playlist.getTitle();
             if (! (title.equals("Most Played") || title.equals("Recently Played"))
-                    && ! playlist.getSongs().contains(selectedSong)) {
+                        && ! playlist.getSongs().contains(selectedSong)) {
                 playlistTitles.add(title);
             }
         }
@@ -82,9 +82,9 @@ public class ControlPanelController implements Initializable {
         MenuItem playing = new MenuItem("Playing");
         playing.setStyle("-fx-text-fill: black");
         playing.setOnAction(
-            e1 -> {
-                OdysseyPlayer.addSongToNowPlayingList(selectedSong);
-            });
+                e1 -> {
+                    OdysseyPlayer.addSongToNowPlayingList(selectedSong);
+                });
         
         contextMenu.getItems().add(playing);
         
@@ -92,9 +92,9 @@ public class ControlPanelController implements Initializable {
             SeparatorMenuItem item = new SeparatorMenuItem();
             item.getContent()
                 .setStyle(
-                    "-fx-border-width: 1 0 0 0; "
-                        + "-fx-border-color: #c2c2c2; "
-                        + "-fx-border-insets: 5 5 5 5;");
+                        "-fx-border-width: 1 0 0 0; "
+                                + "-fx-border-color: #c2c2c2; "
+                                + "-fx-border-insets: 5 5 5 5;");
             contextMenu.getItems().add(item);
         }
         
@@ -104,18 +104,18 @@ public class ControlPanelController implements Initializable {
             item.setStyle("-fx-text-fill: black");
     
             item.setOnAction(
-                e2 -> {
-                    // Finds the desired playlist and adds the currently selected song to it.
-                    String targetPlaylistTitle = item.getText();
-            
-                    // Finds the correct playlist and adds the song to it.
-                    playlists.forEach(
-                        playlist -> {
-                            if (playlist.getTitle().equals(targetPlaylistTitle)) {
-                                playlist.addSong(selectedSong);
-                            }
-                        });
-                });
+                    e2 -> {
+                        // Finds the desired playlist and adds the currently selected song to it.
+                        String targetPlaylistTitle = item.getText();
+                
+                        // Finds the correct playlist and adds the song to it.
+                        playlists.forEach(
+                                playlist -> {
+                                    if (playlist.getTitle().equals(targetPlaylistTitle)) {
+                                        playlist.addSong(selectedSong);
+                                    }
+                                });
+                    });
             
             contextMenu.getItems().add(item);
         }

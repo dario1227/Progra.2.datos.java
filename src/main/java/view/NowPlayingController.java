@@ -52,7 +52,7 @@ public class NowPlayingController implements Initializable, SubView {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
         ObservableList<Song> songs =
-            FXCollections.observableArrayList(OdysseyPlayer.getNowPlayingList());
+                FXCollections.observableArrayList(OdysseyPlayer.getNowPlayingList());
         
         titleColumn.prefWidthProperty().bind(tableView.widthProperty().subtract(50).multiply(0.26));
         artistColumn.prefWidthProperty().bind(tableView.widthProperty().subtract(50).multiply(0.26));
@@ -75,130 +75,130 @@ public class NowPlayingController implements Initializable, SubView {
         playsColumn.setCellValueFactory(new PropertyValueFactory<>("playCount"));
         
         tableView.addEventFilter(
-            MouseEvent.MOUSE_PRESSED,
-            event -> {
-                tableView.requestFocus();
-                event.consume();
-            });
+                MouseEvent.MOUSE_PRESSED,
+                event -> {
+                    tableView.requestFocus();
+                    event.consume();
+                });
         
         tableView.setItems(songs);
         
         tableView.setRowFactory(
-            x -> {
-                TableRow<Song> row = new TableRow<>();
-                
-                PseudoClass playing = PseudoClass.getPseudoClass("playing");
-                
-                ChangeListener<Boolean> changeListener =
-                    (obs, oldValue, newValue) -> row.pseudoClassStateChanged(playing, newValue);
-                
-                row.itemProperty()
-                   .addListener(
-                       (obs, previousSong, currentSong) -> {
-                           if (previousSong != null) {
-                               previousSong.playingProperty().removeListener(changeListener);
-                           }
-                           if (currentSong != null) {
-                               currentSong.playingProperty().addListener(changeListener);
-                               row.pseudoClassStateChanged(playing, currentSong.getPlaying());
-                           } else {
-                               row.pseudoClassStateChanged(playing, false);
-                           }
-                       });
-                
-                row.setOnMouseClicked(
-                    event -> {
-                        TableViewSelectionModel<Song> sm = tableView.getSelectionModel();
-                        if (event.getClickCount() == 2 && ! row.isEmpty()) {
-                            play();
-                        } else if (event.isShiftDown()) {
-                            ArrayList<Integer> indices = new ArrayList<>(sm.getSelectedIndices());
-                            if (indices.size() < 1) {
-                                if (indices.contains(row.getIndex())) {
-                                    sm.clearSelection(row.getIndex());
-                                } else {
-                                    sm.select(row.getItem());
-                                }
-                            } else {
-                                sm.clearSelection();
-                                indices.sort((first, second) -> first.compareTo(second));
-                                int max = indices.get(indices.size() - 1);
-                                int min = indices.get(0);
-                                if (min < row.getIndex()) {
-                                    for (int i = min; i <= row.getIndex(); i++) {
-                                        sm.select(i);
+                x -> {
+                    TableRow<Song> row = new TableRow<>();
+            
+                    PseudoClass playing = PseudoClass.getPseudoClass("playing");
+            
+                    ChangeListener<Boolean> changeListener =
+                            (obs, oldValue, newValue) -> row.pseudoClassStateChanged(playing, newValue);
+            
+                    row.itemProperty()
+                       .addListener(
+                               (obs, previousSong, currentSong) -> {
+                                   if (previousSong != null) {
+                                       previousSong.playingProperty().removeListener(changeListener);
+                                   }
+                                   if (currentSong != null) {
+                                       currentSong.playingProperty().addListener(changeListener);
+                                       row.pseudoClassStateChanged(playing, currentSong.getPlaying());
+                                   } else {
+                                       row.pseudoClassStateChanged(playing, false);
+                                   }
+                               });
+            
+                    row.setOnMouseClicked(
+                            event -> {
+                                TableViewSelectionModel<Song> sm = tableView.getSelectionModel();
+                                if (event.getClickCount() == 2 && ! row.isEmpty()) {
+                                    play();
+                                } else if (event.isShiftDown()) {
+                                    ArrayList<Integer> indices = new ArrayList<>(sm.getSelectedIndices());
+                                    if (indices.size() < 1) {
+                                        if (indices.contains(row.getIndex())) {
+                                            sm.clearSelection(row.getIndex());
+                                        } else {
+                                            sm.select(row.getItem());
+                                        }
+                                    } else {
+                                        sm.clearSelection();
+                                        indices.sort((first, second) -> first.compareTo(second));
+                                        int max = indices.get(indices.size() - 1);
+                                        int min = indices.get(0);
+                                        if (min < row.getIndex()) {
+                                            for (int i = min; i <= row.getIndex(); i++) {
+                                                sm.select(i);
+                                            }
+                                        } else {
+                                            for (int i = row.getIndex(); i <= max; i++) {
+                                                sm.select(i);
+                                            }
+                                        }
                                     }
-                                } else {
-                                    for (int i = row.getIndex(); i <= max; i++) {
-                                        sm.select(i);
-                                    }
-                                }
-                            }
                             
-                        } else if (event.isControlDown()) {
-                            if (sm.getSelectedIndices().contains(row.getIndex())) {
-                                sm.clearSelection(row.getIndex());
-                            } else {
-                                sm.select(row.getItem());
-                            }
-                        } else {
-                            if (sm.getSelectedIndices().size() > 1) {
-                                sm.clearSelection();
-                                sm.select(row.getItem());
-                            } else if (sm.getSelectedIndices().contains(row.getIndex())) {
-                                sm.clearSelection();
-                            } else {
-                                sm.clearSelection();
-                                sm.select(row.getItem());
-                            }
-                        }
-                    });
-                
-                row.setOnDragDetected(
-                    event -> {
-                        Dragboard db = row.startDragAndDrop(TransferMode.ANY);
-                        ClipboardContent content = new ClipboardContent();
-                        if (tableView.getSelectionModel().getSelectedIndices().size() > 1) {
-                            content.putString("List");
-                            db.setContent(content);
-                            OdysseyPlayer.setDraggedItem(tableView.getSelectionModel().getSelectedItems());
-                        } else {
-                            content.putString("Song");
-                            db.setContent(content);
-                            OdysseyPlayer.setDraggedItem(row.getItem());
-                        }
-                        ImageView image = new ImageView(row.snapshot(null, null));
-                        Rectangle2D rectangle = new Rectangle2D(0, 0, 250, 50);
-                        image.setViewport(rectangle);
-                        db.setDragView(image.snapshot(null, null), 125, 25);
-                        event.consume();
-                    });
-                
-                return row;
-            });
+                                } else if (event.isControlDown()) {
+                                    if (sm.getSelectedIndices().contains(row.getIndex())) {
+                                        sm.clearSelection(row.getIndex());
+                                    } else {
+                                        sm.select(row.getItem());
+                                    }
+                                } else {
+                                    if (sm.getSelectedIndices().size() > 1) {
+                                        sm.clearSelection();
+                                        sm.select(row.getItem());
+                                    } else if (sm.getSelectedIndices().contains(row.getIndex())) {
+                                        sm.clearSelection();
+                                    } else {
+                                        sm.clearSelection();
+                                        sm.select(row.getItem());
+                                    }
+                                }
+                            });
+            
+                    row.setOnDragDetected(
+                            event -> {
+                                Dragboard db = row.startDragAndDrop(TransferMode.ANY);
+                                ClipboardContent content = new ClipboardContent();
+                                if (tableView.getSelectionModel().getSelectedIndices().size() > 1) {
+                                    content.putString("List");
+                                    db.setContent(content);
+                                    OdysseyPlayer.setDraggedItem(tableView.getSelectionModel().getSelectedItems());
+                                } else {
+                                    content.putString("Song");
+                                    db.setContent(content);
+                                    OdysseyPlayer.setDraggedItem(row.getItem());
+                                }
+                                ImageView image = new ImageView(row.snapshot(null, null));
+                                Rectangle2D rectangle = new Rectangle2D(0, 0, 250, 50);
+                                image.setViewport(rectangle);
+                                db.setDragView(image.snapshot(null, null), 125, 25);
+                                event.consume();
+                            });
+            
+                    return row;
+                });
         
         tableView
-            .getSelectionModel()
-            .selectedItemProperty()
-            .addListener(
-                (obs, oldSelection, newSelection) -> {
-                    if (oldSelection != null) {
-                        oldSelection.setSelected(false);
-                    }
-                    if (newSelection != null
-                            && tableView.getSelectionModel().getSelectedIndices().size() == 1) {
-                        newSelection.setSelected(true);
-                        selectedSong = newSelection;
-                    }
-                });
+                .getSelectionModel()
+                .selectedItemProperty()
+                .addListener(
+                        (obs, oldSelection, newSelection) -> {
+                            if (oldSelection != null) {
+                                oldSelection.setSelected(false);
+                            }
+                            if (newSelection != null
+                                        && tableView.getSelectionModel().getSelectedIndices().size() == 1) {
+                                newSelection.setSelected(true);
+                                selectedSong = newSelection;
+                            }
+                        });
         
         // Plays selected song when enter key is pressed.
         tableView.setOnKeyPressed(
-            event -> {
-                if (event.getCode().equals(KeyCode.ENTER)) {
-                    play();
-                }
-            });
+                event -> {
+                    if (event.getCode().equals(KeyCode.ENTER)) {
+                        play();
+                    }
+                });
     }
     
     @Override

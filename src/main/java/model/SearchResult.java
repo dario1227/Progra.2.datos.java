@@ -9,7 +9,7 @@ public class SearchResult {
     private List<Artist> artistResults;
     
     public SearchResult (
-        List<Song> songResults, List<Album> albumResults, List<Artist> artistResults) {
+            List<Song> songResults, List<Album> albumResults, List<Artist> artistResults) {
         this.songResults = songResults;
         this.albumResults = albumResults;
         this.artistResults = artistResults;

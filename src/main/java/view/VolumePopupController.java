@@ -33,24 +33,24 @@ public class VolumePopupController implements Initializable {
             CustomSliderSkin sliderSkin = new CustomSliderSkin(volumeSlider);
             volumeSlider.setSkin(sliderSkin);
             frontVolumeTrack
-                .prefWidthProperty()
-                .bind(
-                    volumeSlider
-                        .widthProperty()
-                        .subtract(30)
-                        .multiply(volumeSlider.valueProperty().divide(volumeSlider.maxProperty())));
+                    .prefWidthProperty()
+                    .bind(
+                            volumeSlider
+                                    .widthProperty()
+                                    .subtract(30)
+                                    .multiply(volumeSlider.valueProperty().divide(volumeSlider.maxProperty())));
             volumeSlider
-                .valueProperty()
-                .addListener(
-                    (x, y, z) -> {
-                        volumeLabel.setText(Integer.toString(z.intValue()));
-                    });
+                    .valueProperty()
+                    .addListener(
+                            (x, y, z) -> {
+                                volumeLabel.setText(Integer.toString(z.intValue()));
+                            });
             volumeSlider.setOnMousePressed(
-                x -> {
-                    if (mutedButton.isVisible()) {
-                        muteClick();
-                    }
-                });
+                    x -> {
+                        if (mutedButton.isVisible()) {
+                            muteClick();
+                        }
+                    });
             
         } catch (Exception ex) {
     

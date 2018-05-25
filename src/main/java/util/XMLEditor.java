@@ -152,7 +152,7 @@ public class XMLEditor {
                     // Retrieves the song location and adds it to the corresponding array list.
                     songLocation = reader.getText();
                     xmlSongsFilePaths.add(songLocation);
-    
+
                     // Retrieves the file name from the file path and adds it to the xmlSongsFileNames array
                     // list.
                     int i = songLocation.lastIndexOf("\\");
@@ -308,38 +308,38 @@ public class XMLEditor {
                     artistTitle = tag.getFirst(FieldKey.ARTIST);
                 }
                 String artist =
-                    (artistTitle == null || artistTitle.equals("") || artistTitle.equals("null"))
-                        ? ""
-                        : artistTitle;
+                        (artistTitle == null || artistTitle.equals("") || artistTitle.equals("null"))
+                                ? ""
+                                : artistTitle;
                 String album = tag.getFirst(FieldKey.ALBUM);
                 // Gets the track length (as an int), converts to long and saves it as a duration object.
                 Duration length = Duration.ofSeconds((long) header.getTrackLength());
                 // Gets the track number and converts to an int. Assigns 0 if a track number is null.
                 String track = tag.getFirst(FieldKey.TRACK);
                 int trackNumber =
-                    Integer.parseInt(
-                        (track == null || track.equals("") || track.equals("null")) ? "0" : track);
+                        Integer.parseInt(
+                                (track == null || track.equals("") || track.equals("null")) ? "0" : track);
                 // Gets disc number and converts to int. Assigns 0 if the disc number is null.
                 String disc = tag.getFirst(FieldKey.DISC_NO);
                 int discNumber =
-                    Integer.parseInt((disc == null || disc.equals("") || disc.equals("null")) ? "0" : disc);
+                        Integer.parseInt((disc == null || disc.equals("") || disc.equals("null")) ? "0" : disc);
                 int playCount = 0;
                 LocalDateTime playDate = LocalDateTime.now();
                 String location = Paths.get(songFile.getAbsolutePath()).toString();
 
                 // Creates a new song object for the added song and adds it to the newSongs array list.
                 Song newSong =
-                    new Song(
-                        id,
-                        title,
-                        artist,
-                        album,
-                        length,
-                        trackNumber,
-                        discNumber,
-                        playCount,
-                        playDate,
-                        location);
+                        new Song(
+                                id,
+                                title,
+                                artist,
+                                album,
+                                length,
+                                trackNumber,
+                                discNumber,
+                                playCount,
+                                playDate,
+                                location);
 
                 // Adds the new song to the songsToAdd array list.
                 songsToAdd.add(newSong);
@@ -402,7 +402,7 @@ public class XMLEditor {
 
             // Finds the song node corresponding to the last assigned id.
             XPathExpression expr =
-                xpath.compile("/library/songs/song[id/text() = \"" + xmlLastIdAssigned + "\"]");
+                    xpath.compile("/library/songs/song[id/text() = \"" + xmlLastIdAssigned + "\"]");
             Node lastSongNode = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
 
             // Loops through the songPathsToDelete array list and removes the nodes from the xml file.
@@ -512,11 +512,11 @@ public class XMLEditor {
             // Finds the node with the song id for the selected song in the selected play list for
             // removal.
             String query =
-                "/library/playlists/playlist[@id='"
-                    + selectedPlayListId
-                    + "']/songId[text() = '"
-                    + selectedSongId
-                    + "']";
+                    "/library/playlists/playlist[@id='"
+                            + selectedPlayListId
+                            + "']/songId[text() = '"
+                            + selectedSongId
+                            + "']";
             XPathExpression expr = xpath.compile(query);
             Node deleteSongNode = (Node) expr.evaluate(doc, XPathConstants.NODE);
 

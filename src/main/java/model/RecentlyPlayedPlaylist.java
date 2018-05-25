@@ -18,11 +18,11 @@ public class RecentlyPlayedPlaylist extends Playlist {
 
         List<Song> songs = new ArrayList<>(Library.getSongs());
         songs =
-            songs
-                .stream()
-                .filter(x -> x.getPlayCount() > 0)
-                .sorted((x, y) -> y.getPlayDate().compareTo(x.getPlayDate()))
-                .collect(Collectors.toList());
+                songs
+                        .stream()
+                        .filter(x -> x.getPlayCount() > 0)
+                        .sorted((x, y) -> y.getPlayDate().compareTo(x.getPlayDate()))
+                        .collect(Collectors.toList());
 
         if (songs.size() > 100) {
             songs = songs.subList(0, 100);

@@ -77,10 +77,10 @@ public class Genetic_algorithm {
             Palabra palabra_analize = analizadas.get(index);
             while (index2 < indices.largo) {
                 if (indices.getvalue(index2) >= palabra.length()
-                        || indices.getvalue(index2) >= palabra_analize.palabra.length()) {
+                            || indices.getvalue(index2) >= palabra_analize.palabra.length()) {
                     System.out.print("Me exedi");
                 } else if (palabra_analize.palabra.charAt(indices.getvalue(index2))
-                               == palabra.charAt(indices.getvalue(index2))) {
+                                   == palabra.charAt(indices.getvalue(index2))) {
                     palabra_analize.parecido++;
                 }
                 index2++;

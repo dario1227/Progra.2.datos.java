@@ -29,8 +29,8 @@ public class Playlist {
     private String title;
     private ArrayList<Song> songs;
     private String placeholder =
-        "Add songs to this playlist by dragging items to the sidebar\n"
-            + "or by clicking the Add to Playlist button";
+            "Add songs to this playlist by dragging items to the sidebar\n"
+                    + "or by clicking the Add to Playlist button";
 
     /**
      * Constructor for the Playlist class. Creates a playlist object.
@@ -80,9 +80,9 @@ public class Playlist {
 
                 XPathFactory xPathfactory = XPathFactory.newInstance();
                 XPath xpath = xPathfactory.newXPath();
-    
+
                 XPathExpression expr =
-                    xpath.compile("/library/playlists/playlist[@id=\"" + this.id + "\"]");
+                        xpath.compile("/library/playlists/playlist[@id=\"" + this.id + "\"]");
                 Node playlist = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
 
                 Element songId = doc.createElement("songId");

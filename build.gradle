@@ -43,6 +43,10 @@ dependencies {
 
     compile 'net.jthink:jaudiotagger:2.2.6-PATHRIK'
 
+    compile 'org.dom4j:dom4j:2.1.0'
+
+    compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
+
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'
 }

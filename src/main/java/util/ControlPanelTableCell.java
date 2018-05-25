@@ -15,9 +15,9 @@ import view.PlaylistsController;
 public class ControlPanelTableCell<S, T> extends TableCell<S, T> {
     
     private ChangeListener<Boolean> listener =
-        (observable, oldValue, newValue) ->
-            ControlPanelTableCell.this.updateItem(
-                ControlPanelTableCell.this.getItem(), ControlPanelTableCell.this.isEmpty());
+            (observable, oldValue, newValue) ->
+                    ControlPanelTableCell.this.updateItem(
+                            ControlPanelTableCell.this.getItem(), ControlPanelTableCell.this.isEmpty());
     
     @Override
     protected void updateItem (T item, boolean empty) {

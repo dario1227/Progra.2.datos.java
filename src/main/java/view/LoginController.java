@@ -12,19 +12,19 @@ import javafx.stage.Stage;
 import player.OdysseyPlayer;
 
 public class LoginController {
-
+    
     @FXML
     private JFXPasswordField passwordField;
-
+    
     @FXML
     private JFXButton loginBtn;
-
+    
     @FXML
     private JFXTextField userField;
-
+    
     @FXML
     private JFXButton regBtn;
-
+    
     /**
      * Extrae texto que uno escribe en el user y la pone en password y al mismo tiempo desactiva el
      * boton de login. En el FXML esta para que cuando se de click al boton de login se corra este
@@ -42,7 +42,7 @@ public class LoginController {
             }
         }
     }
-
+    
     @FXML
     private void newRegister () {
         try {
@@ -56,7 +56,7 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-
+    
     // RUN THIS WHEN THE LOGIN IS CORRECT
     private void openPlayer () {
         OdysseyPlayer player = new OdysseyPlayer();

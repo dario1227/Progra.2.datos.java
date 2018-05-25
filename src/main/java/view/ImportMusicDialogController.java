@@ -8,6 +8,9 @@ import javafx.scene.control.ProgressBar;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.Library;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -71,10 +74,10 @@ public class ImportMusicDialogController {
         
         try {
             String parameters =
-                "?artist="
-                    + URLEncoder.encode(artistName, "UTF-8")
-                    + "&song="
-                    + URLEncoder.encode(songName, "UTF-8");
+                    "?artist="
+                            + URLEncoder.encode(artistName, "UTF-8")
+                            + "&song="
+                            + URLEncoder.encode(songName, "UTF-8");
             URL url = new URL(BASE_URL + parameters);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -89,15 +92,17 @@ public class ImportMusicDialogController {
                 content.append(new String(buf, 0, size));
             }
             in.close();
-            
-            extLyrics = content.toString();
+    
+            Document document = DocumentHelper.parseText(content.toString());
+            Element root = document.getRootElement();
+            extLyrics = root.elementIterator("Lyric").next().getText();
             
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
     
-    private void uploadServer (File file) {
+    public void uploadServer (File file) {
         
         try {
             AudioFile audioFile = AudioFileIO.read(file);
@@ -166,27 +171,27 @@ public class ImportMusicDialogController {
     
             // Creates a task that is used to import the music library.
             ImportMusicTask<Boolean> task =
-                new ImportMusicTask<Boolean>() {
-                    @Override
-                    protected Boolean call () {
-                        // Creates library.xml file from user music library.
-                        try {
-                            Library.importMusic(musicDirectory, this);
-                            return true;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            return false;
+                    new ImportMusicTask<Boolean>() {
+                        @Override
+                        protected Boolean call () {
+                            // Creates library.xml file from user music library.
+                            try {
+                                Library.importMusic(musicDirectory, this);
+                                return true;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                return false;
+                            }
                         }
-                    }
-                };
+                    };
             
             // When the task (music importing) ends, the dialog is closed.
             task.setOnSucceeded(
-                (x) -> {
-                    // Sets the music as imported successfully and closes the dialog.
-                    musicImported = true;
-                    dialogStage.close();
-                });
+                    (x) -> {
+                        // Sets the music as imported successfully and closes the dialog.
+                        musicImported = true;
+                        dialogStage.close();
+                    });
             
             task.updateProgress(0, 1);
     

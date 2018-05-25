@@ -102,15 +102,15 @@ public final class Album implements Comparable<Album> {
         try {
             XMLInputFactory factory = XMLInputFactory.newInstance();
             URL xmlData =
-                new URL(
-                    Resources.APIBASE
-                        + "method=album.getinfo"
-                        + "&artist="
-                        + URLEncoder.encode(this.artist, "UTF-8")
-                        + "&album="
-                        + URLEncoder.encode(this.title, "UTF-8")
-                        + "&api_key="
-                        + Resources.APIKEY);
+                    new URL(
+                            Resources.APIBASE
+                                    + "method=album.getinfo"
+                                    + "&artist="
+                                    + URLEncoder.encode(this.artist, "UTF-8")
+                                    + "&album="
+                                    + URLEncoder.encode(this.title, "UTF-8")
+                                    + "&api_key="
+                                    + Resources.APIKEY);
             
             XMLStreamReader reader = factory.createXMLStreamReader(xmlData.openStream(), "UTF-8");
     
@@ -119,18 +119,18 @@ public final class Album implements Comparable<Album> {
                 reader.next();
         
                 if (reader.isStartElement()
-                        && reader.getName().getLocalPart().equals("image")
-                        && reader.getAttributeValue(0).equals("extralarge")) {
-            
+                            && reader.getName().getLocalPart().equals("image")
+                            && reader.getAttributeValue(0).equals("extralarge")) {
+                    
                     reader.next();
             
                     if (reader.hasText()) {
                         BufferedImage bufferedImage = ImageIO.read(new URL(reader.getText()));
                         BufferedImage newBufferedImage =
-                            new BufferedImage(
-                                bufferedImage.getWidth(),
-                                bufferedImage.getHeight(),
-                                BufferedImage.TYPE_INT_RGB);
+                                new BufferedImage(
+                                        bufferedImage.getWidth(),
+                                        bufferedImage.getHeight(),
+                                        BufferedImage.TYPE_INT_RGB);
                         newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
                         File file = File.createTempFile("temp", "temp");
                         ImageIO.write(newBufferedImage, "jpg", file);

@@ -53,19 +53,19 @@ public class ArtistsController implements Initializable, SubView {
         grid.prefHeightProperty().bind(grid.widthProperty().divide(5).add(16).multiply(rows));
         
         new Thread(
-            () -> {
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                
-                for (int j = 25; j < artists.size(); j++) {
-                    Artist artist = artists.get(j);
-                    Platform.runLater(() -> grid.getChildren().add(createCell(artist)));
-                }
-            })
-            .start();
+                () -> {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+            
+                    for (int j = 25; j < artists.size(); j++) {
+                        Artist artist = artists.get(j);
+                        Platform.runLater(() -> grid.getChildren().add(createCell(artist)));
+                    }
+                })
+                .start();
     }
     
     private VBox createCell (Artist artist) {
@@ -98,32 +98,32 @@ public class ArtistsController implements Initializable, SubView {
         cell.getStyleClass().add("artist-cell");
         cell.setAlignment(Pos.CENTER);
         cell.setOnMouseClicked(
-            event -> {
-                MainController mainController = OdysseyPlayer.getMainController();
-                ArtistsMainController artistsMainController =
-                    (ArtistsMainController) mainController.loadView("ArtistsMain");
-                
-                VBox artistCell = (VBox) event.getSource();
-                String artistTitle = ((Label) artistCell.getChildren().get(1)).getText();
-                Artist a = Library.getArtist(artistTitle);
-                artistsMainController.selectArtist(a);
-            });
+                event -> {
+                    MainController mainController = OdysseyPlayer.getMainController();
+                    ArtistsMainController artistsMainController =
+                            (ArtistsMainController) mainController.loadView("ArtistsMain");
+            
+                    VBox artistCell = (VBox) event.getSource();
+                    String artistTitle = ((Label) artistCell.getChildren().get(1)).getText();
+                    Artist a = Library.getArtist(artistTitle);
+                    artistsMainController.selectArtist(a);
+                });
         
         cell.setOnDragDetected(
-            event -> {
-                PseudoClass pressed = PseudoClass.getPseudoClass("pressed");
-                cell.pseudoClassStateChanged(pressed, false);
-                Dragboard db = cell.startDragAndDrop(TransferMode.ANY);
-                ClipboardContent content = new ClipboardContent();
-                content.putString("Artist");
-                db.setContent(content);
-                OdysseyPlayer.setDraggedItem(artist);
-                db.setDragView(
-                    cell.snapshot(null, null),
-                    cell.widthProperty().divide(2).get(),
-                    cell.heightProperty().divide(2).get());
-                event.consume();
-            });
+                event -> {
+                    PseudoClass pressed = PseudoClass.getPseudoClass("pressed");
+                    cell.pseudoClassStateChanged(pressed, false);
+                    Dragboard db = cell.startDragAndDrop(TransferMode.ANY);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putString("Artist");
+                    db.setContent(content);
+                    OdysseyPlayer.setDraggedItem(artist);
+                    db.setDragView(
+                            cell.snapshot(null, null),
+                            cell.widthProperty().divide(2).get(),
+                            cell.heightProperty().divide(2).get());
+                    event.consume();
+                });
         
         return cell;
     }
@@ -157,16 +157,16 @@ public class ArtistsController implements Initializable, SubView {
         double startVvalue = scrollpane.getVvalue();
         
         Animation scrollAnimation =
-            new Transition() {
-                {
-                    setCycleDuration(Duration.millis(500));
-                }
-                
-                protected void interpolate (double frac) {
-                    double vValue = startVvalue + ((finalVvalue - startVvalue) * frac);
-                    scrollpane.setVvalue(vValue);
-                }
-            };
+                new Transition() {
+                    {
+                        setCycleDuration(Duration.millis(500));
+                    }
+            
+                    protected void interpolate (double frac) {
+                        double vValue = startVvalue + ((finalVvalue - startVvalue) * frac);
+                        scrollpane.setVvalue(vValue);
+                    }
+                };
         
         scrollAnimation.play();
     }

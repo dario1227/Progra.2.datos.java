@@ -73,59 +73,59 @@ public class ArtistsMainController implements Initializable, SubView {
     private double collapsedHeight = 0;
     private CountDownLatch loadedLatch;
     private Animation artistLoadAnimation =
-        new Transition() {
-            {
-                setCycleDuration(Duration.millis(250));
-                setInterpolator(Interpolator.EASE_BOTH);
-            }
+            new Transition() {
+                {
+                    setCycleDuration(Duration.millis(250));
+                    setInterpolator(Interpolator.EASE_BOTH);
+                }
             
-            protected void interpolate (double frac) {
-                double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (frac);
-                subViewRoot.setTranslateY(expandedHeight - curHeight);
-                subViewRoot.setOpacity(frac);
-            }
-        };
+                protected void interpolate (double frac) {
+                    double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (frac);
+                    subViewRoot.setTranslateY(expandedHeight - curHeight);
+                    subViewRoot.setOpacity(frac);
+                }
+            };
     private Animation artistUnloadAnimation =
-        new Transition() {
-            {
-                setCycleDuration(Duration.millis(250));
-                setInterpolator(Interpolator.EASE_BOTH);
-            }
+            new Transition() {
+                {
+                    setCycleDuration(Duration.millis(250));
+                    setInterpolator(Interpolator.EASE_BOTH);
+                }
             
-            protected void interpolate (double frac) {
-                double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (1 - frac);
-                subViewRoot.setTranslateY(expandedHeight - curHeight);
-                subViewRoot.setOpacity(1 - frac);
-            }
-        };
+                protected void interpolate (double frac) {
+                    double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (1 - frac);
+                    subViewRoot.setTranslateY(expandedHeight - curHeight);
+                    subViewRoot.setOpacity(1 - frac);
+                }
+            };
     private Animation albumLoadAnimation =
-        new Transition() {
-            {
-                setCycleDuration(Duration.millis(250));
-                setInterpolator(Interpolator.EASE_BOTH);
-            }
+            new Transition() {
+                {
+                    setCycleDuration(Duration.millis(250));
+                    setInterpolator(Interpolator.EASE_BOTH);
+                }
             
-            protected void interpolate (double frac) {
-                double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (frac);
-                songTable.setTranslateY(expandedHeight - curHeight);
-                songTable.setOpacity(frac);
-            }
-        };
+                protected void interpolate (double frac) {
+                    double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (frac);
+                    songTable.setTranslateY(expandedHeight - curHeight);
+                    songTable.setOpacity(frac);
+                }
+            };
     private Animation albumUnloadAnimation =
-        new Transition() {
-            {
-                setCycleDuration(Duration.millis(250));
-                setInterpolator(Interpolator.EASE_BOTH);
-            }
+            new Transition() {
+                {
+                    setCycleDuration(Duration.millis(250));
+                    setInterpolator(Interpolator.EASE_BOTH);
+                }
             
-            protected void interpolate (double frac) {
-                double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (1 - frac);
-                songTable.setTranslateY(expandedHeight - curHeight);
-                songTable.setOpacity(1 - frac);
-                songTable.setMinHeight(1 - frac);
-                songTable.setPrefHeight(1 - frac);
-            }
-        };
+                protected void interpolate (double frac) {
+                    double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (1 - frac);
+                    songTable.setTranslateY(expandedHeight - curHeight);
+                    songTable.setOpacity(1 - frac);
+                    songTable.setMinHeight(1 - frac);
+                    songTable.setPrefHeight(1 - frac);
+                }
+            };
     
     @Override
     public void initialize (URL location, ResourceBundle resources) {
@@ -160,11 +160,11 @@ public class ArtistsMainController implements Initializable, SubView {
         albumList.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> event.consume());
     
         songTable.addEventFilter(
-            MouseEvent.MOUSE_PRESSED,
-            event -> {
-                songTable.requestFocus();
-                event.consume();
-            });
+                MouseEvent.MOUSE_PRESSED,
+                event -> {
+                    songTable.requestFocus();
+                    event.consume();
+                });
         
         ObservableList<Artist> artists = Library.getArtists();
         Collections.sort(artists);
@@ -172,270 +172,270 @@ public class ArtistsMainController implements Initializable, SubView {
         artistList.setItems(artists);
     
         artistList.setOnMouseClicked(
-            event -> {
-                if (event.getClickCount() == 2) {
-                
-                    ObservableList<Song> songs = FXCollections.observableArrayList();
-                    ObservableList<Album> albums = FXCollections.observableArrayList();
-                    for (Album album : selectedArtist.getAlbums()) {
-                        albums.add(album);
-                        songs.addAll(album.getSongs());
-                    }
-                
-                    if (OdysseyPlayer.isShuffleActive()) {
-                        Collections.shuffle(songs);
-                    } else {
-                        Collections.sort(
-                            songs,
-                            (first, second) -> {
-                                Album firstAlbum =
-                                    albums
-                                        .stream()
-                                        .filter(x -> x.getTitle().equals(first.getAlbum()))
-                                        .findFirst()
-                                        .get();
-                                Album secondAlbum =
-                                    albums
-                                        .stream()
-                                        .filter(x -> x.getTitle().equals(second.getAlbum()))
-                                        .findFirst()
-                                        .get();
-                                if (firstAlbum.compareTo(secondAlbum) != 0) {
-                                    return firstAlbum.compareTo(secondAlbum);
-                                } else {
-                                    return first.compareTo(second);
-                                }
-                            });
-                    }
-                
-                    Song song = songs.get(0);
-                    OdysseyPlayer.setNowPlayingList(songs);
-                    OdysseyPlayer.setNowPlaying(song);
-                    OdysseyPlayer.play();
-                
-                } else {
-                
-                    Task<Void> task =
-                        new Task<Void>() {
-                            @Override
-                            protected Void call () {
-                                Platform.runLater(
-                                    () -> {
-                                        subViewRoot.setVisible(false);
-                                        selectedArtist = artistList.getSelectionModel().getSelectedItem();
-                                        showAllSongs(selectedArtist, false);
-                                        artistLabel.setText(selectedArtist.getTitle());
-                                        albumList.setPrefWidth(albumList.getItems().size() * 150 + 2);
-                                        albumList.setMaxWidth(albumList.getItems().size() * 150 + 2);
-                                        albumList.scrollTo(0);
-                                    });
-                                return null;
-                            }
-                        };
-                
-                    task.setOnSucceeded(
-                        x ->
-                            Platform.runLater(
-                                () -> {
-                                    subViewRoot.setVisible(true);
-                                    artistLoadAnimation.play();
-                                }));
-                
-                    Thread thread = new Thread(task);
-                
-                    artistUnloadAnimation.setOnFinished(x -> thread.start());
-                
-                    artistUnloadAnimation.play();
-                }
-            });
-    
-        albumList.setOnMouseClicked(
-            event -> {
-                Album album = albumList.getSelectionModel().getSelectedItem();
-            
-                if (event.getClickCount() == 2) {
-                
-                    if (album != selectedAlbum) {
-                        selectAlbum(album);
-                    }
-                
-                    ArrayList<Song> songs = selectedAlbum.getSongs();
-                
-                    if (OdysseyPlayer.isShuffleActive()) {
-                        Collections.shuffle(songs);
-                    } else {
-                        Collections.sort(songs);
-                    }
-                
-                    OdysseyPlayer.setNowPlayingList(songs);
-                    OdysseyPlayer.setNowPlaying(songs.get(0));
-                    OdysseyPlayer.play();
-                
-                } else {
-                
-                    Task<Void> task =
-                        new Task<Void>() {
-                            @Override
-                            protected Void call () {
-                                Platform.runLater(
-                                    () -> {
-                                        songTable.setVisible(false);
-                                        selectAlbum(album);
-                                    });
-                                return null;
-                            }
-                        };
-                
-                    task.setOnSucceeded(
-                        x ->
-                            Platform.runLater(
-                                () -> {
-                                    songTable.setVisible(true);
-                                    albumLoadAnimation.play();
-                                }));
-                
-                    Thread thread = new Thread(task);
-                
-                    albumUnloadAnimation.setOnFinished(x -> thread.start());
-                
-                    albumUnloadAnimation.play();
-                }
-            });
-    
-        songTable.setRowFactory(
-            x -> {
-                TableRow<Song> row = new TableRow<>();
-            
-                PseudoClass playing = PseudoClass.getPseudoClass("playing");
-            
-                ChangeListener<Boolean> changeListener =
-                    (obs, oldValue, newValue) -> {
-                        row.pseudoClassStateChanged(playing, newValue);
-                    };
-            
-                row.itemProperty()
-                   .addListener(
-                       (obs, previousSong, currentSong) -> {
-                           if (previousSong != null) {
-                               previousSong.playingProperty().removeListener(changeListener);
-                           }
-                           if (currentSong != null) {
-                               currentSong.playingProperty().addListener(changeListener);
-                               row.pseudoClassStateChanged(playing, currentSong.getPlaying());
-                           } else {
-                               row.pseudoClassStateChanged(playing, false);
-                           }
-                       });
-            
-                row.setOnMouseClicked(
-                    event -> {
-                        TableViewSelectionModel<Song> sm = songTable.getSelectionModel();
-                        if (event.getClickCount() == 2 && ! row.isEmpty()) {
-                            play();
-                        } else if (event.isShiftDown()) {
-                            ArrayList<Integer> indices = new ArrayList<>(sm.getSelectedIndices());
-                            if (indices.size() < 1) {
-                                if (indices.contains(row.getIndex())) {
-                                    sm.clearSelection(row.getIndex());
-                                } else {
-                                    sm.select(row.getItem());
-                                }
-                            } else {
-                                sm.clearSelection();
-                                indices.sort((first, second) -> first.compareTo(second));
-                                int max = indices.get(indices.size() - 1);
-                                int min = indices.get(0);
-                                if (min < row.getIndex()) {
-                                    for (int i = min; i <= row.getIndex(); i++) {
-                                        sm.select(i);
-                                    }
-                                } else {
-                                    for (int i = row.getIndex(); i <= max; i++) {
-                                        sm.select(i);
-                                    }
-                                }
-                            }
-                        
-                        } else if (event.isControlDown()) {
-                            if (sm.getSelectedIndices().contains(row.getIndex())) {
-                                sm.clearSelection(row.getIndex());
-                            } else {
-                                sm.select(row.getItem());
-                            }
-                        } else {
-                            if (sm.getSelectedIndices().size() > 1) {
-                                sm.clearSelection();
-                                sm.select(row.getItem());
-                            } else if (sm.getSelectedIndices().contains(row.getIndex())) {
-                                sm.clearSelection();
-                            } else {
-                                sm.clearSelection();
-                                sm.select(row.getItem());
-                            }
+                event -> {
+                    if (event.getClickCount() == 2) {
+                    
+                        ObservableList<Song> songs = FXCollections.observableArrayList();
+                        ObservableList<Album> albums = FXCollections.observableArrayList();
+                        for (Album album : selectedArtist.getAlbums()) {
+                            albums.add(album);
+                            songs.addAll(album.getSongs());
                         }
-                    });
-            
-                row.setOnDragDetected(
-                    event -> {
-                        Dragboard db = row.startDragAndDrop(TransferMode.ANY);
-                        ClipboardContent content = new ClipboardContent();
-                        if (songTable.getSelectionModel().getSelectedIndices().size() > 1) {
-                            content.putString("List");
-                            db.setContent(content);
-                            OdysseyPlayer.setDraggedItem(songTable.getSelectionModel().getSelectedItems());
+                    
+                        if (OdysseyPlayer.isShuffleActive()) {
+                            Collections.shuffle(songs);
                         } else {
-                            content.putString("Song");
-                            db.setContent(content);
-                            OdysseyPlayer.setDraggedItem(row.getItem());
+                            Collections.sort(
+                                    songs,
+                                    (first, second) -> {
+                                        Album firstAlbum =
+                                                albums
+                                                        .stream()
+                                                        .filter(x -> x.getTitle().equals(first.getAlbum()))
+                                                        .findFirst()
+                                                        .get();
+                                        Album secondAlbum =
+                                                albums
+                                                        .stream()
+                                                        .filter(x -> x.getTitle().equals(second.getAlbum()))
+                                                        .findFirst()
+                                                        .get();
+                                        if (firstAlbum.compareTo(secondAlbum) != 0) {
+                                            return firstAlbum.compareTo(secondAlbum);
+                                        } else {
+                                            return first.compareTo(second);
+                                        }
+                                    });
                         }
-                        ImageView image = new ImageView(row.snapshot(null, null));
-                        Rectangle2D rectangle = new Rectangle2D(0, 0, 250, 50);
-                        image.setViewport(rectangle);
-                        db.setDragView(image.snapshot(null, null), 125, 25);
-                        event.consume();
-                    });
-            
-                return row;
-            });
-    
-        songTable
-            .getSelectionModel()
-            .selectedItemProperty()
-            .addListener(
-                (obs, oldSelection, newSelection) -> {
-                    if (oldSelection != null) {
-                        oldSelection.setSelected(false);
-                    }
-                    if (newSelection != null
-                            && songTable.getSelectionModel().getSelectedIndices().size() == 1) {
-                        newSelection.setSelected(true);
-                        selectedSong = newSelection;
+                    
+                        Song song = songs.get(0);
+                        OdysseyPlayer.setNowPlayingList(songs);
+                        OdysseyPlayer.setNowPlaying(song);
+                        OdysseyPlayer.play();
+                    
+                    } else {
+                    
+                        Task<Void> task =
+                                new Task<Void>() {
+                                    @Override
+                                    protected Void call () {
+                                        Platform.runLater(
+                                                () -> {
+                                                    subViewRoot.setVisible(false);
+                                                    selectedArtist = artistList.getSelectionModel().getSelectedItem();
+                                                    showAllSongs(selectedArtist, false);
+                                                    artistLabel.setText(selectedArtist.getTitle());
+                                                    albumList.setPrefWidth(albumList.getItems().size() * 150 + 2);
+                                                    albumList.setMaxWidth(albumList.getItems().size() * 150 + 2);
+                                                    albumList.scrollTo(0);
+                                                });
+                                        return null;
+                                    }
+                                };
+                    
+                        task.setOnSucceeded(
+                                x ->
+                                        Platform.runLater(
+                                                () -> {
+                                                    subViewRoot.setVisible(true);
+                                                    artistLoadAnimation.play();
+                                                }));
+                    
+                        Thread thread = new Thread(task);
+                    
+                        artistUnloadAnimation.setOnFinished(x -> thread.start());
+                    
+                        artistUnloadAnimation.play();
                     }
                 });
         
+        albumList.setOnMouseClicked(
+                event -> {
+                    Album album = albumList.getSelectionModel().getSelectedItem();
+            
+                    if (event.getClickCount() == 2) {
+                
+                        if (album != selectedAlbum) {
+                            selectAlbum(album);
+                        }
+                
+                        ArrayList<Song> songs = selectedAlbum.getSongs();
+                
+                        if (OdysseyPlayer.isShuffleActive()) {
+                            Collections.shuffle(songs);
+                        } else {
+                            Collections.sort(songs);
+                        }
+                
+                        OdysseyPlayer.setNowPlayingList(songs);
+                        OdysseyPlayer.setNowPlaying(songs.get(0));
+                        OdysseyPlayer.play();
+                
+                    } else {
+                
+                        Task<Void> task =
+                                new Task<Void>() {
+                                    @Override
+                                    protected Void call () {
+                                        Platform.runLater(
+                                                () -> {
+                                                    songTable.setVisible(false);
+                                                    selectAlbum(album);
+                                                });
+                                        return null;
+                                    }
+                                };
+                
+                        task.setOnSucceeded(
+                                x ->
+                                        Platform.runLater(
+                                                () -> {
+                                                    songTable.setVisible(true);
+                                                    albumLoadAnimation.play();
+                                                }));
+                
+                        Thread thread = new Thread(task);
+                
+                        albumUnloadAnimation.setOnFinished(x -> thread.start());
+                
+                        albumUnloadAnimation.play();
+                    }
+                });
+        
+        songTable.setRowFactory(
+                x -> {
+                    TableRow<Song> row = new TableRow<>();
+            
+                    PseudoClass playing = PseudoClass.getPseudoClass("playing");
+            
+                    ChangeListener<Boolean> changeListener =
+                            (obs, oldValue, newValue) -> {
+                                row.pseudoClassStateChanged(playing, newValue);
+                            };
+            
+                    row.itemProperty()
+                       .addListener(
+                               (obs, previousSong, currentSong) -> {
+                                   if (previousSong != null) {
+                                       previousSong.playingProperty().removeListener(changeListener);
+                                   }
+                                   if (currentSong != null) {
+                                       currentSong.playingProperty().addListener(changeListener);
+                                       row.pseudoClassStateChanged(playing, currentSong.getPlaying());
+                                   } else {
+                                       row.pseudoClassStateChanged(playing, false);
+                                   }
+                               });
+            
+                    row.setOnMouseClicked(
+                            event -> {
+                                TableViewSelectionModel<Song> sm = songTable.getSelectionModel();
+                                if (event.getClickCount() == 2 && ! row.isEmpty()) {
+                                    play();
+                                } else if (event.isShiftDown()) {
+                                    ArrayList<Integer> indices = new ArrayList<>(sm.getSelectedIndices());
+                                    if (indices.size() < 1) {
+                                        if (indices.contains(row.getIndex())) {
+                                            sm.clearSelection(row.getIndex());
+                                        } else {
+                                            sm.select(row.getItem());
+                                        }
+                                    } else {
+                                        sm.clearSelection();
+                                        indices.sort((first, second) -> first.compareTo(second));
+                                        int max = indices.get(indices.size() - 1);
+                                        int min = indices.get(0);
+                                        if (min < row.getIndex()) {
+                                            for (int i = min; i <= row.getIndex(); i++) {
+                                                sm.select(i);
+                                            }
+                                        } else {
+                                            for (int i = row.getIndex(); i <= max; i++) {
+                                                sm.select(i);
+                                            }
+                                        }
+                                    }
+                            
+                                } else if (event.isControlDown()) {
+                                    if (sm.getSelectedIndices().contains(row.getIndex())) {
+                                        sm.clearSelection(row.getIndex());
+                                    } else {
+                                        sm.select(row.getItem());
+                                    }
+                                } else {
+                                    if (sm.getSelectedIndices().size() > 1) {
+                                        sm.clearSelection();
+                                        sm.select(row.getItem());
+                                    } else if (sm.getSelectedIndices().contains(row.getIndex())) {
+                                        sm.clearSelection();
+                                    } else {
+                                        sm.clearSelection();
+                                        sm.select(row.getItem());
+                                    }
+                                }
+                            });
+            
+                    row.setOnDragDetected(
+                            event -> {
+                                Dragboard db = row.startDragAndDrop(TransferMode.ANY);
+                                ClipboardContent content = new ClipboardContent();
+                                if (songTable.getSelectionModel().getSelectedIndices().size() > 1) {
+                                    content.putString("List");
+                                    db.setContent(content);
+                                    OdysseyPlayer.setDraggedItem(songTable.getSelectionModel().getSelectedItems());
+                                } else {
+                                    content.putString("Song");
+                                    db.setContent(content);
+                                    OdysseyPlayer.setDraggedItem(row.getItem());
+                                }
+                                ImageView image = new ImageView(row.snapshot(null, null));
+                                Rectangle2D rectangle = new Rectangle2D(0, 0, 250, 50);
+                                image.setViewport(rectangle);
+                                db.setDragView(image.snapshot(null, null), 125, 25);
+                                event.consume();
+                            });
+            
+                    return row;
+                });
+        
+        songTable
+                .getSelectionModel()
+                .selectedItemProperty()
+                .addListener(
+                        (obs, oldSelection, newSelection) -> {
+                            if (oldSelection != null) {
+                                oldSelection.setSelected(false);
+                            }
+                            if (newSelection != null
+                                        && songTable.getSelectionModel().getSelectedIndices().size() == 1) {
+                                newSelection.setSelected(true);
+                                selectedSong = newSelection;
+                            }
+                        });
+        
         // Plays selected song when enter key is pressed.
         songTable.setOnKeyPressed(
-            event -> {
-                if (event.getCode().equals(KeyCode.ENTER)) {
-                    play();
-                }
-            });
+                event -> {
+                    if (event.getCode().equals(KeyCode.ENTER)) {
+                        play();
+                    }
+                });
         
         artistList.setMinHeight(0);
         artistList.setPrefHeight(0);
         double height = artists.size() * 50;
         Animation artistListLoadAnimation =
-            new Transition() {
-                {
-                    setCycleDuration(Duration.millis(250));
-                    setInterpolator(Interpolator.EASE_BOTH);
-                }
+                new Transition() {
+                    {
+                        setCycleDuration(Duration.millis(250));
+                        setInterpolator(Interpolator.EASE_BOTH);
+                    }
             
-                protected void interpolate (double frac) {
-                    artistList.setMinHeight(frac * height);
-                    artistList.setPrefHeight(frac * height);
-                }
-            };
+                    protected void interpolate (double frac) {
+                        artistList.setMinHeight(frac * height);
+                        artistList.setPrefHeight(frac * height);
+                    }
+                };
         artistListLoadAnimation.play();
     }
     
@@ -466,28 +466,28 @@ public class ArtistsMainController implements Initializable, SubView {
             songTable.setVisible(true);
             double height = (songs.size() + 1) * 50 + 2;
             Animation songTableLoadAnimation =
-                new Transition() {
-                    {
-                        setCycleDuration(Duration.millis(250));
-                        setInterpolator(Interpolator.EASE_BOTH);
-                    }
+                    new Transition() {
+                        {
+                            setCycleDuration(Duration.millis(250));
+                            setInterpolator(Interpolator.EASE_BOTH);
+                        }
             
-                    protected void interpolate (double frac) {
-                        songTable.setMinHeight(frac * height);
-                        songTable.setPrefHeight(frac * height);
-                    }
-                };
+                        protected void interpolate (double frac) {
+                            songTable.setMinHeight(frac * height);
+                            songTable.setPrefHeight(frac * height);
+                        }
+                    };
             new Thread(
-                () -> {
-                    try {
-                        loadedLatch.await();
-                        loadedLatch = new CountDownLatch(1);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    songTableLoadAnimation.play();
-                })
-                .start();
+                    () -> {
+                        try {
+                            loadedLatch.await();
+                            loadedLatch = new CountDownLatch(1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        songTableLoadAnimation.play();
+                    })
+                    .start();
         }
     }
     
@@ -497,27 +497,27 @@ public class ArtistsMainController implements Initializable, SubView {
         artistList.getSelectionModel().select(artist);
         CountDownLatch latch = new CountDownLatch(1);
         artistListScrollPane
-            .heightProperty()
-            .addListener(
-                (x, y, z) -> {
-                    if (z.doubleValue() != 0) {
-                        latch.countDown();
-                    }
-                });
+                .heightProperty()
+                .addListener(
+                        (x, y, z) -> {
+                            if (z.doubleValue() != 0) {
+                                latch.countDown();
+                            }
+                        });
         new Thread(
-            () -> {
-                try {
-                    latch.await();
-                    int selectedCell = artistList.getSelectionModel().getSelectedIndex();
-                    double vValue =
-                        (selectedCell * 50)
-                            / (Library.getArtists().size() * 50 - artistListScrollPane.getHeight());
-                    artistListScrollPane.setVvalue(vValue);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            })
-            .start();
+                () -> {
+                    try {
+                        latch.await();
+                        int selectedCell = artistList.getSelectionModel().getSelectedIndex();
+                        double vValue =
+                                (selectedCell * 50)
+                                        / (Library.getArtists().size() * 50 - artistListScrollPane.getHeight());
+                        artistListScrollPane.setVvalue(vValue);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                })
+                .start();
         showAllSongs(artist, true);
         albumList.setPrefWidth(artist.getAlbums().size() * 150 + 2);
         albumList.setMaxWidth(artist.getAlbums().size() * 150 + 2);
@@ -528,20 +528,20 @@ public class ArtistsMainController implements Initializable, SubView {
     void selectSong (Song song) {
         
         new Thread(
-            () -> {
-                try {
-                    loadedLatch.await();
-                    loadedLatch = new CountDownLatch(1);
-                    Platform.runLater(
-                        () -> {
-                            songTable.getSelectionModel().select(song);
-                            scrollPane.requestFocus();
-                        });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            })
-            .start();
+                () -> {
+                    try {
+                        loadedLatch.await();
+                        loadedLatch = new CountDownLatch(1);
+                        Platform.runLater(
+                                () -> {
+                                    songTable.getSelectionModel().select(song);
+                                    scrollPane.requestFocus();
+                                });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                })
+                .start();
     }
     
     public Song getSelectedSong () {
@@ -561,18 +561,18 @@ public class ArtistsMainController implements Initializable, SubView {
         }
         
         Collections.sort(
-            songs,
-            (first, second) -> {
-                Album firstAlbum =
-                    albums.stream().filter(x -> x.getTitle().equals(first.getAlbum())).findFirst().get();
-                Album secondAlbum =
-                    albums.stream().filter(x -> x.getTitle().equals(second.getAlbum())).findFirst().get();
-                if (firstAlbum.compareTo(secondAlbum) != 0) {
-                    return firstAlbum.compareTo(secondAlbum);
-                } else {
-                    return first.compareTo(second);
-                }
-            });
+                songs,
+                (first, second) -> {
+                    Album firstAlbum =
+                            albums.stream().filter(x -> x.getTitle().equals(first.getAlbum())).findFirst().get();
+                    Album secondAlbum =
+                            albums.stream().filter(x -> x.getTitle().equals(second.getAlbum())).findFirst().get();
+                    if (firstAlbum.compareTo(secondAlbum) != 0) {
+                        return firstAlbum.compareTo(secondAlbum);
+                    } else {
+                        return first.compareTo(second);
+                    }
+                });
         
         Collections.sort(albums);
         
@@ -592,36 +592,36 @@ public class ArtistsMainController implements Initializable, SubView {
         songTable.setVisible(true);
         double height = (songs.size() + 1) * 50 + 2;
         Animation songTableLoadAnimation =
-            new Transition() {
-                {
-                    setCycleDuration(Duration.millis(250));
-                    setInterpolator(Interpolator.EASE_BOTH);
-                }
-                
-                protected void interpolate (double frac) {
-                    songTable.setMinHeight(frac * height);
-                    songTable.setPrefHeight(frac * height);
-                }
-            };
+                new Transition() {
+                    {
+                        setCycleDuration(Duration.millis(250));
+                        setInterpolator(Interpolator.EASE_BOTH);
+                    }
+            
+                    protected void interpolate (double frac) {
+                        songTable.setMinHeight(frac * height);
+                        songTable.setPrefHeight(frac * height);
+                    }
+                };
         
         songTableLoadAnimation.setOnFinished(x -> loadedLatch.countDown());
         
         new Thread(
-            () -> {
-                try {
-                    if (fromMainController) {
-                        OdysseyPlayer.getMainController().getLatch().await();
-                        OdysseyPlayer.getMainController().resetLatch();
-                    } else {
-                        loadedLatch.await();
-                        loadedLatch = new CountDownLatch(1);
+                () -> {
+                    try {
+                        if (fromMainController) {
+                            OdysseyPlayer.getMainController().getLatch().await();
+                            OdysseyPlayer.getMainController().resetLatch();
+                        } else {
+                            loadedLatch.await();
+                            loadedLatch = new CountDownLatch(1);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                songTableLoadAnimation.play();
-            })
-            .start();
+                    songTableLoadAnimation.play();
+                })
+                .start();
     }
     
     @Override
@@ -644,16 +644,16 @@ public class ArtistsMainController implements Initializable, SubView {
             songs.add(0, song);
         } else {
             Collections.sort(
-                songs,
-                (first, second) -> {
-                    Album firstAlbum = Library.getAlbum(first.getAlbum());
-                    Album secondAlbum = Library.getAlbum(second.getAlbum());
-                    if (firstAlbum.compareTo(secondAlbum) != 0) {
-                        return firstAlbum.compareTo(secondAlbum);
-                    } else {
-                        return first.compareTo(second);
-                    }
-                });
+                    songs,
+                    (first, second) -> {
+                        Album firstAlbum = Library.getAlbum(first.getAlbum());
+                        Album secondAlbum = Library.getAlbum(second.getAlbum());
+                        if (firstAlbum.compareTo(secondAlbum) != 0) {
+                            return firstAlbum.compareTo(secondAlbum);
+                        } else {
+                            return first.compareTo(second);
+                        }
+                    });
         }
         
         OdysseyPlayer.setNowPlayingList(songs);
@@ -679,20 +679,20 @@ public class ArtistsMainController implements Initializable, SubView {
         
         double startVvalue = artistListScrollPane.getVvalue();
         double finalVvalue =
-            (double) (selectedCell * 50)
-                / (Library.getArtists().size() * 50 - artistListScrollPane.getHeight());
+                (double) (selectedCell * 50)
+                        / (Library.getArtists().size() * 50 - artistListScrollPane.getHeight());
         
         Animation scrollAnimation =
-            new Transition() {
-                {
-                    setCycleDuration(Duration.millis(500));
-                }
-                
-                protected void interpolate (double frac) {
-                    double vValue = startVvalue + ((finalVvalue - startVvalue) * frac);
-                    artistListScrollPane.setVvalue(vValue);
-                }
-            };
+                new Transition() {
+                    {
+                        setCycleDuration(Duration.millis(500));
+                    }
+            
+                    protected void interpolate (double frac) {
+                        double vValue = startVvalue + ((finalVvalue - startVvalue) * frac);
+                        artistListScrollPane.setVvalue(vValue);
+                    }
+                };
         scrollAnimation.play();
     }
     
@@ -741,15 +741,15 @@ public class ArtistsMainController implements Initializable, SubView {
             this.setOnMouseClicked(event -> artistList.getSelectionModel().select(artist));
             
             this.setOnDragDetected(
-                event -> {
-                    Dragboard db = this.startDragAndDrop(TransferMode.ANY);
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString("Artist");
-                    db.setContent(content);
-                    OdysseyPlayer.setDraggedItem(artist);
-                    db.setDragView(this.snapshot(null, null), 125, 25);
-                    event.consume();
-                });
+                    event -> {
+                        Dragboard db = this.startDragAndDrop(TransferMode.ANY);
+                        ClipboardContent content = new ClipboardContent();
+                        content.putString("Artist");
+                        db.setContent(content);
+                        OdysseyPlayer.setDraggedItem(artist);
+                        db.setDragView(this.snapshot(null, null), 125, 25);
+                        event.consume();
+                    });
         }
         
         @Override
@@ -790,15 +790,15 @@ public class ArtistsMainController implements Initializable, SubView {
             this.setOnMouseClicked(event -> albumList.getSelectionModel().select(album));
             
             this.setOnDragDetected(
-                event -> {
-                    Dragboard db = this.startDragAndDrop(TransferMode.ANY);
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString("Album");
-                    db.setContent(content);
-                    OdysseyPlayer.setDraggedItem(album);
-                    db.setDragView(this.snapshot(null, null), 75, 75);
-                    event.consume();
-                });
+                    event -> {
+                        Dragboard db = this.startDragAndDrop(TransferMode.ANY);
+                        ClipboardContent content = new ClipboardContent();
+                        content.putString("Album");
+                        db.setContent(content);
+                        OdysseyPlayer.setDraggedItem(album);
+                        db.setDragView(this.snapshot(null, null), 75, 75);
+                        event.consume();
+                    });
         }
         
         @Override

@@ -18,11 +18,11 @@ public class MostPlayedPlaylist extends Playlist {
 
         List<Song> songs = new ArrayList<>(Library.getSongs());
         songs =
-            songs
-                .stream()
-                .filter(x -> x.getPlayCount() > 0)
-                .sorted((x, y) -> Integer.compare(y.getPlayCount(), x.getPlayCount()))
-                .collect(Collectors.toList());
+                songs
+                        .stream()
+                        .filter(x -> x.getPlayCount() > 0)
+                        .sorted((x, y) -> Integer.compare(y.getPlayCount(), x.getPlayCount()))
+                        .collect(Collectors.toList());
 
         if (songs.size() > 100) {
             songs = songs.subList(0, 100);
