@@ -71,7 +71,7 @@ public class GeneticController {
         System.out.println(inputDialog.getDefaultValue());
         res.ifPresent(System.out::println);
         res.ifPresent(s -> answerLabel.setText(s));
-        ArrayList<Canciones> cancion = XML_parser.get_songs("Nombre", "1", res.get());
+        ArrayList<Canciones> cancion = XML_parser.get_songs("Nombre", "1", res.get(),"false");
         if (cancion.isEmpty()) {
             return;
         }

@@ -1,6 +1,7 @@
 package view;
 
 import Server.ClientServer;
+import XML.XML_parser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -47,8 +48,9 @@ public class Main extends Application {
         ///"Mama",
         ///"Mamas and the papas");
         ///XML_parser.get_songs("Nombre", "1", "MEME");
-        //   XML_parser.chunk("Tool - H. w Lyrics (HD).mp3", "1");
-        //System.out.print("TERMINO ALELUYA");
+           XML_parser.chunk("Tool - H. w Lyrics (HD).mp3", "1");
+        XML_parser.get_chunk_bytes("Tool - H. w Lyrics (HD).mp3","0");
+        System.out.println("TERMINO ALELUYA");
         //        System.out.print(cosa.charAt(cosa.length()));
         //        byte bytes[] = Base64.getDecoder().decode(cosa);
         //        try (FileOutputStream fos = new FileOutputStream("cosa.mp3")) {
@@ -62,12 +64,12 @@ public class Main extends Application {
         // XML_parser.chunk("MEME.mp3","2");
         // XML_parser.prueba();
         // Cambiar a Login.fxml para probar metodos o a Main.fxml para reproductor
-        Parent root = FXMLLoader.load(getClass().getResource("Genetic.fxml"));
-        mStage = primaryStage;
-        mStage.setTitle("Odyssey++");
-        mStage.setScene(new Scene(root, 400, 300));
-        mStage.setResizable(false);
-        mStage.show();
+//        Parent root = FXMLLoader.load(getClass().getResource("Genetic.fxml"));
+//        mStage = primaryStage;
+//        mStage.setTitle("Odyssey++");
+//        mStage.setScene(new Scene(root, 400, 300));
+//        mStage.setResizable(false);
+//        mStage.show();
         //        ClientServer.Server.send("YOUR MOM GAY");
         //        ClientServer.Server.receive();
         // String cosa = XML_parser.getXML_Archive("/home/kenneth/Desktop/Tool - Pushit.mp3");

@@ -249,12 +249,13 @@ public class XML_parser {
       Element rootnode = (Element) nList.item(0);
       String cosa = rootnode.getAttribute("Data");
       byte[] decodedBytes = Base64.getDecoder().decode(cosa);
-      FileOutputStream outputStream = new FileOutputStream("CANCION.mp3");
+      FileOutputStream outputStream = new FileOutputStream("MEME.mp3");
       outputStream.write(decodedBytes);
       outputStream.close();
       System.out.print("LLEGO AL FINAL");
 
     } catch (Exception e) {
+      e.printStackTrace();
 
     }
   }
@@ -296,17 +297,19 @@ public class XML_parser {
       System.out.println(sw.toString());
       doc.getDocumentElement().normalize();
       NodeList nList = doc.getElementsByTagName("Root");
-      System.out.print(nList.getLength());
+
       Element rootnode = (Element) nList.item(0);
       String cosa = rootnode.getAttribute("Data");
-      size_actual = Integer.getInteger(rootnode.getAttribute("Filesize"));
       byte[] decodedBytes = Base64.getDecoder().decode(cosa);
-      FileOutputStream outputStream = new FileOutputStream("CANCION.mp3");
+      System.out.println("LLEGUE PERROS");
+
+      FileOutputStream outputStream = new FileOutputStream("MEME.mp3");
       outputStream.write(decodedBytes);
       outputStream.close();
-      System.out.print("LLEGO AL FINAL");
+      System.out.println("LLEGO AL FINAL");
       return decodedBytes;
     } catch (Exception e) {
+e.printStackTrace();
 return null;
     }
   }

@@ -9,7 +9,7 @@ public class ClientServer {
     public Socket socket;
     public InputStream clientInput;
     public OutputStream clientOutput;
-    byte[] buf = new byte[70000];
+    byte[] buf = new byte[100000];
     private int message;
     
     public ClientServer () throws IOException {
@@ -28,7 +28,7 @@ public class ClientServer {
         String recivido = "";
         while (true) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(300);
             } catch (Exception e) {
             }
             System.out.print(clientInput.available());
