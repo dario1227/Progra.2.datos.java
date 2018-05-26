@@ -1268,17 +1268,4 @@ public class MainController implements Initializable {
         isSideBarExpanded = ! isSideBarExpanded;
     }
     
-    @FXML
-    public void startGenericView () {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Genetic.fxml"));
-            Parent root1 = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Generic Search");
-            stage.setScene(new Scene(root1, 600, 400));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

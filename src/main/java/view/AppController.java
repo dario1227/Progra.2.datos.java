@@ -1,5 +1,6 @@
 package view;
 
+import XML.MP3Bytes;
 import XML.XML_parser;
 import com.jfoenix.controls.*;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
@@ -31,8 +32,6 @@ public class AppController {
     @FXML
     private ImageView playPauseBtn;
     
-    @FXML
-    private MaterialDesignIconView searchDialog;
     
     @FXML
     private JFXSlider songSlider;
@@ -125,6 +124,25 @@ public class AppController {
             e.printStackTrace();
         }
         
+    }
+    
+    @FXML
+    public void startGeneticView () {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Genetic.fxml"));
+            Parent root1 = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Generic Search");
+            stage.setScene(new Scene(root1, 600, 400));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        Integer chunknum = 0;
+//        String songNombre = "13.mp3";
+//        byte[] test = XML_parser.get_chunk_bytes(songNombre, chunknum.toString());
+//        MP3Bytes mp3Bytes = new MP3Bytes(test, songNombre);
+//        mp3Bytes.play();
     }
 
 }
