@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8.0.141" fx:controller="view.MP3ID3TagController">
+    <children>
+        <GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="351.0">
+            <columnConstraints>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="20.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+            </rowConstraints>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+            </padding>
+            <children>
+                <Label text="Title:" GridPane.hgrow="SOMETIMES">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </Label>
+                <Label text="Artist:" GridPane.rowIndex="1">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </Label>
+                <Label text="Album:" GridPane.rowIndex="2">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </Label>
+                <Label text="Genre:" GridPane.rowIndex="3">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </Label>
+                <Label text="Year:" GridPane.rowIndex="4">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </Label>
+                <Label text="Lyrics:" GridPane.rowIndex="5">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </Label>
+                <JFXTextArea fx:id="lyricsLabel" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                    <focusColor>
+                        <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#eced0c"/>
+                                <Stop color="#1aff94" offset="0.5033333333333333"/>
+                                <Stop color="#ff1919" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </focusColor>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </JFXTextArea>
+                <JFXTextField fx:id="titleLabel" GridPane.columnIndex="1">
+                    <focusColor>
+                        <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#eced0c"/>
+                                <Stop color="#1aff94" offset="0.5033333333333333"/>
+                                <Stop color="#ff1919" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </focusColor>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </JFXTextField>
+                <JFXTextField fx:id="artistLabel" layoutX="186.0" layoutY="47.0" GridPane.columnIndex="1"
+                              GridPane.rowIndex="1">
+                    <focusColor>
+                        <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#eced0c"/>
+                                <Stop color="#1aff94" offset="0.5033333333333333"/>
+                                <Stop color="#ff1919" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </focusColor>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </JFXTextField>
+                <JFXTextField fx:id="albumLabel" layoutX="186.0" layoutY="107.0" GridPane.columnIndex="1"
+                              GridPane.rowIndex="2">
+                    <focusColor>
+                        <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#eced0c"/>
+                                <Stop color="#1aff94" offset="0.5033333333333333"/>
+                                <Stop color="#ff1919" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </focusColor>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </JFXTextField>
+                <JFXTextField fx:id="genreLabel" layoutX="186.0" layoutY="167.0" GridPane.columnIndex="1"
+                              GridPane.rowIndex="3">
+                    <focusColor>
+                        <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#eced0c"/>
+                                <Stop color="#1aff94" offset="0.5033333333333333"/>
+                                <Stop color="#ff1919" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </focusColor>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </JFXTextField>
+                <JFXTextField fx:id="yearLabel" layoutX="186.0" layoutY="227.0" GridPane.columnIndex="1"
+                              GridPane.rowIndex="4">
+                    <focusColor>
+                        <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#eced0c"/>
+                                <Stop color="#1aff94" offset="0.5033333333333333"/>
+                                <Stop color="#ff1919" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </focusColor>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </JFXTextField>
+            </children>
+        </GridPane>
+        <HBox layoutX="385.0" layoutY="293.0" prefHeight="48.0" prefWidth="207.0" spacing="40.0">
+            <children>
+                <JFXButton fx:id="saveBtn" contentDisplay="RIGHT" onAction="#saveChanges"
+                           style="-fx-background-radius: 30;" text="Save">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="CHECK" size="14.0"/>
+                    </graphic>
+                    <ripplerFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#eced0c"/>
+                                <Stop color="#1aff94" offset="0.5033333333333333"/>
+                                <Stop color="#ff1919" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </ripplerFill>
+                </JFXButton>
+                <JFXButton fx:id="cancelBtn" contentDisplay="RIGHT" onAction="#discardChanges"
+                           style="-fx-background-radius: 30;" text="Cancel">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="CLOSE" size="14.0"/>
+                    </graphic>
+                    <ripplerFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#eced0c"/>
+                                <Stop color="#1aff94" offset="0.5033333333333333"/>
+                                <Stop color="#ff1919" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </ripplerFill>
+                </JFXButton>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+        </HBox>
+        <StackPane layoutX="374.0" layoutY="33.0" prefHeight="200.0" prefWidth="198.0">
+            <children>
+                <ImageView fx:id="coverArtImg" fitHeight="200.0" fitWidth="201.0" pickOnBounds="true"
+                           preserveRatio="true"/>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0202e500" height="200.0" strokeType="INSIDE"
+                           width="200.0">
+                    <stroke>
+                        <LinearGradient endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#ba07f5"/>
+                                <Stop color="#f50606" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </stroke>
+                </Rectangle>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>

@@ -7,18 +7,23 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Metadata;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class AppController {
@@ -175,6 +180,38 @@ public class AppController {
 //        MP3Bytes mp3Bytes = new MP3Bytes(test, songNombre);
 //        mp3Bytes.play();
     }
+    
+    @FXML
+    void contextMenu (ContextMenuEvent event) {
+        ContextMenu altMenu = new ContextMenu();
+        MenuItem details = new MenuItem("Details");
+        details.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle (ActionEvent event) {
+                try {
+                    Metadata selected = songList.getSelectionModel().getSelectedItem().getValue();
+                    DetailsDialog dialog = new DetailsDialog();
+                    dialog.showAndWait(selected);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        
+        altMenu.getItems().add(details);
+        altMenu.show(Main.getmStage(), event.getSceneX(), event.getSceneY());
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     //DALE ACA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     //METODO PARA CONECTAR CON LA PAGINACION XML
