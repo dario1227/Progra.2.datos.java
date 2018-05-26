@@ -1,20 +1,28 @@
 package view;
 
 import XML.XML_parser;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXSlider;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.*;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.util.Pair;
 import model.Metadata;
 
 import java.io.File;
-import java.util.List;
+import java.util.*;
 
 public class AppController {
     
@@ -24,10 +32,17 @@ public class AppController {
     private ImageView playPauseBtn;
     
     @FXML
+    private MaterialDesignIconView searchDialog;
+    
+    @FXML
     private JFXSlider songSlider;
     
     @FXML
     private JFXListView<?> friendsList;
+    
+    @FXML
+    private JFXButton vizButton;
+    
     
     @FXML
     private JFXTreeTableView<Metadata> songList;
@@ -95,5 +110,21 @@ public class AppController {
 //        XML_parser.get_songs(, , , )
 //        return FXCollections.observableArrayList();
 //    }
+    
+    @FXML
+    private void openSearchDialog (ActionEvent actionEvent) {
+        
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SearchDialog.fxml"));
+            Parent root1 = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Search");
+            stage.setScene(new Scene(root1, 400, 300));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
 
 }
