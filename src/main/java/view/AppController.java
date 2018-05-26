@@ -1,33 +1,32 @@
 package view;
 
-import XML.MP3Bytes;
 import XML.XML_parser;
 import com.jfoenix.controls.*;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
-import javafx.beans.InvalidationListener;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import model.Metadata;
 
 import java.io.File;
-import java.util.*;
+import java.util.List;
 
 public class AppController {
     
-    ObservableList<Metadata> songs = FXCollections.observableArrayList();
+    private static AppController instance;
+    TablePages[] tablePages = new TablePages[3];
+    ObservableList<Metadata> tableList = FXCollections.observableArrayList();
+    private JFXTreeTableColumn<Metadata, String> nameColumn = new JFXTreeTableColumn<>("Title");
     
     @FXML
     private ImageView playPauseBtn;
@@ -46,7 +45,9 @@ public class AppController {
     @FXML
     private JFXTreeTableView<Metadata> songList;
     
-    private JFXTreeTableColumn<Metadata, String> nameColumn = new JFXTreeTableColumn<>("Name");
+    public static AppController getInstance () {
+        return instance;
+    }
     
     private JFXTreeTableColumn<Metadata, String> artistColumn = new JFXTreeTableColumn<>("Artist");
     
@@ -60,11 +61,46 @@ public class AppController {
     
     @FXML
     private void initialize () {
+    
+        nameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().title));
+    
+    
+        artistColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().artist));
+    
+    
+        albumColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().album));
+    
+    
+        yearColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().year));
+    
+        genreColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().genre));
+    
+    
+        final TreeItem<Metadata> root = new RecursiveTreeItem<>(tableList, RecursiveTreeObject::getChildren);
+    
+    
+        instance = this;
+    
+        songList.setRoot(root);
         songList.setShowRoot(false);
         songList.setEditable(false);
         songList.getColumns()
                 .setAll(nameColumn, artistColumn, albumColumn, yearColumn, genreColumn, lyricsColumn);
+    
+        tablePages[0] = populateTable(0);
+        tableList.addAll(tablePages[0].songs);
+    
+        tablePages[1] = populateTable(1);
+        tableList.addAll(tablePages[1].songs);
+    
+        tablePages[2] = populateTable(2);
+        tableList.addAll(tablePages[2].songs);
+        
+        
     }
+    
+    
+    //TODO CONTEXT MENU PARA PROPIEDADES DE CADA CANCION
     
     @FXML
     void nextSong (ActionEvent event) {
@@ -104,11 +140,6 @@ public class AppController {
             e.printStackTrace();
         }
     }
-
-//    private ObservableList<Metadata> populateTable(){
-//        XML_parser.get_songs(, , , )
-//        return FXCollections.observableArrayList();
-//    }
     
     @FXML
     private void openSearchDialog (ActionEvent actionEvent) {
@@ -144,5 +175,31 @@ public class AppController {
 //        MP3Bytes mp3Bytes = new MP3Bytes(test, songNombre);
 //        mp3Bytes.play();
     }
-
+    
+    //DALE ACA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+    //METODO PARA CONECTAR CON LA PAGINACION XML
+    private TablePages populateTable (int pageNumber) {
+        TablePages page = null;
+        try {
+            page = new TablePages();
+            
+            page.pageNumber = pageNumber;
+            page.totalSongs = //PEDIR POR XML
+                    page.pages = //PEDIR POR XML
+                            page.pageSize = //PEDIR POR XML
+            
+            //RECORRER CANCIONES E IR AGREGANDO
+            for (songs:) {
+                Metadata newSong = new Metadata();
+                
+                newSong.title = //PEDIR POR XML
+                        newSong.album = //PEDIR POR XML
+                                newSong.artist = //PEDIR POR XML
+                                        page.songs.addAll(newSong);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
 }

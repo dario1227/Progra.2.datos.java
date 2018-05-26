@@ -18,12 +18,15 @@ import java.net.URLEncoder;
 
 public class Metadata extends RecursiveTreeObject<Metadata> {
     
-    public String song = "";
+    public String title = "";
     public String artist = "";
     public String year = "";
     public String album = "";
     public String genre = "";
     public String lyrics = "";
+    
+    public Metadata () {
+    }
     
     public Metadata (String path) throws Exception {
         
@@ -36,7 +39,7 @@ public class Metadata extends RecursiveTreeObject<Metadata> {
             
             album = tag.getFirst(FieldKey.ALBUM);
             artist = tag.getFirst(FieldKey.ARTIST);
-            song = tag.getFirst(FieldKey.TITLE);
+            title = tag.getFirst(FieldKey.TITLE);
             lyrics = tag.getFirst(FieldKey.LYRICS);
             genre = tag.getFirst(FieldKey.GENRE);
             year = tag.getFirst(FieldKey.YEAR);
@@ -62,7 +65,7 @@ public class Metadata extends RecursiveTreeObject<Metadata> {
                     "?artist="
                             + URLEncoder.encode(artist, "UTF-8")
                             + "&song="
-                            + URLEncoder.encode(song, "UTF-8");
+                            + URLEncoder.encode(title, "UTF-8");
             URL url = new URL(BASE_URL + parameters);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");

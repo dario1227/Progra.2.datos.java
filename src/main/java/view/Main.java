@@ -10,6 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.io.*;
 import java.nio.file.Files;
 
@@ -84,12 +87,20 @@ public class Main extends Application {
         XML_parser.getXML_Archive("/home/germago/13.mp3", "13.mp3", "Blah", "ISM", "Savant");
     
     
-        Integer chunknum = 1;
+        Integer chunknum = 30;
         String songNombre = "13.mp3";
         byte[] test = XML_parser.get_chunk_bytes(songNombre, chunknum.toString());
         System.out.println("LARGO: " + test.length);
         MP3Bytes mp3Bytes = new MP3Bytes(test, songNombre);
         mp3Bytes.play();
+
+//        InputStream stream = new ByteArrayInputStream(test);
+//        System.out.println("STREAM: " + stream.toString());
+//        Clip clip = AudioSystem.getClip();
+//        AudioInputStream buffer = AudioSystem.getAudioInputStream(stream);
+//        clip.open(buffer);
+//        System.out.println("CLIP START/ Buffer: " + buffer.toString());
+//        clip.start();
     
     
         File f = new File("/home/germago/13.mp3");
