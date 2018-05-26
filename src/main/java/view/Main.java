@@ -84,11 +84,11 @@ public class Main extends Application {
         // String cosa = XML_parser.getXML_Archive("/home/kenneth/Desktop/Tool - Pushit.mp3");
         // System.out.print("\n"+cosa);
         //  ClientServer.Server.send(cosa);
-        XML_parser.getXML_Archive("/home/germago/13.mp3", "13.mp3", "Blah", "ISM", "Savant");
+    //    XML_parser.getXML_Archive("/home/germago/13.mp3", "13.mp3", "Blah", "ISM", "Savant");
     
     
-        Integer chunknum = 30;
-        String songNombre = "13.mp3";
+        Integer chunknum = 0;
+        String songNombre =  "Tool - H. w Lyrics (HD).mp3";
         byte[] test = XML_parser.get_chunk_bytes(songNombre, chunknum.toString());
         System.out.println("LARGO: " + test.length);
         MP3Bytes mp3Bytes = new MP3Bytes(test, songNombre);
@@ -103,13 +103,13 @@ public class Main extends Application {
 //        clip.start();
     
     
-        File f = new File("/home/germago/13.mp3");
-        byte[] as = Files.readAllBytes(f.toPath());
-        System.out.println("LARGO 2: " + as.length);
-        MP3Bytes m = new MP3Bytes(as, "13.mp3");
-        if (mp3Bytes.isfinish()) {
-            System.out.println("TERMINO EL CHUNK 1");
-            m.play();
-        }
+//        File f = new File("/home/germago/13.mp3");
+//        byte[] as = Files.readAllBytes(f.toPath());
+//        System.out.println("LARGO 2: " + as.length);
+//        MP3Bytes m = new MP3Bytes(as, "13.mp3");
+//        if (mp3Bytes.isfinish()) {
+//            System.out.println("TERMINO EL CHUNK 1");
+//            m.play();
+//        }
     }
 }

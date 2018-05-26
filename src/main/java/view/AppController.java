@@ -219,16 +219,16 @@ public class AppController {
         TablePages page = null;
         try {
             page = new TablePages();
-            
+
             page.pageNumber = pageNumber;
             page.totalSongs = //PEDIR POR XML
                     page.pages = //PEDIR POR XML
                             page.pageSize = //PEDIR POR XML
-            
+
             //RECORRER CANCIONES E IR AGREGANDO
             for (songs:) {
                 Metadata newSong = new Metadata();
-                
+
                 newSong.title = //PEDIR POR XML
                         newSong.album = //PEDIR POR XML
                                 newSong.artist = //PEDIR POR XML
@@ -237,6 +237,7 @@ public class AppController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return null;
     }
-    
+
 }
