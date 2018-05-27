@@ -3,11 +3,19 @@ package view;
 import Server.ClientServer;
 import XML.MP3Bytes;
 import XML.XML_parser;
+import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 
 public class Main extends Application {
@@ -21,6 +29,21 @@ public class Main extends Application {
     
     public static Stage getmStage () {
         return mStage;
+    }
+    
+    public static void exitServer () {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Look, a Confirmation Dialog");
+        alert.setContentText("Are you ok with this?");
+        
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Platform.exit();
+        } else {
+            alert.close();
+        }
+        
     }
     
     @Override
@@ -67,6 +90,7 @@ public class Main extends Application {
         // Cambiar a Login.fxml para probar metodos o a Main.fxml para reproductor
         Parent root = FXMLLoader.load(getClass().getResource("App.fxml"));
         mStage = primaryStage;
+        mStage.setOnCloseRequest(e -> exitServer());
         mStage.setTitle("Odyssey++");
         //mStage.setScene(new Scene(root, 400, 300));
         mStage.setScene(new Scene(root, 1280, 720));
@@ -105,4 +129,5 @@ public class Main extends Application {
 //            m.play();
 //        }
     }
+    
 }

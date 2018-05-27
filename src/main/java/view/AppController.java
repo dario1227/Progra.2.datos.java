@@ -4,6 +4,7 @@ import XML.Canciones;
 import XML.XML_parser;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,6 +39,11 @@ public class AppController {
     @FXML
     private ImageView playPauseBtn;
     
+    @FXML
+    private JFXButton prevPageBtn;
+    
+    @FXML
+    private JFXButton nextPageBtn;
     
     @FXML
     private JFXSlider songSlider;
@@ -242,6 +248,29 @@ public class AppController {
         }
     
         return value[0];
+    }
+    
+    @FXML
+    void prevPageRequest (ActionEvent event) {
+        if (SearchDialogController.actualPage.equals("1")) {
+            //Do nothing
+        } else {
+            Integer i = Integer.parseInt(SearchDialogController.actualPage);
+            i--;
+            SearchDialogController.actualPage = i.toString();
+            populateTable();
+        }
+    }
+    
+    @FXML
+    void nextPageRequest (ActionEvent event) {
+        if (Integer.parseInt(SearchDialogController.actualPage) >= 1) {
+            Integer i = Integer.parseInt(SearchDialogController.actualPage);
+            i++;
+            SearchDialogController.actualPage = i.toString();
+            populateTable();
+        }
+        
     }
     
 }
