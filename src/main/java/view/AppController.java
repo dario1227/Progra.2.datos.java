@@ -187,16 +187,13 @@ public class AppController {
     void contextMenu (ContextMenuEvent event) {
         ContextMenu altMenu = new ContextMenu();
         MenuItem details = new MenuItem("Details");
-        details.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle (ActionEvent event) {
-                try {
-                    Metadata selected = songList.getSelectionModel().getSelectedItem().getValue();
-                    DetailsDialog dialog = new DetailsDialog();
-                    dialog.showAndWait(selected);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+        details.setOnAction(event1 -> {
+            try {
+                Metadata selected = songList.getSelectionModel().getSelectedItem().getValue();
+                DetailsDialog dialog = new DetailsDialog();
+                dialog.showAndWait(selected);
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         });
         
@@ -205,38 +202,32 @@ public class AppController {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     //DALE ACA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     //METODO PARA CONECTAR CON LA PAGINACION XML
-    public TablePages populateTable (int pageNumber, ArrayList<Canciones> canciones) {
+    public TablePages populateTable (Integer pageNumber) {
         TablePages page = null;
         try {
             page = new TablePages();
-//
-//            page.pageNumber =; pageNumber;
-//            page.totalSongs = ;//PEDIR POR XML;
-//                    page.pages =; //PEDIR POR XML;
-//                            page.pageSize = ;//PEDIR POR XML;
+    
+            //POR MIENTRAS NADA
+            String method = "Nada";
+            String parametro = "Nada";  //NO ESTOY SEGURO DE QUE PONER ACA
+            String orden = "false";
+    
+            ArrayList<Canciones> canciones = XML_parser.get_songs(method, pageNumber.toString(), parametro, orden);
 
             //RECORRER CANCIONES E IR AGREGANDO
            int x=0;
             while(x<canciones.size()) {
                 Metadata newSong = new Metadata();
-
                 newSong.title = canciones.get(x).nombre;//PEDIR POR XML
-                        newSong.album = canciones.get(x).album;//PEDIR POR XML
-                                newSong.artist = canciones.get(x).artista;//PEDIR POR XML
-                                        page.songs.addAll(newSong);
+                newSong.album = canciones.get(x).album;//PEDIR POR XML
+                newSong.artist = canciones.get(x).artista;//PEDIR POR XML
+                page.songs.addAll(newSong);
             }
+    
+            return page;
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
