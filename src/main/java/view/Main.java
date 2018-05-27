@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Optional;
 
 
@@ -37,7 +38,13 @@ public class Main extends Application {
         alert.setHeaderText(null);
         alert.setContentText("Request Server Shutdown");
         alert.showAndWait();
-        
+        try {
+            ClientServer.Server.send("Salir");
+            ClientServer.Server.socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
     
     @Override

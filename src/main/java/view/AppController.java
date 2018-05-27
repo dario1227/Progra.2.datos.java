@@ -210,7 +210,7 @@ public class AppController {
         final CountDownLatch latch = new CountDownLatch(1);
         final TablePages[] value = new TablePages[1];
     
-        new Thread(() -> {
+
         
             TablePages page = null;
             try {
@@ -234,18 +234,21 @@ public class AppController {
                     latch.countDown();
                 } else {
                     value[0] = null;
+
                 }
             
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         
-        }).start();
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+//        try {            System.out.println("LLEGUE AQUI");
+//
+//            latch.await();
+//
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     
         return value[0];
     }

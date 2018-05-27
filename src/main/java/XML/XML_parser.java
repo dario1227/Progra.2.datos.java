@@ -134,6 +134,7 @@ public class XML_parser {
             Element rootnode = (Element) nList.item(0);
             String result = rootnode.getAttribute("Result");
             if (result.contains("true")) {
+                System.out.println("ENTRE AQUI MIJO");
                 NodeList nodos = rootnode.getElementsByTagName("Cancion");
                 int x = 0;
                 
