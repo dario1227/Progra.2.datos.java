@@ -14,9 +14,9 @@ import java.util.ArrayList;
 
 public class SearchDialogController {
     public static String actualPage = "0";
-    public static String orden;
-    public static String parametro;
-    public static String nombre;
+    public static String orden="Nada";
+    public static String parametro="Nada";
+    public static String nombre="Nada";
     @FXML
     private JFXTextField searchTextField;
     
