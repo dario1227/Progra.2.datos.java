@@ -78,7 +78,7 @@ public class ArtistsMainController implements Initializable, SubView {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (frac);
                     subViewRoot.setTranslateY(expandedHeight - curHeight);
@@ -91,7 +91,7 @@ public class ArtistsMainController implements Initializable, SubView {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (1 - frac);
                     subViewRoot.setTranslateY(expandedHeight - curHeight);
@@ -104,7 +104,7 @@ public class ArtistsMainController implements Initializable, SubView {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (frac);
                     songTable.setTranslateY(expandedHeight - curHeight);
@@ -117,7 +117,7 @@ public class ArtistsMainController implements Initializable, SubView {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (1 - frac);
                     songTable.setTranslateY(expandedHeight - curHeight);
@@ -174,14 +174,14 @@ public class ArtistsMainController implements Initializable, SubView {
         artistList.setOnMouseClicked(
                 event -> {
                     if (event.getClickCount() == 2) {
-                    
+    
                         ObservableList<Song> songs = FXCollections.observableArrayList();
                         ObservableList<Album> albums = FXCollections.observableArrayList();
                         for (Album album : selectedArtist.getAlbums()) {
                             albums.add(album);
                             songs.addAll(album.getSongs());
                         }
-                    
+    
                         if (OdysseyPlayer.isShuffleActive()) {
                             Collections.shuffle(songs);
                         } else {
@@ -207,14 +207,14 @@ public class ArtistsMainController implements Initializable, SubView {
                                         }
                                     });
                         }
-                    
+    
                         Song song = songs.get(0);
                         OdysseyPlayer.setNowPlayingList(songs);
                         OdysseyPlayer.setNowPlaying(song);
                         OdysseyPlayer.play();
-                    
+    
                     } else {
-                    
+    
                         Task<Void> task =
                                 new Task<Void>() {
                                     @Override
@@ -232,7 +232,7 @@ public class ArtistsMainController implements Initializable, SubView {
                                         return null;
                                     }
                                 };
-                    
+    
                         task.setOnSucceeded(
                                 x ->
                                         Platform.runLater(
@@ -240,11 +240,11 @@ public class ArtistsMainController implements Initializable, SubView {
                                                     subViewRoot.setVisible(true);
                                                     artistLoadAnimation.play();
                                                 }));
-                    
+    
                         Thread thread = new Thread(task);
-                    
+    
                         artistUnloadAnimation.setOnFinished(x -> thread.start());
-                    
+    
                         artistUnloadAnimation.play();
                     }
                 });
@@ -252,27 +252,27 @@ public class ArtistsMainController implements Initializable, SubView {
         albumList.setOnMouseClicked(
                 event -> {
                     Album album = albumList.getSelectionModel().getSelectedItem();
-            
+    
                     if (event.getClickCount() == 2) {
-                
+        
                         if (album != selectedAlbum) {
                             selectAlbum(album);
                         }
-                
+        
                         ArrayList<Song> songs = selectedAlbum.getSongs();
-                
+        
                         if (OdysseyPlayer.isShuffleActive()) {
                             Collections.shuffle(songs);
                         } else {
                             Collections.sort(songs);
                         }
-                
+        
                         OdysseyPlayer.setNowPlayingList(songs);
                         OdysseyPlayer.setNowPlaying(songs.get(0));
                         OdysseyPlayer.play();
-                
+        
                     } else {
-                
+        
                         Task<Void> task =
                                 new Task<Void>() {
                                     @Override
@@ -285,7 +285,7 @@ public class ArtistsMainController implements Initializable, SubView {
                                         return null;
                                     }
                                 };
-                
+        
                         task.setOnSucceeded(
                                 x ->
                                         Platform.runLater(
@@ -293,11 +293,11 @@ public class ArtistsMainController implements Initializable, SubView {
                                                     songTable.setVisible(true);
                                                     albumLoadAnimation.play();
                                                 }));
-                
+        
                         Thread thread = new Thread(task);
-                
+        
                         albumUnloadAnimation.setOnFinished(x -> thread.start());
-                
+        
                         albumUnloadAnimation.play();
                     }
                 });
@@ -305,14 +305,14 @@ public class ArtistsMainController implements Initializable, SubView {
         songTable.setRowFactory(
                 x -> {
                     TableRow<Song> row = new TableRow<>();
-            
+    
                     PseudoClass playing = PseudoClass.getPseudoClass("playing");
-            
+    
                     ChangeListener<Boolean> changeListener =
                             (obs, oldValue, newValue) -> {
                                 row.pseudoClassStateChanged(playing, newValue);
                             };
-            
+    
                     row.itemProperty()
                        .addListener(
                                (obs, previousSong, currentSong) -> {
@@ -326,7 +326,7 @@ public class ArtistsMainController implements Initializable, SubView {
                                        row.pseudoClassStateChanged(playing, false);
                                    }
                                });
-            
+    
                     row.setOnMouseClicked(
                             event -> {
                                 TableViewSelectionModel<Song> sm = songTable.getSelectionModel();
@@ -355,7 +355,7 @@ public class ArtistsMainController implements Initializable, SubView {
                                             }
                                         }
                                     }
-                            
+    
                                 } else if (event.isControlDown()) {
                                     if (sm.getSelectedIndices().contains(row.getIndex())) {
                                         sm.clearSelection(row.getIndex());
@@ -374,7 +374,7 @@ public class ArtistsMainController implements Initializable, SubView {
                                     }
                                 }
                             });
-            
+    
                     row.setOnDragDetected(
                             event -> {
                                 Dragboard db = row.startDragAndDrop(TransferMode.ANY);
@@ -394,7 +394,7 @@ public class ArtistsMainController implements Initializable, SubView {
                                 db.setDragView(image.snapshot(null, null), 125, 25);
                                 event.consume();
                             });
-            
+    
                     return row;
                 });
         
@@ -430,7 +430,7 @@ public class ArtistsMainController implements Initializable, SubView {
                         setCycleDuration(Duration.millis(250));
                         setInterpolator(Interpolator.EASE_BOTH);
                     }
-            
+    
                     protected void interpolate (double frac) {
                         artistList.setMinHeight(frac * height);
                         artistList.setPrefHeight(frac * height);
@@ -471,7 +471,7 @@ public class ArtistsMainController implements Initializable, SubView {
                             setCycleDuration(Duration.millis(250));
                             setInterpolator(Interpolator.EASE_BOTH);
                         }
-            
+    
                         protected void interpolate (double frac) {
                             songTable.setMinHeight(frac * height);
                             songTable.setPrefHeight(frac * height);
@@ -597,7 +597,7 @@ public class ArtistsMainController implements Initializable, SubView {
                         setCycleDuration(Duration.millis(250));
                         setInterpolator(Interpolator.EASE_BOTH);
                     }
-            
+    
                     protected void interpolate (double frac) {
                         songTable.setMinHeight(frac * height);
                         songTable.setPrefHeight(frac * height);
@@ -687,7 +687,7 @@ public class ArtistsMainController implements Initializable, SubView {
                     {
                         setCycleDuration(Duration.millis(500));
                     }
-            
+    
                     protected void interpolate (double frac) {
                         double vValue = startVvalue + ((finalVvalue - startVvalue) * frac);
                         artistListScrollPane.setVvalue(vValue);

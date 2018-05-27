@@ -69,7 +69,7 @@ public class PlaylistsController implements Initializable, SubView {
                     setCycleDuration(Duration.millis(500));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     if (frac < 0.5) {
                         cell.setOpacity(1.0 - frac * 2);
@@ -114,12 +114,12 @@ public class PlaylistsController implements Initializable, SubView {
         tableView.setRowFactory(
                 x -> {
                     TableRow<Song> row = new TableRow<>();
-            
+    
                     PseudoClass playing = PseudoClass.getPseudoClass("playing");
-            
+    
                     ChangeListener<Boolean> changeListener =
                             (obs, oldValue, newValue) -> row.pseudoClassStateChanged(playing, newValue);
-            
+    
                     row.itemProperty()
                        .addListener(
                                (obs, previousSong, currentSong) -> {
@@ -133,7 +133,7 @@ public class PlaylistsController implements Initializable, SubView {
                                        row.pseudoClassStateChanged(playing, false);
                                    }
                                });
-            
+    
                     row.setOnMouseClicked(
                             event -> {
                                 TableViewSelectionModel<Song> sm = tableView.getSelectionModel();
@@ -162,7 +162,7 @@ public class PlaylistsController implements Initializable, SubView {
                                             }
                                         }
                                     }
-                            
+    
                                 } else if (event.isControlDown()) {
                                     if (sm.getSelectedIndices().contains(row.getIndex())) {
                                         sm.clearSelection(row.getIndex());
@@ -181,7 +181,7 @@ public class PlaylistsController implements Initializable, SubView {
                                     }
                                 }
                             });
-            
+    
                     row.setOnDragDetected(
                             event -> {
                                 Dragboard db = row.startDragAndDrop(TransferMode.ANY);
@@ -201,7 +201,7 @@ public class PlaylistsController implements Initializable, SubView {
                                 db.setDragView(image.snapshot(null, null), 125, 25);
                                 event.consume();
                             });
-            
+    
                     return row;
                 });
         

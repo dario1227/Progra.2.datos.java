@@ -426,33 +426,35 @@ public class XML_parser {
         is.close();
         return bytes;
     }
-    public static boolean delete_file(String filename,String artista,String album){
-        try{
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-        Document doc = docBuilder.newDocument();
-        Element root = doc.createElement("Root");
-        Attr atributo = doc.createAttribute("Operation");
-        atributo.setValue("Log");
-        root.setAttributeNode(atributo);
-        Element user = doc.createElement("User");
-        user.setAttribute("Filename", filename);
-        user.setAttribute("Artista", artista);
-    //    user.setAttribute();
-        root.appendChild(user);
-        doc.appendChild(root);
-        DOMSource domSource = new DOMSource(doc);
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        StringWriter sw = new StringWriter();
-        StreamResult sr = new StreamResult(sw);
-        transformer.transform(domSource, sr);
-        System.out.println(sw.toString());
-        ClientServer.Server.send(sw.toString());
-        return true;}
-        catch(Exception e){
-        return false;
+    
+    public static boolean delete_file (String filename, String artista, String album) {
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.newDocument();
+            Element root = doc.createElement("Root");
+            Attr atributo = doc.createAttribute("Operation");
+            atributo.setValue("Log");
+            root.setAttributeNode(atributo);
+            Element user = doc.createElement("User");
+            user.setAttribute("Filename", filename);
+            user.setAttribute("Artista", artista);
+            //    user.setAttribute();
+            root.appendChild(user);
+            doc.appendChild(root);
+            DOMSource domSource = new DOMSource(doc);
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            StringWriter sw = new StringWriter();
+            StreamResult sr = new StreamResult(sw);
+            transformer.transform(domSource, sr);
+            System.out.println(sw.toString());
+            ClientServer.Server.send(sw.toString());
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
+    
     public static boolean getXML_Archive (
             String path, String filename, String letra, String Album, String artista) {
         try {

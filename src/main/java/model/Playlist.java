@@ -24,14 +24,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Playlist {
-
+    
     private int id;
     private String title;
     private ArrayList<Song> songs;
     private String placeholder =
             "Add songs to this playlist by dragging items to the sidebar\n"
                     + "or by clicking the Add to Playlist button";
-
+    
     /**
      * Constructor for the Playlist class. Creates a playlist object.
      *
@@ -70,25 +70,25 @@ public class Playlist {
     
     public void addSong (Song song) {
         if (! songs.contains(song)) {
-
+    
             songs.add(song);
-
+    
             try {
                 DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
                 Document doc = docBuilder.parse(Resources.JAR + "library.xml");
-
+        
                 XPathFactory xPathfactory = XPathFactory.newInstance();
                 XPath xpath = xPathfactory.newXPath();
-
+        
                 XPathExpression expr =
                         xpath.compile("/library/playlists/playlist[@id=\"" + this.id + "\"]");
                 Node playlist = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
-
+        
                 Element songId = doc.createElement("songId");
                 songId.setTextContent(Integer.toString(song.getId()));
                 playlist.appendChild(songId);
-
+        
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -97,7 +97,7 @@ public class Playlist {
                 File xmlFile = new File(Resources.JAR + "library.xml");
                 StreamResult result = new StreamResult(xmlFile);
                 transformer.transform(source, result);
-
+        
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -115,7 +115,7 @@ public class Playlist {
             }
         }
     }
-
+    
     @Override
     public String toString () {
         return this.title;

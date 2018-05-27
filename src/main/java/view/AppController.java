@@ -8,7 +8,6 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class AppController {
     
@@ -51,20 +51,15 @@ public class AppController {
     
     @FXML
     private JFXTreeTableView<Metadata> songList;
+    private JFXTreeTableColumn<Metadata, String> artistColumn = new JFXTreeTableColumn<>("Artist");
+    private JFXTreeTableColumn<Metadata, String> yearColumn = new JFXTreeTableColumn<>("Year");
+    private JFXTreeTableColumn<Metadata, String> albumColumn = new JFXTreeTableColumn<>("Album");
+    private JFXTreeTableColumn<Metadata, String> genreColumn = new JFXTreeTableColumn<>("Genre");
+    private JFXTreeTableColumn<Metadata, String> lyricsColumn = new JFXTreeTableColumn<>("Lyrics");
     
     public static AppController getInstance () {
         return instance;
     }
-    
-    private JFXTreeTableColumn<Metadata, String> artistColumn = new JFXTreeTableColumn<>("Artist");
-    
-    private JFXTreeTableColumn<Metadata, String> yearColumn = new JFXTreeTableColumn<>("Year");
-    
-    private JFXTreeTableColumn<Metadata, String> albumColumn = new JFXTreeTableColumn<>("Album");
-    
-    private JFXTreeTableColumn<Metadata, String> genreColumn = new JFXTreeTableColumn<>("Genre");
-    
-    private JFXTreeTableColumn<Metadata, String> lyricsColumn = new JFXTreeTableColumn<>("Lyrics");
     
     @FXML
     private void initialize () {
@@ -93,15 +88,15 @@ public class AppController {
         songList.setEditable(false);
         songList.getColumns()
                 .setAll(nameColumn, artistColumn, albumColumn, yearColumn, genreColumn, lyricsColumn);
-    //AQUI ES ESTO
-        tablePages[0] = populateTable(0);
+        //AQUI ES ESTO
+        tablePages[0] = populateTable();
         tableList.addAll(tablePages[0].songs);
-    
-        tablePages[1] = populateTable(1);
-        tableList.addAll(tablePages[1].songs);
-    
-        tablePages[2] = populateTable(2);
-        tableList.addAll(tablePages[2].songs);
+
+//        tablePages[1] = populateTable(1);
+//        tableList.addAll(tablePages[1].songs);
+//
+//        tablePages[2] = populateTable(2);
+//        tableList.addAll(tablePages[2].songs);
         
         
     }
@@ -204,34 +199,49 @@ public class AppController {
     
     //DALE ACA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     //METODO PARA CONECTAR CON LA PAGINACION XML
-    public TablePages populateTable (Integer pageNumber) {
-        TablePages page = null;
-        try {
-            page = new TablePages();
+    public TablePages populateTable () {
     
-            //POR MIENTRAS NADA
-//            String method = "Nada";
-//            String parametro = "Nada";  //NO ESTOY SEGURO DE QUE PONER ACA
-//            String orden = "false";
+        final CountDownLatch latch = new CountDownLatch(1);
+        final TablePages[] value = new TablePages[1];
     
-            ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro,SearchDialogController.actualPage,SearchDialogController.nombre,SearchDialogController.orden);
-
-            //RECORRER CANCIONES E IR AGREGANDO
-           int x=0;
-            while(x<canciones.size()) {
-                Metadata newSong = new Metadata();
-                newSong.title = canciones.get(x).nombre;//PEDIR POR XML
-                newSong.album = canciones.get(x).album;//PEDIR POR XML
-                newSong.artist = canciones.get(x).artista;//PEDIR POR XML
-                page.songs.addAll(newSong);
-            }
-    
-            return page;
+        new Thread(() -> {
+        
+            TablePages page = null;
+            try {
+                page = new TablePages();
             
-        } catch (Exception ex) {
-            ex.printStackTrace();
+                ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro, SearchDialogController.actualPage, SearchDialogController.nombre, SearchDialogController.orden);
+            
+                //RECORRER CANCIONES E IR AGREGANDO
+                if (canciones != null) {
+                    int x = 0;
+                    while (x < canciones.size()) {
+                        Metadata newSong = new Metadata();
+                        newSong.title = canciones.get(x).nombre;//PEDIR POR XML
+                        newSong.album = canciones.get(x).album;//PEDIR POR XML
+                        newSong.artist = canciones.get(x).artista;//PEDIR POR XML
+                        page.songs.addAll(newSong);
+                        x++;
+                    }
+                
+                    value[0] = page;
+                    latch.countDown();
+                } else {
+                    value[0] = null;
+                }
+            
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        
+        }).start();
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        return null;
+    
+        return value[0];
     }
-
+    
 }

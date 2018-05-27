@@ -1,7 +1,5 @@
 package view;
 
-import XML.Canciones;
-import XML.XML_parser;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
@@ -9,8 +7,6 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
-import java.util.ArrayList;
 
 public class SearchDialogController {
     public static String actualPage = "0";
@@ -54,32 +50,32 @@ public class SearchDialogController {
     
     @FXML
     void saveSettings (ActionEvent event) {
-        String cosa ;
+        String cosa;
         String parametro2 = typeCombo.getValue().getText();
-        if(yesRadioBtn.isSelected()){
+        if (yesRadioBtn.isSelected()) {
             orden = "true";
-        }
-        else{
+        } else {
             orden = "false";
         }
         nombre = searchTextField.getText();
         parametro = metodo_busqueda(parametro2);
-
-      //  ArrayList<Canciones> canciones = XML_parser.get_songs(parametro_parseado, actualPage, busqueda, cosa);
-        AppController.instance.populateTable(0);
+    
+        //  ArrayList<Canciones> canciones = XML_parser.get_songs(parametro_parseado, actualPage, busqueda, cosa);
+        AppController.instance.populateTable();
     }
-    String metodo_busqueda(String ingles){
-        if(ingles.contains("Album")){
+    
+    String metodo_busqueda (String ingles) {
+        if (ingles.contains("Album")) {
             return "Album";
         }
-        if(ingles.contains("Artist")){
-            return  "Autor";
+        if (ingles.contains("Artist")) {
+            return "Autor";
         }
-        if(ingles.contains("Title")){
-return "Nombre";
+        if (ingles.contains("Title")) {
+            return "Nombre";
         }
-        if(ingles.contains("Lyrics")){
-return "Letra";
+        if (ingles.contains("Lyrics")) {
+            return "Letra";
         }
         return " null";
     }

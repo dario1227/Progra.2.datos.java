@@ -143,14 +143,14 @@ public final class Library {
         for (File file : files) {
             if (file.isFile() && isSupportedFileType(file.getName())) {
                 try {
-
+    
                     AudioFile audioFile = AudioFileIO.read(file);
                     Tag tag = audioFile.getTag();
                     AudioHeader header = audioFile.getAudioHeader();
-
+    
                     Element song = doc.createElement("song");
                     songs.appendChild(song);
-
+    
                     Element id = doc.createElement("id");
                     Element title = doc.createElement("title");
                     Element artist = doc.createElement("artist");
@@ -161,9 +161,9 @@ public final class Library {
                     Element playCount = doc.createElement("playCount");
                     Element playDate = doc.createElement("playDate");
                     Element location = doc.createElement("location");
-
+    
                     Element lyrics = doc.createElement("lyrics");
-
+    
                     id.setTextContent(Integer.toString(i++));
                     title.setTextContent(tag.getFirst(FieldKey.TITLE));
                     String artistTitle = tag.getFirst(FieldKey.ALBUM_ARTIST);
@@ -179,7 +179,7 @@ public final class Library {
                     if (songLyrics != null || ! songLyrics.equals("") || ! songLyrics.equals("null")) {
                         lyrics.setTextContent(songLyrics);
                     }
-
+    
                     album.setTextContent(tag.getFirst(FieldKey.ALBUM));
                     length.setTextContent(Integer.toString(header.getTrackLength()));
                     String track = tag.getFirst(FieldKey.TRACK);
@@ -191,7 +191,7 @@ public final class Library {
                     playCount.setTextContent("0");
                     playDate.setTextContent(LocalDateTime.now().toString());
                     location.setTextContent(Paths.get(file.getAbsolutePath()).toString());
-
+    
                     // SERVER
                     //                    XML_parser.getXML_Archive(
                     //                            location.getFirstChild().getUserData("data").toString(),
@@ -199,7 +199,7 @@ public final class Library {
                     //                            songLyrics,
                     //                            album.getFirstChild().getUserData("data").toString(),
                     //                            artist.getFirstChild().getUserData("data").toString());
-
+    
                     //                    System.out.println(location.getUserData("data").toString());
                     //                    System.out.println(file.getName());
                     //                    System.out.println(songLyrics);
@@ -217,9 +217,9 @@ public final class Library {
                     song.appendChild(playDate);
                     song.appendChild(location);
                     song.appendChild(lyrics);
-
+    
                     task.updateProgress(i, Library.maxProgress);
-
+    
                 } catch (Exception ex) {
     
                     ex.printStackTrace();
@@ -494,23 +494,23 @@ public final class Library {
                         () -> {
                             int i = playlists.size() - 2;
                             playlists.add(new Playlist(i, text, new ArrayList<>()));
-                    
+    
                             try {
                                 DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
                                 DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
                                 Document doc = docBuilder.parse(Resources.JAR + "library.xml");
-                        
+        
                                 XPathFactory xPathfactory = XPathFactory.newInstance();
                                 XPath xpath = xPathfactory.newXPath();
-                        
+        
                                 XPathExpression expr = xpath.compile("/library/playlists");
                                 Node playlists = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
-                        
+        
                                 Element playlist = doc.createElement("playlist");
                                 playlist.setAttribute("id", Integer.toString(i));
                                 playlist.setAttribute(TITLE, text);
                                 playlists.appendChild(playlist);
-                        
+        
                                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                                 Transformer transformer = transformerFactory.newTransformer();
                                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -594,7 +594,7 @@ public final class Library {
                             return 0;
                         }
                     });
-
+    
             playlists.add(new MostPlayedPlaylist(- 2));
             playlists.add(new RecentlyPlayedPlaylist(- 1));
         } else {
@@ -684,28 +684,28 @@ public final class Library {
                 new Thread(
                         () -> {
                             try {
-                        
+    
                                 DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
                                 DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
                                 Document doc = docBuilder.parse(Resources.JAR + "library.xml");
-                        
+    
                                 XPathFactory xPathfactory = XPathFactory.newInstance();
                                 XPath xpath = xPathfactory.newXPath();
-                        
+    
                                 XPathExpression expr = xpath.compile("/library/nowPlayingList");
                                 Node playingList = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
-                        
+    
                                 NodeList nodes = playingList.getChildNodes();
                                 while (nodes.getLength() > 0) {
                                     playingList.removeChild(nodes.item(0));
                                 }
-                        
+    
                                 for (Song song : OdysseyPlayer.getNowPlayingList()) {
                                     Element id = doc.createElement(ID);
                                     id.setTextContent(Integer.toString(song.getId()));
                                     playingList.appendChild(id);
                                 }
-                        
+    
                                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                                 Transformer transformer = transformerFactory.newTransformer();
                                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -714,9 +714,9 @@ public final class Library {
                                 File xmlFile = new File(Resources.JAR + "library.xml");
                                 StreamResult result = new StreamResult(xmlFile);
                                 transformer.transform(source, result);
-                        
+    
                             } catch (Exception ex) {
-                        
+    
                                 ex.printStackTrace();
                             }
                         });

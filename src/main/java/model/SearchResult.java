@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class SearchResult {
-
+    
     private List<Song> songResults;
     private List<Album> albumResults;
     private List<Artist> artistResults;

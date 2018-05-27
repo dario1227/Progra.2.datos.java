@@ -86,12 +86,12 @@ public class NowPlayingController implements Initializable, SubView {
         tableView.setRowFactory(
                 x -> {
                     TableRow<Song> row = new TableRow<>();
-            
+    
                     PseudoClass playing = PseudoClass.getPseudoClass("playing");
-            
+    
                     ChangeListener<Boolean> changeListener =
                             (obs, oldValue, newValue) -> row.pseudoClassStateChanged(playing, newValue);
-            
+    
                     row.itemProperty()
                        .addListener(
                                (obs, previousSong, currentSong) -> {
@@ -105,7 +105,7 @@ public class NowPlayingController implements Initializable, SubView {
                                        row.pseudoClassStateChanged(playing, false);
                                    }
                                });
-            
+    
                     row.setOnMouseClicked(
                             event -> {
                                 TableViewSelectionModel<Song> sm = tableView.getSelectionModel();
@@ -134,7 +134,7 @@ public class NowPlayingController implements Initializable, SubView {
                                             }
                                         }
                                     }
-                            
+    
                                 } else if (event.isControlDown()) {
                                     if (sm.getSelectedIndices().contains(row.getIndex())) {
                                         sm.clearSelection(row.getIndex());
@@ -153,7 +153,7 @@ public class NowPlayingController implements Initializable, SubView {
                                     }
                                 }
                             });
-            
+    
                     row.setOnDragDetected(
                             event -> {
                                 Dragboard db = row.startDragAndDrop(TransferMode.ANY);
@@ -173,7 +173,7 @@ public class NowPlayingController implements Initializable, SubView {
                                 db.setDragView(image.snapshot(null, null), 125, 25);
                                 event.consume();
                             });
-            
+    
                     return row;
                 });
         

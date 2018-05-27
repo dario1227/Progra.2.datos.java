@@ -3,18 +3,11 @@ package view;
 import Server.ClientServer;
 import XML.MP3Bytes;
 import XML.XML_parser;
-import com.sun.webkit.Timer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import java.io.*;
-import java.nio.file.Files;
 
 
 public class Main extends Application {
@@ -72,27 +65,27 @@ public class Main extends Application {
         // XML_parser.chunk("MEME.mp3","2");
         // XML_parser.prueba();
         // Cambiar a Login.fxml para probar metodos o a Main.fxml para reproductor
-//        Parent root = FXMLLoader.load(getClass().getResource("App.fxml"));
-//        mStage = primaryStage;
-//        mStage.setTitle("Odyssey++");
-//        //mStage.setScene(new Scene(root, 400, 300));
-//        mStage.setScene(new Scene(root, 1280, 720));
-//        //mStage.setResizable(false);
-//        mStage.show();
+        Parent root = FXMLLoader.load(getClass().getResource("App.fxml"));
+        mStage = primaryStage;
+        mStage.setTitle("Odyssey++");
+        //mStage.setScene(new Scene(root, 400, 300));
+        mStage.setScene(new Scene(root, 1280, 720));
+        //mStage.setResizable(false);
+        mStage.show();
         //        ClientServer.Server.send("YOUR MOM GAY");
         //        ClientServer.Server.receive();
         // String cosa = XML_parser.getXML_Archive("/home/kenneth/Desktop/Tool - Pushit.mp3");
         // System.out.print("\n"+cosa);
         //  ClientServer.Server.send(cosa);
-    //    XML_parser.getXML_Archive("/home/germago/13.mp3", "13.mp3", "Blah", "ISM", "Savant");
-    
-    
-        Integer chunknum = 0;
-        String songNombre =  "Tool - H. w Lyrics (HD).mp3";
-        byte[] test = XML_parser.get_chunk_bytes(songNombre, chunknum.toString());
-        System.out.println("LARGO: " + test.length);
-        MP3Bytes mp3Bytes = new MP3Bytes(test, songNombre);
-        mp3Bytes.play();
+        //    XML_parser.getXML_Archive("/home/germago/13.mp3", "13.mp3", "Blah", "ISM", "Savant");
+
+
+//        Integer chunknum = 0;
+//        String songNombre = "Tool - H. w Lyrics (HD).mp3";
+//        byte[] test = XML_parser.get_chunk_bytes(songNombre, chunknum.toString());
+//        System.out.println("LARGO: " + test.length);
+//        MP3Bytes mp3Bytes = new MP3Bytes(test, songNombre);
+//        mp3Bytes.play();
 
 //        InputStream stream = new ByteArrayInputStream(test);
 //        System.out.println("STREAM: " + stream.toString());
@@ -101,8 +94,8 @@ public class Main extends Application {
 //        clip.open(buffer);
 //        System.out.println("CLIP START/ Buffer: " + buffer.toString());
 //        clip.start();
-    
-    
+
+
 //        File f = new File("/home/germago/13.mp3");
 //        byte[] as = Files.readAllBytes(f.toPath());
 //        System.out.println("LARGO 2: " + as.length);

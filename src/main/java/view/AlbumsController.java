@@ -83,7 +83,7 @@ public class AlbumsController implements Initializable, SubView {
                 {
                     setCycleDuration(Duration.millis(250));
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (frac);
                     songBox.setPrefHeight(curHeight);
@@ -97,7 +97,7 @@ public class AlbumsController implements Initializable, SubView {
                     setCycleDuration(Duration.millis(250));
                     setOnFinished(x -> collapseAlbumDetail());
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (1.0 - frac);
                     songBox.setPrefHeight(curHeight);
@@ -112,7 +112,7 @@ public class AlbumsController implements Initializable, SubView {
                     setCycleDuration(Duration.millis(250));
                     setOnFinished(x -> collapseAlbumDetail());
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double curLocation = collapsedHeight + (expandedHeight - collapsedHeight) * (frac);
                     artistLabel.setTranslateY(curLocation);
@@ -130,7 +130,7 @@ public class AlbumsController implements Initializable, SubView {
                 {
                     setCycleDuration(Duration.millis(250));
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double curLocation = collapsedHeight + (expandedHeight - collapsedHeight) * (1.0 - frac);
                     artistLabel.setTranslateY(curLocation);
@@ -186,7 +186,7 @@ public class AlbumsController implements Initializable, SubView {
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-            
+    
                     for (int j = 25; j < albums.size(); j++) {
                         Album album = albums.get(j);
                         int k = j;
@@ -214,14 +214,14 @@ public class AlbumsController implements Initializable, SubView {
         songTable.setRowFactory(
                 x -> {
                     TableRow<Song> row = new TableRow<Song>();
-            
+    
                     PseudoClass playing = PseudoClass.getPseudoClass("playing");
-            
+    
                     ChangeListener<Boolean> changeListener =
                             (obs, oldValue, newValue) -> {
                                 row.pseudoClassStateChanged(playing, newValue.booleanValue());
                             };
-            
+    
                     row.itemProperty()
                        .addListener(
                                (obs, previousSong, currentSong) -> {
@@ -235,7 +235,7 @@ public class AlbumsController implements Initializable, SubView {
                                        row.pseudoClassStateChanged(playing, false);
                                    }
                                });
-            
+    
                     row.setOnMouseClicked(
                             event -> {
                                 TableViewSelectionModel<Song> sm = songTable.getSelectionModel();
@@ -264,7 +264,7 @@ public class AlbumsController implements Initializable, SubView {
                                             }
                                         }
                                     }
-                            
+    
                                 } else if (event.isControlDown()) {
                                     if (sm.getSelectedIndices().contains(row.getIndex())) {
                                         sm.clearSelection(row.getIndex());
@@ -283,7 +283,7 @@ public class AlbumsController implements Initializable, SubView {
                                     }
                                 }
                             });
-            
+    
                     row.setOnDragDetected(
                             event -> {
                                 Dragboard db = row.startDragAndDrop(TransferMode.ANY);
@@ -333,15 +333,15 @@ public class AlbumsController implements Initializable, SubView {
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle (MouseEvent e) {
-                
+    
                         expandedHeight = OdysseyPlayer.getStage().getHeight() - e.getSceneY() - 75;
-                
+    
                         if (expandedHeight > gridBox.getHeight() * 0.75) {
                             expandedHeight = gridBox.getHeight() * 0.75;
                         } else if (expandedHeight < gridBox.getHeight() * 0.25) {
                             expandedHeight = gridBox.getHeight() * 0.25;
                         }
-                
+    
                         songBox.setPrefHeight(expandedHeight);
                         e.consume();
                     }
@@ -380,44 +380,44 @@ public class AlbumsController implements Initializable, SubView {
         cell.setOnMouseClicked(
                 event -> {
                     PseudoClass selected = PseudoClass.getPseudoClass("selected");
-            
+    
                     // If the album detail is collapsed, expand it and populate song table.
                     if (isAlbumDetailCollapsed) {
-                
+    
                         cell.pseudoClassStateChanged(selected, true);
-                
+    
                         // Updates the index of the currently selected cell.
                         currentCell = index;
-                
+    
                         // Shows song table, plays load animation and populates song table with album songs.
                         expandAlbumDetail();
                         expandAnimation.play();
-                
+    
                         artistLabel.setText(album.getArtist());
                         albumLabel.setText(album.getTitle());
                         populateSongTable(cell, album);
-                
+    
                         // Else if album detail is expanded and opened album is reselected.
                     } else if (! isAlbumDetailCollapsed && index == currentCell) {
-                
+    
                         cell.pseudoClassStateChanged(selected, false);
-                
+    
                         // Plays the collapse animation to remove the song table.
                         collapseAnimation.play();
-                
+    
                         // Else if album detail is expanded and a different album is selected on the same row.
                     } else if (! isAlbumDetailCollapsed
                                        && ! (index == currentCell)
                                        && currentCellYCoordinate == cell.getBoundsInParent().getMaxY()) {
-                
+    
                         for (Node child : grid.getChildren()) {
                             child.pseudoClassStateChanged(selected, false);
                         }
                         cell.pseudoClassStateChanged(selected, true);
-                
+    
                         // Updates the index of the currently selected cell.
                         currentCell = index;
-                
+    
                         // Plays load animation and populates song table with songs of newly selected album.
                         tableCollapseAnimation.setOnFinished(
                                 x -> {
@@ -428,23 +428,23 @@ public class AlbumsController implements Initializable, SubView {
                                     tableExpandAnimation.play();
                                     tableCollapseAnimation.setOnFinished(y -> collapseAlbumDetail());
                                 });
-                
+    
                         tableCollapseAnimation.play();
-                
+    
                         // Else if album detail is expanded and a different album is selected on a different
                         // row.
                     } else if (! isAlbumDetailCollapsed
                                        && ! (index == currentCell)
                                        && ! (currentCellYCoordinate == cell.getBoundsInParent().getMaxY())) {
-                
+    
                         for (Node child : grid.getChildren()) {
                             child.pseudoClassStateChanged(selected, false);
                         }
                         cell.pseudoClassStateChanged(selected, true);
-                
+    
                         // Updates the index of the currently selected cell.
                         currentCell = index;
-                
+    
                         // Collapses the song table and then expands it in the appropriate row with songs on new
                         // album.
                         collapseAlbumDetail();
@@ -459,15 +459,15 @@ public class AlbumsController implements Initializable, SubView {
                                     tableExpandAnimation.play();
                                     tableCollapseAnimation.setOnFinished(y -> collapseAlbumDetail());
                                 });
-                
+    
                         tableCollapseAnimation.play();
-                
+    
                     } else {
-                
+    
                         for (Node child : grid.getChildren()) {
                             child.pseudoClassStateChanged(selected, false);
                         }
-                
+    
                         // Plays the collapse animation to remove the song table.
                         collapseAnimation.play();
                     }
@@ -529,7 +529,7 @@ public class AlbumsController implements Initializable, SubView {
                         setCycleDuration(Duration.millis(250));
                         setInterpolator(Interpolator.EASE_BOTH);
                     }
-            
+    
                     protected void interpolate (double frac) {
                         songTable.setMinHeight(frac * height);
                         songTable.setPrefHeight(frac * height);
@@ -582,7 +582,7 @@ public class AlbumsController implements Initializable, SubView {
                     {
                         setCycleDuration(Duration.millis(500));
                     }
-            
+    
                     protected void interpolate (double frac) {
                         double vValue = startVvalue + ((finalVvalue - startVvalue) * frac);
                         gridBox.setVvalue(vValue);

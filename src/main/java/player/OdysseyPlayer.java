@@ -95,7 +95,7 @@ public class OdysseyPlayer extends Application {
             // music directory can be counted and compared to the data in the xml file.
             // It is then passed as an argument when creating the directory watch.
             musicDirectory = xmlMusicDirPathFinder();
-
+    
             // Try/catch block to deal with case where music directory has been renamed.
             try {
                 // Gets the number of files in the music directory and the number of files saved in the xml
@@ -103,7 +103,7 @@ public class OdysseyPlayer extends Application {
                 // These values will be compared to determine if the xml file needs to be updated.
                 int musicDirFileNum = musicDirFileNumFinder(musicDirectory.toFile(), 0);
                 xmlFileNum = xmlMusicDirFileNumFinder();
-
+    
                 // If the number of files stored in the xml file is not the same as the number of files in
                 // the music directory.
                 // Music library has changed; update the xml file.
@@ -121,7 +121,7 @@ public class OdysseyPlayer extends Application {
                 // creating the directory watch.
                 musicDirectory = xmlMusicDirPathFinder();
             }
-
+    
             // If the library.xml file does not exist, the file is created from the user specified music
             // library location.
         } else if (! libraryXML.exists()) {
@@ -141,10 +141,10 @@ public class OdysseyPlayer extends Application {
             factory.setProperty("javax.xml.stream.isCoalescing", true);
             FileInputStream is = new FileInputStream(new File(Resources.JAR + "library.xml"));
             XMLStreamReader reader = factory.createXMLStreamReader(is, "UTF-8");
-
+    
             String element = null;
             String path = null;
-
+    
             // Loops through xml file looking for the music directory file path.
             while (reader.hasNext()) {
                 reader.next();
@@ -159,7 +159,7 @@ public class OdysseyPlayer extends Application {
             }
             // Closes xml reader.
             reader.close();
-
+    
             return Paths.get(path);
         } catch (Exception e) {
             e.printStackTrace();
@@ -174,10 +174,10 @@ public class OdysseyPlayer extends Application {
             factory.setProperty("javax.xml.stream.isCoalescing", true);
             FileInputStream is = new FileInputStream(new File(Resources.JAR + "library.xml"));
             XMLStreamReader reader = factory.createXMLStreamReader(is, "UTF-8");
-
+    
             String element = null;
             String fileNum = null;
-
+    
             // Loops through xml file looking for the music directory file path.
             while (reader.hasNext()) {
                 reader.next();
@@ -192,7 +192,7 @@ public class OdysseyPlayer extends Application {
             }
             // Closes xml reader.
             reader.close();
-
+    
             // Converts the file number to an int and returns the value.
             return Integer.parseInt(fileNum);
         } catch (Exception e) {
@@ -231,7 +231,7 @@ public class OdysseyPlayer extends Application {
                     new FXMLLoader(
                             OdysseyPlayer.class.getResource(Resources.FXML + "ImportMusicDialog.fxml"));
             BorderPane importView = loader.load();
-
+    
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Music Player Configuration");
@@ -560,17 +560,17 @@ public class OdysseyPlayer extends Application {
                             Library.getAlbums();
                             Library.getArtists();
                             Library.getPlaylists();
-                    
+    
                             nowPlayingList = Library.loadPlayingList();
-                    
+    
                             if (nowPlayingList.isEmpty()) {
-                        
+        
                                 Artist artist = Library.getArtists().get(0);
-                        
+        
                                 for (Album album : artist.getAlbums()) {
                                     nowPlayingList.addAll(album.getSongs());
                                 }
-                        
+        
                                 Collections.sort(
                                         nowPlayingList,
                                         (first, second) -> {
@@ -583,7 +583,7 @@ public class OdysseyPlayer extends Application {
                                             }
                                         });
                             }
-                    
+    
                             nowPlaying = nowPlayingList.get(0);
                             nowPlayingIndex = 0;
                             nowPlaying.setPlaying(true);
@@ -595,26 +595,26 @@ public class OdysseyPlayer extends Application {
                             mediaPlayer = new MediaPlayer(media);
                             mediaPlayer.setVolume(0.5);
                             mediaPlayer.setOnEndOfMedia(new SongSkipper());
-                    
+    
                             File imgFolder = new File(Resources.JAR + "/img");
                             if (! imgFolder.exists()) {
-                        
+    
                                 Thread thread1 =
                                         new Thread(
                                                 () -> {
                                                     Library.getArtists().forEach(Artist::downloadArtistImage);
                                                 });
-                        
+    
                                 Thread thread2 =
                                         new Thread(
                                                 () -> {
                                                     Library.getAlbums().forEach(Album::downloadArtwork);
                                                 });
-                        
+    
                                 thread1.start();
                                 thread2.start();
                             }
-                    
+    
                             new Thread(
                                     () -> {
                                         XMLEditor.getNewSongs()
@@ -628,7 +628,7 @@ public class OdysseyPlayer extends Application {
                                                          });
                                     })
                                     .start();
-                    
+    
                             // Calls the function to initialize the main layout.
                             Platform.runLater(this::initMain);
                         });

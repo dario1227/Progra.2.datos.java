@@ -35,9 +35,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class XMLEditor {
-
+    
     private static String musicDirectory;
-
+    
     // Initializes array lists to store the file names of the songs in the xml file.
     // This array lists will be checked to determine if a song has been added or deleted from the
     // music directory.
@@ -46,7 +46,7 @@ public class XMLEditor {
     // This is important if a song has to be removed from the xml file as it is used to find the node
     // to remove.
     private static ArrayList<String> xmlSongsFilePaths = new ArrayList<>();
-
+    
     // Initializes array lists to store the filenames of the songs in the music directory.
     // This array lists will be checked to determine if a song has been added or deleted from the
     // music directory.
@@ -55,15 +55,15 @@ public class XMLEditor {
     // This is important if a song has to be added to the xml file and it is used to find the file to
     // add.
     private static ArrayList<File> musicDirFiles = new ArrayList<>();
-
+    
     // Initializes array list with song files of songs to be added to library.xml
     private static ArrayList<File> songFilesToAdd = new ArrayList<>();
-
+    
     // Initializes array list with song paths of songs to be deleted from library.xml
     private static ArrayList<String> songPathsToDelete = new ArrayList<>();
-
+    
     private static ArrayList<Song> songsToAdd = new ArrayList<>();
-
+    
     // Initializes booleans used to determine how the library.xml file needs to be edited.
     private static boolean addSongs;
     private static boolean deleteSongs;
@@ -80,10 +80,10 @@ public class XMLEditor {
         // Finds the file name of the songs in the library xml file and
         // stores them in the xmlSongsFileNames array list.
         xmlSongsFilePathFinder();
-
+    
         // Finds the song titles in the music directory and stores them in the librarySongs array list.
         musicDirFileFinder(new File(musicDirectory));
-
+    
         // Initializes a counter variable to index the musicDirFiles array to get the file
         // corresponding to the song that needs to be added to the xml file.
         int i = 0;
@@ -99,7 +99,7 @@ public class XMLEditor {
             }
             i++;
         }
-
+    
         // Initializes a counter variable to index the xmlSongsFilePaths array to get the
         // file path of the songs that need to be removed from the xml file.
         int j = 0;
@@ -115,13 +115,13 @@ public class XMLEditor {
             }
             j++;
         }
-
+    
         // If a song needs to be added to the xml file.
         if (addSongs) {
             // Adds the new song to the xml file.
             addSongToXML();
         }
-
+    
         // If a song needs to be deleted from the xml file.
         if (deleteSongs) {
             // Deletes song from library xml file.
@@ -136,10 +136,10 @@ public class XMLEditor {
             factory.setProperty("javax.xml.stream.isCoalescing", true);
             FileInputStream is = new FileInputStream(new File(Resources.JAR + "library.xml"));
             XMLStreamReader reader = factory.createXMLStreamReader(is, "UTF-8");
-
+    
             String element = null;
             String songLocation;
-
+    
             // Loops through xml file looking for song titles.
             // Stores the song title in the xmlSongsFileNames array list.
             while (reader.hasNext()) {
@@ -152,7 +152,7 @@ public class XMLEditor {
                     // Retrieves the song location and adds it to the corresponding array list.
                     songLocation = reader.getText();
                     xmlSongsFilePaths.add(songLocation);
-
+    
                     // Retrieves the file name from the file path and adds it to the xmlSongsFileNames array
                     // list.
                     int i = songLocation.lastIndexOf("\\");
@@ -170,13 +170,13 @@ public class XMLEditor {
     private static void musicDirFileFinder (File musicDirectoryFile) {
         // Lists all the files in the music directory and stores them in an array.
         File[] files = musicDirectoryFile.listFiles();
-
+    
         // Loops through the files.
         for (File file : files) {
             if (file.isFile() && Library.isSupportedFileType(file.getName())) {
                 // Adds the file to the musicDirFiles array list.
                 musicDirFiles.add(file);
-
+    
                 // Adds the file name to the musicDirFileNames array list.
                 musicDirFileNames.add(file.getName());
             } else if (file.isDirectory()) {
@@ -188,23 +188,23 @@ public class XMLEditor {
     private static void addSongToXML () {
         // Initializes the array list with song objects to add to the xml file.
         createNewSongObject();
-
+    
         if (songsToAdd.size() == 0) {
             return;
         }
-
+    
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(Resources.JAR + "library.xml");
-
+        
             XPathFactory xPathfactory = XPathFactory.newInstance();
             XPath xpath = xPathfactory.newXPath();
-
+        
             // Creates node to add songs.
             XPathExpression expr = xpath.compile("/library/songs");
             Node songsNode = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
-
+        
             // Loops through the songs in the new song array list and adds them to the xml file.
             for (Song song : songsToAdd) {
                 // Creates a new song element and its sub elements.
@@ -219,7 +219,7 @@ public class XMLEditor {
                 Element newSongPlayCount = doc.createElement("playCount");
                 Element newSongPlayDate = doc.createElement("playDate");
                 Element newSongLocation = doc.createElement("location");
-
+    
                 // Saves the new song data.
                 newSongId.setTextContent(Integer.toString(song.getId()));
                 newSongTitle.setTextContent(song.getTitle());
@@ -231,7 +231,7 @@ public class XMLEditor {
                 newSongPlayCount.setTextContent(Integer.toString(song.getPlayCount()));
                 newSongPlayDate.setTextContent(song.getPlayDate().toString());
                 newSongLocation.setTextContent(song.getLocation());
-
+    
                 // Adds the new song to the xml file.
                 songsNode.appendChild(newSong);
                 // Adds the new song data to the new song.
@@ -246,31 +246,31 @@ public class XMLEditor {
                 newSong.appendChild(newSongPlayDate);
                 newSong.appendChild(newSongLocation);
             }
-
+        
             // Calculates the new xml file number, taking into account the new songs.
             int newXMLFileNum = OdysseyPlayer.getXMLFileNum() + songFilesToAdd.size();
-
+        
             // Creates node to update xml file number.
             expr = xpath.compile("/library/musicLibrary/fileNum");
             Node fileNum = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
-
+        
             // Updates the fileNum field in the xml file.
             fileNum.setTextContent(Integer.toString(newXMLFileNum));
             // Updates the xmlFileNum in OdysseyPlayer.
             OdysseyPlayer.setXMLFileNum(newXMLFileNum);
-
+        
             // Gets the new last id assigned after adding all the new songs.
             int newLastIdAssigned = songsToAdd.get(songsToAdd.size() - 1).getId();
-
+        
             // Creates node to update xml last id assigned.
             expr = xpath.compile("/library/musicLibrary/lastId");
             Node lastId = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
-
+        
             // Updates the last id in the xml file.
             lastId.setTextContent(Integer.toString(newLastIdAssigned));
             // Updates the lastId in OdysseyPlayer.
             OdysseyPlayer.setLastIdAssigned(newLastIdAssigned);
-
+        
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -279,17 +279,17 @@ public class XMLEditor {
             File xmlFile = new File(Resources.JAR + "library.xml");
             StreamResult result = new StreamResult(xmlFile);
             transformer.transform(source, result);
-
+        
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
     
     private static void createNewSongObject () {
-
+    
         // Searches the xml file to get the last id assigned.
         int lastIdAssigned = xmlLastIdAssignedFinder();
-
+    
         // Loops through each song file that needs to be added and creates a song object for each.
         // Each song object is added to an array list and returned so that they can be added to the xml
         // file.
@@ -298,7 +298,7 @@ public class XMLEditor {
                 AudioFile audioFile = AudioFileIO.read(songFile);
                 Tag tag = audioFile.getTag();
                 AudioHeader header = audioFile.getAudioHeader();
-
+    
                 // Gets song properties.
                 int id = ++ lastIdAssigned;
                 String title = tag.getFirst(FieldKey.TITLE);
@@ -326,7 +326,7 @@ public class XMLEditor {
                 int playCount = 0;
                 LocalDateTime playDate = LocalDateTime.now();
                 String location = Paths.get(songFile.getAbsolutePath()).toString();
-
+    
                 // Creates a new song object for the added song and adds it to the newSongs array list.
                 Song newSong =
                         new Song(
@@ -340,7 +340,7 @@ public class XMLEditor {
                                 playCount,
                                 playDate,
                                 location);
-
+    
                 // Adds the new song to the songsToAdd array list.
                 songsToAdd.add(newSong);
             } catch (Exception ex) {
@@ -358,10 +358,10 @@ public class XMLEditor {
             factory.setProperty("javax.xml.stream.isCoalescing", true);
             FileInputStream is = new FileInputStream(new File(Resources.JAR + "library.xml"));
             XMLStreamReader reader = factory.createXMLStreamReader(is, "UTF-8");
-
+    
             String element = null;
             String lastId = null;
-
+    
             // Loops through xml file looking for the music directory file path.
             while (reader.hasNext()) {
                 reader.next();
@@ -376,7 +376,7 @@ public class XMLEditor {
             }
             // Closes xml reader.
             reader.close();
-
+    
             // Converts the file number to an int and returns the value.
             return Integer.parseInt(lastId);
         } catch (Exception e) {
@@ -388,59 +388,59 @@ public class XMLEditor {
     private static void deleteSongFromXML () {
         // Gets the currentXMLFileNum.
         int currentXMLFileNum = OdysseyPlayer.getXMLFileNum();
-
+    
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(Resources.JAR + "library.xml");
-
+        
             XPathFactory xPathfactory = XPathFactory.newInstance();
             XPath xpath = xPathfactory.newXPath();
-
+        
             // Retrieves the last id assigned to a song from the xml file.
             int xmlLastIdAssigned = xmlLastIdAssignedFinder();
-
+        
             // Finds the song node corresponding to the last assigned id.
             XPathExpression expr =
                     xpath.compile("/library/songs/song[id/text() = \"" + xmlLastIdAssigned + "\"]");
             Node lastSongNode = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
-
+        
             // Loops through the songPathsToDelete array list and removes the nodes from the xml file.
             Node deleteSongNode = null;
             for (String songFilePath : songPathsToDelete) {
                 // Finds the node with the song title marked for removal.
                 expr = xpath.compile("/library/songs/song[location/text() = \"" + songFilePath + "\"]");
                 deleteSongNode = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
-
+    
                 // Removes the node corresponding to the title of the song.
                 deleteSongNode.getParentNode().removeChild(deleteSongNode);
-
+    
                 // Decreases the counter for the number of files in the xml file.
                 currentXMLFileNum--;
             }
-
+        
             // If the last node to be deleted was the last song node,
             // then the new last assigned id is found and updated in the OdysseyPlayer and xml file.
             if (deleteSongNode == lastSongNode) {
                 int newLastIdAssigned = xmlNewLastIdAssignedFinder();
-
+    
                 // Creates node to update xml last id assigned.
                 expr = xpath.compile("/library/musicLibrary/lastId");
                 Node lastId = ((NodeList) expr.evaluate(doc, XPathConstants.NODESET)).item(0);
-
+    
                 // Updates the lastId in OdysseyPlayer and in the xml file.
                 OdysseyPlayer.setLastIdAssigned(newLastIdAssigned);
                 lastId.setTextContent(Integer.toString(newLastIdAssigned));
             }
-
+        
             // Creates node to update xml file number.
             XPathExpression fileNumExpr = xpath.compile("/library/musicLibrary/fileNum");
             Node fileNum = ((NodeList) fileNumExpr.evaluate(doc, XPathConstants.NODESET)).item(0);
-
+        
             // Updates the fileNum in OdysseyPlayer and in the xml file.
             OdysseyPlayer.setXMLFileNum(currentXMLFileNum);
             fileNum.setTextContent(Integer.toString(currentXMLFileNum));
-
+        
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -449,7 +449,7 @@ public class XMLEditor {
             File xmlFile = new File(Resources.JAR + "library.xml");
             StreamResult result = new StreamResult(xmlFile);
             transformer.transform(source, result);
-
+        
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -462,13 +462,13 @@ public class XMLEditor {
             factory.setProperty("javax.xml.stream.isCoalescing", true);
             FileInputStream is = new FileInputStream(new File(Resources.JAR + "library.xml"));
             XMLStreamReader reader = factory.createXMLStreamReader(is, "UTF-8");
-
+    
             String element = null;
             String location;
-
+    
             String currentSongId = null;
             String xmlNewLastIdAssigned = null;
-
+    
             // Loops through xml file looking for the music directory file path.
             while (reader.hasNext()) {
                 reader.next();
@@ -491,7 +491,7 @@ public class XMLEditor {
             }
             // Closes xml reader.
             reader.close();
-
+    
             // Converts the file number to an int and returns the value.
             return Integer.parseInt(xmlNewLastIdAssigned);
         } catch (Exception e) {
@@ -505,7 +505,7 @@ public class XMLEditor {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(Resources.JAR + "library.xml");
-
+    
             XPathFactory xPathfactory = XPathFactory.newInstance();
             XPath xpath = xPathfactory.newXPath();
     
@@ -519,10 +519,10 @@ public class XMLEditor {
                             + "']";
             XPathExpression expr = xpath.compile(query);
             Node deleteSongNode = (Node) expr.evaluate(doc, XPathConstants.NODE);
-
+    
             // Removes the node corresponding to the selected song.
             deleteSongNode.getParentNode().removeChild(deleteSongNode);
-
+    
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -531,7 +531,7 @@ public class XMLEditor {
             File xmlFile = new File(Resources.JAR + "library.xml");
             StreamResult result = new StreamResult(xmlFile);
             transformer.transform(source, result);
-
+    
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -542,18 +542,18 @@ public class XMLEditor {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(Resources.JAR + "library.xml");
-
+    
             XPathFactory xPathfactory = XPathFactory.newInstance();
             XPath xpath = xPathfactory.newXPath();
-
+    
             // Finds the node with the play list id for removal.
             String query = "/library/playlists/playlist[@id='" + selectedPlayListId + "']";
             XPathExpression expr = xpath.compile(query);
             Node deleteplaylistNode = (Node) expr.evaluate(doc, XPathConstants.NODE);
-
+    
             // Removes the node corresponding to the selected song.
             deleteplaylistNode.getParentNode().removeChild(deleteplaylistNode);
-
+    
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -562,7 +562,7 @@ public class XMLEditor {
             File xmlFile = new File(Resources.JAR + "library.xml");
             StreamResult result = new StreamResult(xmlFile);
             transformer.transform(source, result);
-
+    
         } catch (Exception ex) {
             ex.printStackTrace();
         }

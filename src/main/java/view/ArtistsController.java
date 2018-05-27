@@ -59,7 +59,7 @@ public class ArtistsController implements Initializable, SubView {
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-            
+    
                     for (int j = 25; j < artists.size(); j++) {
                         Artist artist = artists.get(j);
                         Platform.runLater(() -> grid.getChildren().add(createCell(artist)));
@@ -102,7 +102,7 @@ public class ArtistsController implements Initializable, SubView {
                     MainController mainController = OdysseyPlayer.getMainController();
                     ArtistsMainController artistsMainController =
                             (ArtistsMainController) mainController.loadView("ArtistsMain");
-            
+    
                     VBox artistCell = (VBox) event.getSource();
                     String artistTitle = ((Label) artistCell.getChildren().get(1)).getText();
                     Artist a = Library.getArtist(artistTitle);
@@ -161,7 +161,7 @@ public class ArtistsController implements Initializable, SubView {
                     {
                         setCycleDuration(Duration.millis(500));
                     }
-            
+    
                     protected void interpolate (double frac) {
                         double vValue = startVvalue + ((finalVvalue - startVvalue) * frac);
                         scrollpane.setVvalue(vValue);

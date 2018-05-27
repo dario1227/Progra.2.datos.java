@@ -38,7 +38,7 @@ public class ControlPanelController implements Initializable {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     contextMenu.setOpacity(frac);
                 }
@@ -107,7 +107,7 @@ public class ControlPanelController implements Initializable {
                     e2 -> {
                         // Finds the desired playlist and adds the currently selected song to it.
                         String targetPlaylistTitle = item.getText();
-                
+    
                         // Finds the correct playlist and adds the song to it.
                         playlists.forEach(
                                 playlist -> {

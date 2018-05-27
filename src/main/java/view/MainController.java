@@ -15,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
@@ -105,7 +104,7 @@ public class MainController implements Initializable {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     volumePopup.setOpacity(frac);
                 }
@@ -116,7 +115,7 @@ public class MainController implements Initializable {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     volumePopup.setOpacity(1.0 - frac);
                 }
@@ -127,7 +126,7 @@ public class MainController implements Initializable {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     searchPopup.setOpacity(frac);
                 }
@@ -138,7 +137,7 @@ public class MainController implements Initializable {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     searchPopup.setOpacity(1.0 - frac);
                 }
@@ -150,7 +149,7 @@ public class MainController implements Initializable {
                     setInterpolator(Interpolator.EASE_BOTH);
                     setOnFinished(x -> setSlideDirection());
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double curWidth = collapsedWidth + (expandedWidth - collapsedWidth) * (1.0 - frac);
                     double searchWidth = searchCollapsed + (searchExpanded - searchCollapsed) * (1.0 - frac);
@@ -166,7 +165,7 @@ public class MainController implements Initializable {
                     setInterpolator(Interpolator.EASE_BOTH);
                     setOnFinished(x -> setSlideDirection());
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double curWidth = collapsedWidth + (expandedWidth - collapsedWidth) * (frac);
                     double searchWidth = searchCollapsed + (searchExpanded - searchCollapsed) * (frac);
@@ -181,7 +180,7 @@ public class MainController implements Initializable {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     subViewRoot.setVvalue(0);
                     double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (frac);
@@ -195,7 +194,7 @@ public class MainController implements Initializable {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double curHeight = collapsedHeight + (expandedHeight - collapsedHeight) * (1 - frac);
                     subViewRoot.getContent().setTranslateY(expandedHeight - curHeight);
@@ -208,7 +207,7 @@ public class MainController implements Initializable {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     letterBox.setPrefHeight(50);
                     letterBox.setOpacity(frac);
@@ -222,7 +221,7 @@ public class MainController implements Initializable {
                     setCycleDuration(Duration.millis(250));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     letterBox.setOpacity(1.0 - frac);
                     letterSeparator.setOpacity(1.0 - frac);
@@ -234,7 +233,7 @@ public class MainController implements Initializable {
                     setCycleDuration(Duration.millis(500));
                     setInterpolator(Interpolator.EASE_BOTH);
                 }
-            
+    
                 protected void interpolate (double frac) {
                     HBox cell = (HBox) playlistBox.getChildren().get(1);
                     if (frac < 0.5) {
@@ -287,7 +286,7 @@ public class MainController implements Initializable {
                 .addListener(
                         (slider, wasChanging, isChanging) -> {
                             if (wasChanging) {
-                            
+    
                                 int seconds = (int) Math.round(timeSlider.getValue() / 4.0);
                                 timeSlider.setValue(seconds * 4);
                                 OdysseyPlayer.seek(seconds);
@@ -303,7 +302,7 @@ public class MainController implements Initializable {
                             if (! timeSlider.isValueChanging()
                                         && current != previous + 1
                                         && ! isTimeSliderPressed()) {
-                        
+    
                                 int seconds = (int) Math.round(current / 4.0);
                                 timeSlider.setValue(seconds * 4);
                                 OdysseyPlayer.seek(seconds);
@@ -531,7 +530,7 @@ public class MainController implements Initializable {
                                         && ! (playlist instanceof RecentlyPlayedPlaylist)
                                         && event.getGestureSource() != cell
                                         && event.getDragboard().hasString()) {
-                    
+    
                                 cell.pseudoClassStateChanged(hover, true);
                                 // cell.getStyleClass().setAll("sideBarItemSelected");
                             }
@@ -543,7 +542,7 @@ public class MainController implements Initializable {
                                         && ! (playlist instanceof RecentlyPlayedPlaylist)
                                         && event.getGestureSource() != cell
                                         && event.getDragboard().hasString()) {
-                
+    
                                 cell.pseudoClassStateChanged(hover, false);
                                 // cell.getStyleClass().setAll("sideBarItem");
                             }
@@ -555,7 +554,7 @@ public class MainController implements Initializable {
                                         && ! (playlist instanceof RecentlyPlayedPlaylist)
                                         && event.getGestureSource() != cell
                                         && event.getDragboard().hasString()) {
-                
+    
                                 event.acceptTransferModes(TransferMode.ANY);
                             }
                             event.consume();
@@ -611,7 +610,7 @@ public class MainController implements Initializable {
                                         }
                                     })
                                     .start();
-            
+    
                             event.consume();
                         });
                 
@@ -739,7 +738,7 @@ public class MainController implements Initializable {
                                         && ! (playlist instanceof RecentlyPlayedPlaylist)
                                         && event.getGestureSource() != cell
                                         && event.getDragboard().hasString()) {
-                    
+    
                                 cell.pseudoClassStateChanged(hover, true);
                             }
                         });
@@ -751,7 +750,7 @@ public class MainController implements Initializable {
                                         && ! (playlist instanceof RecentlyPlayedPlaylist)
                                         && event.getGestureSource() != cell
                                         && event.getDragboard().hasString()) {
-                
+    
                                 cell.pseudoClassStateChanged(hover, false);
                             }
                         });
@@ -763,7 +762,7 @@ public class MainController implements Initializable {
                                         && ! (playlist instanceof RecentlyPlayedPlaylist)
                                         && event.getGestureSource() != cell
                                         && event.getDragboard().hasString()) {
-                
+    
                                 event.acceptTransferModes(TransferMode.ANY);
                             }
                             event.consume();
@@ -820,7 +819,7 @@ public class MainController implements Initializable {
                                         }
                                     })
                                     .start();
-            
+    
                             event.consume();
                         });
                 

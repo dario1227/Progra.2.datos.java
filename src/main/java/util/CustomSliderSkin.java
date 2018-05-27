@@ -18,33 +18,33 @@ import javafx.util.StringConverter;
  */
 @SuppressWarnings("restriction")
 public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
-
+    
     // Track if slider is vertical/horizontal and cause re layout.
     private NumberAxis tickLine = null;
     private double trackToTickGap = 2;
-
+    
     private boolean showTickMarks;
     private double thumbWidth;
-
+    
     private double trackStart;
     private double trackLength;
     private double thumbTop;
     private double thumbLeft;
     private double preDragThumbPos;
     private Point2D dragStart; // in skin coordinates
-
+    
     private StackPane thumb;
     private StackPane track;
     private boolean trackClicked = false;
     private StringConverter<Number> stringConverterWrapper =
             new StringConverter<Number>() {
                 Slider slider = getSkinnable();
-            
+    
                 @Override
                 public String toString (Number object) {
                     return (object != null) ? slider.getLabelFormatter().toString(object.doubleValue()) : "";
                 }
-            
+    
                 @Override
                 public Number fromString (String string) {
                     return slider.getLabelFormatter().fromString(string);
@@ -55,7 +55,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
                 {
                     setCycleDuration(Duration.millis(100));
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double padding = 10 + frac * 5;
                     thumb.setStyle("-fx-padding: " + padding + ";");
@@ -66,7 +66,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
                 {
                     setCycleDuration(Duration.millis(100));
                 }
-            
+    
                 protected void interpolate (double frac) {
                     double padding = 15 - frac * 5;
                     thumb.setStyle("-fx-padding: " + padding + ";");
@@ -75,7 +75,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
     
     public CustomSliderSkin (Slider slider) {
         super(slider, new SliderBehavior(slider));
-
+    
         initialize();
         slider.requestLayout();
         registerChangeListener(slider.minProperty(), "MIN");
@@ -94,7 +94,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
         thumb.getStyleClass().setAll("thumb");
         track = new StackPane();
         track.getStyleClass().setAll("track");
-
+    
         getChildren().clear();
         getChildren().addAll(track, thumb);
         setShowTickMarks(getSkinnable().isShowTickMarks(), getSkinnable().isShowTickLabels());
@@ -186,7 +186,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
             getChildren().clear();
             getChildren().addAll(track, thumb);
         }
-
+    
         getSkinnable().requestLayout();
     }
     
@@ -197,7 +197,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
     public StackPane getTrack () {
         return track;
     }
-
+    
     @Override
     protected void handleControlPropertyChanged (String p) {
         super.handleControlPropertyChanged(p);
@@ -246,7 +246,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
             }
         }
     }
-
+    
     /**
      * Called when ever either min, max or value changes, so thumb's layoutX, Y is recomputed.
      */
@@ -268,7 +268,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
                                   - (trackLength
                                              * ((s.getValue() - s.getMin())
                                                         / (s.getMax() - s.getMin()))); //  - thumbHeight/2
-
+    
         if (animate) {
             // lets animate the thumb transition
             final double startX = thumb.getLayoutX();
@@ -278,7 +278,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
                         {
                             setCycleDuration(Duration.millis(200));
                         }
-            
+    
                         @Override
                         protected void interpolate (double frac) {
                             if (! Double.isNaN(startX)) {
@@ -295,7 +295,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
             thumb.setLayoutY(endY);
         }
     }
-
+    
     @Override
     protected void layoutChildren (final double x, final double y, final double w, final double h) {
         // calculate the available space
@@ -310,7 +310,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
                         : track.getBackground().getFills().size() > 0
                                   ? track.getBackground().getFills().get(0).getRadii().getTopLeftHorizontalRadius()
                                   : 0;
-
+        
         if (getSkinnable().getOrientation() == Orientation.HORIZONTAL) {
             double tickLineHeight = (showTickMarks) ? tickLine.prefHeight(- 1) : 0;
             double trackHeight = snapSize(track.prefHeight(- 1));
@@ -323,7 +323,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
             trackStart = snapPosition(x + (thumbWidth / 2));
             double trackTop = (int) (startY + ((trackAreaHeight - trackHeight) / 2));
             thumbTop = (int) (startY + ((trackAreaHeight - thumbHeight) / 2));
-
+            
             positionThumb(false);
             // layout track
             track.resizeRelocate(
@@ -356,7 +356,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
             trackStart = snapPosition(y + (thumbHeight / 2));
             double trackLeft = (int) (startX + ((trackAreaWidth - trackWidth) / 2));
             thumbLeft = (int) (startX + ((trackAreaWidth - thumbWidth) / 2));
-
+            
             positionThumb(false);
             // layout track
             track.resizeRelocate(
@@ -383,7 +383,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
     private double minTrackLength () {
         return 2 * thumb.prefWidth(- 1);
     }
-
+    
     @Override
     protected double computeMinWidth (
             double height, double topInset, double rightInset, double bottomInset, double leftInset) {
@@ -393,7 +393,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
             return (leftInset + thumb.prefWidth(- 1) + rightInset);
         }
     }
-
+    
     @Override
     protected double computeMinHeight (
             double width, double topInset, double rightInset, double bottomInset, double leftInset) {
@@ -403,7 +403,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
             return (topInset + minTrackLength() + thumb.prefHeight(- 1) + bottomInset);
         }
     }
-
+    
     @Override
     protected double computePrefWidth (
             double height, double topInset, double rightInset, double bottomInset, double leftInset) {
@@ -421,7 +421,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
                            + rightInset;
         }
     }
-
+    
     @Override
     protected double computePrefHeight (
             double width, double topInset, double rightInset, double bottomInset, double leftInset) {
@@ -439,7 +439,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
             }
         }
     }
-
+    
     @Override
     protected double computeMaxWidth (
             double height, double topInset, double rightInset, double bottomInset, double leftInset) {
@@ -449,7 +449,7 @@ public class CustomSliderSkin extends BehaviorSkinBase<Slider, SliderBehavior> {
             return getSkinnable().prefWidth(- 1);
         }
     }
-
+    
     @Override
     protected double computeMaxHeight (
             double width, double topInset, double rightInset, double bottomInset, double leftInset) {
