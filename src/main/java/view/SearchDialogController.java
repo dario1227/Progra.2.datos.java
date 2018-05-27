@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class SearchDialogController {
-    public static String actualPage = "0";
+    public static String actualPage = "1";
     public static String orden="Nada";
     public static String parametro="Nada";
     public static String nombre="Nada";
