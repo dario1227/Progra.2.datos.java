@@ -13,7 +13,10 @@ import javafx.scene.control.Label;
 import java.util.ArrayList;
 
 public class SearchDialogController {
-    static String actualPage = "0";
+    public static String actualPage = "0";
+    public static String orden;
+    public static String parametro;
+    public static String nombre;
     @FXML
     private JFXTextField searchTextField;
     
@@ -52,17 +55,18 @@ public class SearchDialogController {
     @FXML
     void saveSettings (ActionEvent event) {
         String cosa ;
-        String parametro = typeCombo.getValue().getText();
+        String parametro2 = typeCombo.getValue().getText();
         if(yesRadioBtn.isSelected()){
-            cosa = "true";
+            orden = "true";
         }
         else{
-            cosa = "false";
+            orden = "false";
         }
-        String busqueda = searchTextField.getText();
-        String parametro_parseado = metodo_busqueda(parametro);
-        ArrayList<Canciones> canciones = XML_parser.get_songs(parametro_parseado, actualPage, busqueda, cosa);
-        AppController.instance.populateTable(0,canciones);
+        nombre = searchTextField.getText();
+        parametro = metodo_busqueda(parametro2);
+
+      //  ArrayList<Canciones> canciones = XML_parser.get_songs(parametro_parseado, actualPage, busqueda, cosa);
+        AppController.instance.populateTable(0);
     }
     String metodo_busqueda(String ingles){
         if(ingles.contains("Album")){

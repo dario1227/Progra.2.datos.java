@@ -210,11 +210,11 @@ public class AppController {
             page = new TablePages();
     
             //POR MIENTRAS NADA
-            String method = "Nada";
-            String parametro = "Nada";  //NO ESTOY SEGURO DE QUE PONER ACA
-            String orden = "false";
+//            String method = "Nada";
+//            String parametro = "Nada";  //NO ESTOY SEGURO DE QUE PONER ACA
+//            String orden = "false";
     
-            ArrayList<Canciones> canciones = XML_parser.get_songs(method, pageNumber.toString(), parametro, orden);
+            ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro,SearchDialogController.actualPage,SearchDialogController.nombre,SearchDialogController.orden);
 
             //RECORRER CANCIONES E IR AGREGANDO
            int x=0;
