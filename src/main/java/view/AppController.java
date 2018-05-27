@@ -141,9 +141,18 @@ public class AppController {
         
         try {
             Metadata data = new Metadata(file.toPath().toString());
-            
-            XML_parser.getXML_Archive(
-                    file.getAbsolutePath(), file.getName(), data.lyrics, data.album, data.artist);
+    
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MP3ID3Tag.fxml"));
+            Parent root1 = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Details");
+            stage.setScene(new Scene(root1, 600, 400));
+    
+            MP3ID3TagController controller = fxmlLoader.getController();
+            controller.load(data);
+    
+            stage.show();
+                
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -251,6 +260,7 @@ public class AppController {
 //        }
     
         return value[0];
+    
     }
     
     @FXML
