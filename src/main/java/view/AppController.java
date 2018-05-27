@@ -1,5 +1,6 @@
 package view;
 
+import XML.Canciones;
 import XML.XML_parser;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
@@ -24,11 +25,12 @@ import model.Metadata;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppController {
     
-    private static AppController instance;
+    public static AppController instance;
     TablePages[] tablePages = new TablePages[3];
     ObservableList<Metadata> tableList = FXCollections.observableArrayList();
     private JFXTreeTableColumn<Metadata, String> nameColumn = new JFXTreeTableColumn<>("Title");
@@ -91,7 +93,7 @@ public class AppController {
         songList.setEditable(false);
         songList.getColumns()
                 .setAll(nameColumn, artistColumn, albumColumn, yearColumn, genreColumn, lyricsColumn);
-    
+    //AQUI ES ESTO
         tablePages[0] = populateTable(0);
         tableList.addAll(tablePages[0].songs);
     
@@ -215,23 +217,24 @@ public class AppController {
     
     //DALE ACA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     //METODO PARA CONECTAR CON LA PAGINACION XML
-    private TablePages populateTable (int pageNumber) {
+    public TablePages populateTable (int pageNumber, ArrayList<Canciones> canciones) {
         TablePages page = null;
         try {
             page = new TablePages();
-
-            page.pageNumber = pageNumber;
-            page.totalSongs = //PEDIR POR XML
-                    page.pages = //PEDIR POR XML
-                            page.pageSize = //PEDIR POR XML
+//
+//            page.pageNumber =; pageNumber;
+//            page.totalSongs = ;//PEDIR POR XML;
+//                    page.pages =; //PEDIR POR XML;
+//                            page.pageSize = ;//PEDIR POR XML;
 
             //RECORRER CANCIONES E IR AGREGANDO
-            for (songs:) {
+           int x=0;
+            while(x<canciones.size()) {
                 Metadata newSong = new Metadata();
 
-                newSong.title = //PEDIR POR XML
-                        newSong.album = //PEDIR POR XML
-                                newSong.artist = //PEDIR POR XML
+                newSong.title = canciones.get(x).nombre;//PEDIR POR XML
+                        newSong.album = canciones.get(x).album;//PEDIR POR XML
+                                newSong.artist = canciones.get(x).artista;//PEDIR POR XML
                                         page.songs.addAll(newSong);
             }
         } catch (Exception ex) {
