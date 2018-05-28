@@ -33,7 +33,7 @@ public class AppController {
     public static AppController instance;
     TablePages[] tablePages = new TablePages[3];
     ObservableList<Metadata> tableList = FXCollections.observableArrayList();
-    
+
     
     @FXML
     private ImageView playPauseBtn;
@@ -93,7 +93,7 @@ public class AppController {
                 .setAll(nameColumn, artistColumn, albumColumn, genreColumn, lyricsColumn);
         //AQUI ES ESTO
         tablePages[0] = populateTable();
-        tableList.addAll(tablePages[0].songs);
+    //    tableList.addAll(tablePages[0].songs);
 
 //        tablePages[1] = populateTable(1);
 //        tableList.addAll(tablePages[1].songs);
@@ -212,7 +212,7 @@ public class AppController {
     //DALE ACA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     //METODO PARA CONECTAR CON LA PAGINACION XML
     public TablePages populateTable () {
-    
+        tableList.clear();
         final CountDownLatch latch = new CountDownLatch(1);
         final TablePages[] value = new TablePages[1];
     
@@ -237,6 +237,7 @@ public class AppController {
                     }
                 
                     value[0] = page;
+                    tableList.addAll(page.songs);
                     latch.countDown();
                 } else {
                     value[0] = null;

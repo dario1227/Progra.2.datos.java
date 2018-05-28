@@ -71,7 +71,7 @@ public class LoginController {
     // RUN THIS WHEN THE LOGIN IS CORRECT
     public void openPlayer () {
     
-        new Thread(() -> {
+
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("App.fxml"));
                 Stage stage = new Stage();
@@ -83,6 +83,6 @@ public class LoginController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }).start();
+
     }
 }

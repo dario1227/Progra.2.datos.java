@@ -300,6 +300,8 @@ public class XML_parser {
             
             Element rootnode = (Element) nList.item(0);
             String cosa = rootnode.getAttribute("Data");
+            String cuantity = rootnode.getAttribute("Filesize");
+            size_actual = new Integer(cuantity);
             byte[] decodedBytes = Base64.getDecoder().decode(cosa);
             System.out.println("LLEGUE PERROS");
             
@@ -502,5 +504,14 @@ public class XML_parser {
         } catch (Exception e) {
             return false;
         }
+    }
+    static int calcule_actual_page(int porcentage){
+        long actualbyte = size_actual*porcentage;
+        int x = 0;
+        long  limite = (long) (size_actual*0.02);
+        while(!(limite*x<=actualbyte)&& !(actualbyte<=limite*x+limite)){
+            x++;
+        }
+        return x;
     }
 }
