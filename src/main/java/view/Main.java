@@ -89,13 +89,12 @@ public class Main extends Application {
         // XML_parser.chunk("MEME.mp3","2");
         // XML_parser.prueba();
         // Cambiar a Login.fxml para probar metodos o a Main.fxml para reproductor
-        Parent root = FXMLLoader.load(getClass().getResource("App.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         mStage = primaryStage;
-        mStage.setOnCloseRequest(e -> exitServer());
-        mStage.setTitle("Odyssey++");
-        //mStage.setScene(new Scene(root, 400, 300));
-        mStage.setScene(new Scene(root, 1280, 720));
-        //mStage.setResizable(false);
+        mStage.setTitle("Login");
+        mStage.setScene(new Scene(root, 400, 300));
+        //mStage.setScene(new Scene(root, 1280, 720));
+        mStage.setResizable(false);
         mStage.show();
         //        ClientServer.Server.send("YOUR MOM GAY");
         //        ClientServer.Server.receive();

@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 
 public class RegisterController {
     private static Integer id = 0;
@@ -26,6 +27,15 @@ public class RegisterController {
         if ((user != null) && (pass != null) && (age != null)) {
             if (XML_parser.createAccount(user, id.toString(), age, pass)) {
                 id++;
+    
+                AppController.USER = user;
+    
+                LoginController lg = new LoginController();
+                lg.openPlayer();
+    
+                Stage stage = (Stage) createBtn.getScene().getWindow();
+                stage.close();
+                
                 // TODO SUCCESS DIALOG
             } else {
                 // TODO Error Dialog

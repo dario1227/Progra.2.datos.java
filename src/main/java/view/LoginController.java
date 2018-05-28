@@ -9,7 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import player.OdysseyPlayer;
+
+import java.io.IOException;
 
 public class LoginController {
     
@@ -39,10 +40,14 @@ public class LoginController {
             if (XML_parser.loginRequest(user, pass)) {
                 AppController.USER = user;
                 openPlayer();
+    
+                Stage stage = (Stage) loginBtn.getScene().getWindow();
+                stage.close();
             } else {
                 // TODO Error Dialog
             }
         }
+    
     }
     
     @FXML
@@ -53,16 +58,31 @@ public class LoginController {
             Stage stage = new Stage();
             stage.setTitle("Register");
             stage.setScene(new Scene(root1, 500, 400));
+            stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    
+        Stage stage = (Stage) regBtn.getScene().getWindow();
+        stage.close();
     }
     
     // RUN THIS WHEN THE LOGIN IS CORRECT
-    private void openPlayer () {
-        OdysseyPlayer player = new OdysseyPlayer();
-        Main.getmStage().setResizable(true);
-        player.start(Main.getmStage());
+    public void openPlayer () {
+    
+        new Thread(() -> {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("App.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("Odyssey++");
+                stage.setScene(new Scene(root, 1280, 720));
+                stage.setResizable(true);
+                stage.setOnCloseRequest(e -> Main.exitServer());
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }
