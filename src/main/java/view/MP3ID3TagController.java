@@ -90,9 +90,11 @@ public class MP3ID3TagController {
             data.set(4, lyricsLabel.getText());
         }
     
-        XML_parser.getXML_Archive(data.get(5), data.get(6), data.get(3), data.get(2), data.get(1));
-        data.clear();
-    
+        new Thread(() -> {
+            XML_parser.getXML_Archive(data.get(5), data.get(6), data.get(3), data.get(2), data.get(1));
+            data.clear();
+        }).start();
+        
         Stage stage = (Stage) saveBtn.getScene().getWindow();
         stage.close();
     
