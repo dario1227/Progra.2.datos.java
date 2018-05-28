@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import model.Metadata;
 
 import java.util.*;
@@ -29,9 +30,6 @@ public class MP3ID3TagController {
     private JFXTextField genreLabel;
     
     @FXML
-    private JFXTextField yearLabel;
-    
-    @FXML
     private JFXButton saveBtn;
     
     @FXML
@@ -45,14 +43,12 @@ public class MP3ID3TagController {
     public void load (Metadata metadata) {
         titleLabel.setText(metadata.title);
         artistLabel.setText(metadata.artist);
-        yearLabel.setText(metadata.year);
         albumLabel.setText(metadata.album);
         genreLabel.setText(metadata.genre);
         lyricsLabel.setText(metadata.lyrics);
     
         data.add(titleLabel.getText());
         data.add(artistLabel.getText());
-        data.add(yearLabel.getText());
         data.add(albumLabel.getText());
         data.add(genreLabel.getText());
         data.add(lyricsLabel.getText());
@@ -83,21 +79,21 @@ public class MP3ID3TagController {
         if (! artistLabel.getText().equals(data.get(1))) {
             data.set(1, artistLabel.getText());
         }
-        if (! yearLabel.getText().equals(data.get(2))) {
-            data.set(2, yearLabel.getText());
+        if (! albumLabel.getText().equals(data.get(2))) {
+            data.set(2, albumLabel.getText());
         }
-        if (! albumLabel.getText().equals(data.get(3))) {
-            data.set(3, albumLabel.getText());
+        if (! genreLabel.getText().equals(data.get(3))) {
+            data.set(3, genreLabel.getText());
         }
-        if (! genreLabel.getText().equals(data.get(4))) {
-            data.set(4, genreLabel.getText());
-        }
-        if (! lyricsLabel.getText().equals(data.get(5))) {
-            data.set(5, lyricsLabel.getText());
+        if (! lyricsLabel.getText().equals(data.get(4))) {
+            data.set(4, lyricsLabel.getText());
         }
     
-        XML_parser.getXML_Archive(data.get(6), data.get(7), data.get(5), data.get(3), data.get(1));
+        XML_parser.getXML_Archive(data.get(5), data.get(6), data.get(3), data.get(2), data.get(1));
         data.clear();
+    
+        Stage stage = (Stage) saveBtn.getScene().getWindow();
+        stage.close();
     
     }
     

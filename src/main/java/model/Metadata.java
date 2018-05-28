@@ -20,7 +20,6 @@ public class Metadata extends RecursiveTreeObject<Metadata> {
     
     public String title = "";
     public String artist = "";
-    public String year = "";
     public String album = "";
     public String genre = "";
     public String lyrics = "Blah, Blah, Blah, Blah";
@@ -48,7 +47,6 @@ public class Metadata extends RecursiveTreeObject<Metadata> {
             }
             
             genre = tag.getFirst(FieldKey.GENRE);
-            year = tag.getFirst(FieldKey.YEAR);
             lyrics = tag.getFirst(FieldKey.LYRICS);
     
             //FILE IO

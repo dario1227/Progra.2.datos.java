@@ -34,7 +34,7 @@ public class AppController {
     public static AppController instance;
     TablePages[] tablePages = new TablePages[3];
     ObservableList<Metadata> tableList = FXCollections.observableArrayList();
-    private JFXTreeTableColumn<Metadata, String> nameColumn = new JFXTreeTableColumn<>("Title");
+    
     
     @FXML
     private ImageView playPauseBtn;
@@ -57,8 +57,8 @@ public class AppController {
     
     @FXML
     private JFXTreeTableView<Metadata> songList;
+    private JFXTreeTableColumn<Metadata, String> nameColumn = new JFXTreeTableColumn<>("Title");
     private JFXTreeTableColumn<Metadata, String> artistColumn = new JFXTreeTableColumn<>("Artist");
-    private JFXTreeTableColumn<Metadata, String> yearColumn = new JFXTreeTableColumn<>("Year");
     private JFXTreeTableColumn<Metadata, String> albumColumn = new JFXTreeTableColumn<>("Album");
     private JFXTreeTableColumn<Metadata, String> genreColumn = new JFXTreeTableColumn<>("Genre");
     private JFXTreeTableColumn<Metadata, String> lyricsColumn = new JFXTreeTableColumn<>("Lyrics");
@@ -79,8 +79,6 @@ public class AppController {
         albumColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().album));
     
     
-        yearColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().year));
-    
         genreColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().genre));
     
     
@@ -93,7 +91,7 @@ public class AppController {
         songList.setShowRoot(false);
         songList.setEditable(false);
         songList.getColumns()
-                .setAll(nameColumn, artistColumn, albumColumn, yearColumn, genreColumn, lyricsColumn);
+                .setAll(nameColumn, artistColumn, albumColumn, genreColumn, lyricsColumn);
         //AQUI ES ESTO
         tablePages[0] = populateTable();
         tableList.addAll(tablePages[0].songs);
@@ -249,15 +247,7 @@ public class AppController {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        
-
-//        try {            System.out.println("LLEGUE AQUI");
-//
-//            latch.await();
-//
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+    
     
         return value[0];
     
