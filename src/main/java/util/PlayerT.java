@@ -39,9 +39,9 @@ public class PlayerT extends Thread {
             }
             
             InputStream stream = buffer.getInputStream();
-            
-            
-            Streamer streaming = new Streamer(buffer.getOutputStream(), this.filenameRequest, initialChunk, Integer.parseInt(initialChunk));
+    
+    
+            Streamer streaming = new Streamer(buffer.getOutputStream(), this.filenameRequest, initialChunk, Integer.parseInt(initialChunk) + 1);
             streaming.start();
             
             AudioInputStream in = AudioSystem.getAudioInputStream(stream);
