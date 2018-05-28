@@ -60,7 +60,9 @@ public class Metadata extends RecursiveTreeObject<Metadata> {
         
     }
     
-    
+    public String getFilename () {
+        return filename;
+    }
 }
 
 

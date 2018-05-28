@@ -505,7 +505,8 @@ public class XML_parser {
             return false;
         }
     }
-    static int calcule_actual_page(int porcentage){
+    
+    public static int calcule_actual_page (int porcentage) {
         long actualbyte = size_actual*porcentage;
         int x = 0;
         long  limite = (long) (size_actual*0.02);

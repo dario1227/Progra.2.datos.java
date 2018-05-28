@@ -8,10 +8,7 @@ plugins {
     id 'application'
 }
 
-// Define the main class for the application
-//FOR LOGIN view.Main
 mainClassName = 'view.Main'
-//mainClassName = 'player.OdysseyPlayer'
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
@@ -46,6 +43,10 @@ dependencies {
     compile 'org.dom4j:dom4j:2.1.0'
 
     compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
+
+    compile 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
+
+    compile 'org.ostermiller:utils:1.07.00'
 
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'

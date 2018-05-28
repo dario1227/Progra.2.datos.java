@@ -16,9 +16,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Metadata;
+import util.OdysseyPlayer;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +36,7 @@ public class AppController {
     public static AppController instance;
     TablePages[] tablePages = new TablePages[3];
     ObservableList<Metadata> tableList = FXCollections.observableArrayList();
+    private int currentlyPlaying;
 
     
     @FXML
@@ -77,8 +81,8 @@ public class AppController {
 
         albumColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().album));
 
-
         genreColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().genre));
+    
         lyricsColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().lyrics));
     
         final TreeItem<Metadata> root = new RecursiveTreeItem<>(tableList, RecursiveTreeObject::getChildren);
@@ -93,14 +97,11 @@ public class AppController {
                 .setAll(nameColumn, artistColumn, albumColumn, genreColumn, lyricsColumn);
         //AQUI ES ESTO
         tablePages[0] = populateTable();
-    //    tableList.addAll(tablePages[0].songs);
-
-//        tablePages[1] = populateTable(1);
-//        tableList.addAll(tablePages[1].songs);
-//
-//        tablePages[2] = populateTable(2);
-//        tableList.addAll(tablePages[2].songs);
-        
+    
+        songSlider.setMin(0);
+        songSlider.setMax(100);
+        songSlider.setValue(0);
+        OdysseyPlayer.getInstance().setSlider(songSlider);
         
     }
     
@@ -109,14 +110,49 @@ public class AppController {
     
     @FXML
     void nextSong (ActionEvent event) {
+    
+        Metadata metadata = tableList.get(++ currentlyPlaying);
+        OdysseyPlayer.getInstance().play(metadata, 0);
+    
     }
     
     @FXML
     void playPauseSong (ActionEvent event) {
+    
+        OdysseyPlayer player = OdysseyPlayer.getInstance();
+        if (player.isPlaying()) {
+            player.pause();
+        } else {
+            player.unpause();
+        }
+        
     }
     
     @FXML
+    void playSong (MouseEvent event) {
+        
+        System.out.println("Is playing before " + OdysseyPlayer.getInstance().isPlaying());
+        if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+            
+            TreeItem<Metadata> treeItem = songList.getSelectionModel().getSelectedItem();
+            if (treeItem == null) {
+                return;
+            }
+            OdysseyPlayer.getInstance().play(treeItem.getValue(), 0);
+            currentlyPlaying = songList.getSelectionModel().getSelectedIndex();
+            System.out.println("Is playing after " + OdysseyPlayer.getInstance().isPlaying());
+        }
+        
+    }
+    
+    
+    
+    @FXML
     void prevSong (ActionEvent event) {
+    
+        Metadata metadata = tableList.get(-- currentlyPlaying);
+        OdysseyPlayer.getInstance().play(metadata, 0);
+        
     }
     
     @FXML

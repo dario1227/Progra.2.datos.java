@@ -146,6 +146,7 @@
         <JFXListView fx:id="friendsList" BorderPane.alignment="CENTER"/>
     </right>
     <center>
-        <JFXTreeTableView fx:id="songList" BorderPane.alignment="CENTER"/>
+        <JFXTreeTableView fx:id="songList" onContextMenuRequested="#contextMenu" onMouseClicked="#playSong"
+                          BorderPane.alignment="CENTER"/>
     </center>
 </BorderPane>
