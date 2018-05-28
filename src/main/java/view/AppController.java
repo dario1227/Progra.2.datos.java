@@ -70,16 +70,16 @@ public class AppController {
     private void initialize () {
     
         nameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().title));
-    
-    
+
+
         artistColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().artist));
-    
-    
+
+
         albumColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().album));
-    
-    
+
+
         genreColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().genre));
-    
+        lyricsColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().lyrics));
     
         final TreeItem<Metadata> root = new RecursiveTreeItem<>(tableList, RecursiveTreeObject::getChildren);
     
@@ -232,10 +232,24 @@ public class AppController {
                         newSong.title = canciones.get(x).nombre;//PEDIR POR XML
                         newSong.album = canciones.get(x).album;//PEDIR POR XML
                         newSong.artist = canciones.get(x).artista;//PEDIR POR XML
+                        newSong.lyrics=canciones.get(x).letra;
+                        page.songs.addAll(newSong);
+                        x++;
+                    }Metadata Redcomended =  new Metadata();
+                    Redcomended.title="Recomended";
+                    Redcomended.lyrics="";
+                    page.songs.addAll(Redcomended);
+                    canciones = XML_parser.get_songs("Random","1","Random","Random");
+                    x=0;
+                    while (x < canciones.size()) {
+                        Metadata newSong = new Metadata();
+                        newSong.title = canciones.get(x).nombre;//PEDIR POR XML
+                        newSong.album = canciones.get(x).album;//PEDIR POR XML
+                        newSong.artist = canciones.get(x).artista;//PEDIR POR XML
+                        newSong.lyrics=canciones.get(x).letra;
                         page.songs.addAll(newSong);
                         x++;
                     }
-                
                     value[0] = page;
                     tableList.addAll(page.songs);
                     latch.countDown();
