@@ -13,10 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.stage.FileChooser;
@@ -27,10 +24,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
 public class AppController {
     
+    public static String USER;
     public static AppController instance;
     TablePages[] tablePages = new TablePages[3];
     ObservableList<Metadata> tableList = FXCollections.observableArrayList();
@@ -273,6 +272,22 @@ public class AppController {
             SearchDialogController.actualPage = i.toString();
             populateTable();
         }
+        
+    }
+    
+    @FXML
+    void addFriend (ActionEvent a) {
+        
+        TextInputDialog dialog = new TextInputDialog("Isaac");
+        dialog.setTitle("Text Input Dialog");
+        dialog.setHeaderText("Look, a Text Input Dialog");
+        dialog.setContentText("Please enter your friend's name:");
+        
+        
+        Optional<String> result = dialog.showAndWait();
+        
+        result.ifPresent(name -> System.out.println("FRIEND name: " + name));
+        
         
     }
     

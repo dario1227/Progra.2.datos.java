@@ -8,6 +8,7 @@
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.paint.LinearGradient?>
@@ -15,7 +16,8 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0"
-            xmlns="http://javafx.com/javafx/8.0.141" fx:controller="view.AppController">
+            style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141"
+            fx:controller="view.AppController">
     <bottom>
         <HBox prefHeight="40.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
             <children>
@@ -44,20 +46,30 @@
         </HBox>
     </bottom>
     <top>
-        <JFXToolbar BorderPane.alignment="CENTER">
+        <JFXToolbar style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
             <right>
-                <JFXButton onAction="#uploadSong" text="Upload song" BorderPane.alignment="CENTER">
+                <JFXButton onAction="#uploadSong" style="-fx-background-color: #ffffff;" text="Upload song"
+                           textFill="WHITE" BorderPane.alignment="CENTER">
                     <graphic>
                         <FontAwesomeIconView glyphName="UPLOAD"/>
                     </graphic>
+                    <ripplerFill>
+                        <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#0bf5ed"/>
+                                <Stop color="#30f50c" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </ripplerFill>
                 </JFXButton>
             </right>
             <left>
-                <HBox alignment="CENTER" prefHeight="40.0" prefWidth="354.0" spacing="5.0"
-                      BorderPane.alignment="CENTER">
+                <HBox alignment="CENTER" prefHeight="40.0" prefWidth="324.0" spacing="5.0"
+                      style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
                     <children>
-                        <JFXTextField promptText="Search"/>
-                        <JFXButton fx:id="prevPageBtn" onAction="#prevPageRequest" text="Back">
+                        <JFXTextField prefHeight="26.0" prefWidth="175.0" promptText="Search"/>
+                        <JFXButton fx:id="prevPageBtn" onAction="#prevPageRequest"
+                                   style="-fx-background-color: #ffffff;" text="Back" textFill="WHITE">
                             <ripplerFill>
                                 <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
                                     <stops>
@@ -71,7 +83,8 @@
                             </graphic>
                         </JFXButton>
                         <JFXButton fx:id="nextPageBtn" contentDisplay="RIGHT" layoutX="151.0" layoutY="17.0"
-                                   onAction="#nextPageRequest" text="Next">
+                                   onAction="#nextPageRequest" style="-fx-background-color: #ffffff;" text="Next"
+                                   textFill="WHITE">
                             <ripplerFill>
                                 <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
                                     <stops>
@@ -88,17 +101,42 @@
                 </HBox>
             </left>
             <center>
-                <JFXButton onAction="#startGeneticView" text="Genetic" BorderPane.alignment="CENTER">
-                    <ripplerFill>
+                <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity"
+                      style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
+                    <children>
+                        <JFXButton contentDisplay="RIGHT" onAction="#startGeneticView" text="Genetic" textFill="WHITE">
+                            <ripplerFill>
+                                <LinearGradient endX="1.0" endY="1.0">
+                                    <stops>
+                                        <Stop color="#f7054b"/>
+                                        <Stop color="#027ef0" offset="1.0"/>
+                                    </stops>
+                                </LinearGradient>
+                            </ripplerFill>
+                            <graphic>
+                                <FontAwesomeIconView glyphName="SEARCH"/>
+                            </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="addfriendBtn" contentDisplay="RIGHT" layoutX="379.0" layoutY="17.0"
+                                   onAction="#addFriend" text="Add Friend" textFill="WHITE">
+                            <ripplerFill>
                         <LinearGradient endX="1.0" endY="1.0">
                             <stops>
                                 <Stop color="#f7054b"/>
                                 <Stop color="#027ef0" offset="1.0"/>
                             </stops>
                         </LinearGradient>
-                    </ripplerFill>
-                </JFXButton>
+                            </ripplerFill>
+                            <graphic>
+                                <FontAwesomeIconView glyphName="USER"/>
+                            </graphic>
+                        </JFXButton>
+                    </children>
+                </HBox>
             </center>
+            <BorderPane.margin>
+                <Insets left="10.0" right="10.0"/>
+            </BorderPane.margin>
         </JFXToolbar>
     </top>
     <left>

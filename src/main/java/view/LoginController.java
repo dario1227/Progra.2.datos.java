@@ -13,6 +13,7 @@ import player.OdysseyPlayer;
 
 public class LoginController {
     
+    
     @FXML
     private JFXPasswordField passwordField;
     
@@ -36,6 +37,7 @@ public class LoginController {
         String pass = passwordField.getText();
         if ((user != null) && (pass != null)) {
             if (XML_parser.loginRequest(user, pass)) {
+                AppController.USER = user;
                 openPlayer();
             } else {
                 // TODO Error Dialog

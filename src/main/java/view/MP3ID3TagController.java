@@ -73,6 +73,7 @@ public class MP3ID3TagController {
     
     @FXML
     void saveChanges (ActionEvent event) {
+    
         if (! titleLabel.getText().equals(data.get(0))) {
             data.set(0, titleLabel.getText());
         }
