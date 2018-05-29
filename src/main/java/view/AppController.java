@@ -269,6 +269,7 @@ public class AppController {
                         newSong.album = canciones.get(x).album;//PEDIR POR XML
                         newSong.artist = canciones.get(x).artista;//PEDIR POR XML
                         newSong.lyrics=canciones.get(x).letra;
+                        newSong.genre = canciones.get(x).genero;
                         page.songs.addAll(newSong);
                         x++;
                     }Metadata Redcomended =  new Metadata();
@@ -283,6 +284,8 @@ public class AppController {
                         newSong.album = canciones.get(x).album;//PEDIR POR XML
                         newSong.artist = canciones.get(x).artista;//PEDIR POR XML
                         newSong.lyrics=canciones.get(x).letra;
+                        newSong.genre = canciones.get(x).genero;
+
                         page.songs.addAll(newSong);
                         x++;
                     }
@@ -338,7 +341,25 @@ public class AppController {
         Optional<String> result = dialog.showAndWait();
         
         result.ifPresent(name -> System.out.println("FRIEND name: " + name));
-        
+        if(result.isPresent()){
+            String amigo = result.get();
+        String enviador = LoginController.usuario;
+       boolean aceptado =  XML_parser.sendFriendRequest(enviador,amigo);
+            if(aceptado){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Friend");
+                alert.setHeaderText(null);
+                alert.setContentText("You have a new friend yay");
+                alert.showAndWait();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Friend");
+                alert.setHeaderText(null);
+                alert.setContentText("Nobody likes you");
+                alert.showAndWait();
+            }
+        }
+
         
     }
     
