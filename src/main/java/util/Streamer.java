@@ -6,6 +6,19 @@ import java.io.OutputStream;
 
 
 public class Streamer extends Thread {
+    
+    private static Streamer instance;
+    
+    private Streamer () {
+    }
+    
+    public static Streamer getInstance () {
+        if (instance == null) {
+            instance = new Streamer();
+        }
+        return instance;
+    }
+    
     private final int totalChunks = 50;
     OutputStream stream;
     String request;
@@ -41,6 +54,8 @@ public class Streamer extends Thread {
             
             chunk++;
         }
+    
+        instance = null;
     }
     
     public int pause () {

@@ -6,6 +6,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import util.Streamer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -120,6 +121,7 @@ public class XML_parser {
      */
     public static ArrayList<Canciones> get_songs (String method, String page, String parametro, String orden) {
         try {
+            sleepStream();
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.newDocument();
@@ -484,6 +486,7 @@ public class XML_parser {
     public static boolean getXML_Archive (
             String path, String filename, String letra, String Album, String artista,String genero) {
         try {
+            sleepStream();
             String file = getFile(path);
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -539,4 +542,17 @@ public class XML_parser {
         }
         return x;
     }
+    
+    public static void sleepStream () {
+        
+        try {
+            Streamer.getInstance();
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
+    
 }
