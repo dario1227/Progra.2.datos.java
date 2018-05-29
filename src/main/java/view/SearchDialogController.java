@@ -13,11 +13,16 @@ public class SearchDialogController {
     public static String orden="Nada";
     public static String parametro="Nada";
     public static String nombre="Nada";
+    
+    
     @FXML
     private JFXTextField searchTextField;
     
     @FXML
     private JFXComboBox<Label> typeCombo;
+    
+    @FXML
+    private JFXComboBox<Label> sortCombo;
     
     @FXML
     private JFXRadioButton yesRadioBtn;
@@ -35,17 +40,28 @@ public class SearchDialogController {
         typeCombo.getItems().add(new Label("Album"));
         typeCombo.getItems().add(new Label("Artist"));
         typeCombo.setEditable(false);
+    
+        sortCombo.getItems().add(new Label("Lyrics"));
+        sortCombo.getItems().add(new Label("Title"));
+        sortCombo.getItems().add(new Label("Album"));
+        sortCombo.getItems().add(new Label("Artist"));
+        sortCombo.setEditable(false);
+        
+        
+        
     }
     
     @FXML
     void disableNo (ActionEvent event) {
         noRadioBtn.setSelected(false);
+        sortCombo.setDisable(false);
         
     }
     
     @FXML
     void disableYes (ActionEvent event) {
         yesRadioBtn.setSelected(false);
+        sortCombo.setDisable(true);
     }
     
     @FXML
