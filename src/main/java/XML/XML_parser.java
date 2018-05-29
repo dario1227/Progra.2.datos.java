@@ -72,6 +72,7 @@ public class XML_parser {
     ////
     public static boolean sendFriendRequest (String enviador, String destinatario) {
         try {
+            sleepStream();
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.newDocument();
