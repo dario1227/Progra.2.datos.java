@@ -52,7 +52,7 @@ public class AppController {
     private JFXSlider songSlider;
     
     @FXML
-    private JFXListView<?> friendsList;
+    public static JFXListView<String> friendsList;
     
     @FXML
     private JFXButton vizButton;
