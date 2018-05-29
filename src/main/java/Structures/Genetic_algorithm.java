@@ -8,18 +8,19 @@ public class Genetic_algorithm {
     ArrayList<String> lista;
     ArrayList<Palabra> analizadas;
     ArrayList<Palabra> usadas;
-
+    
     /**
      * inicia la cancion para analizar
+     *
      * @param cancion_to
      */
-    public Genetic_algorithm(String cancion_to) {
+    public Genetic_algorithm (String cancion_to) {
         cancion = cancion_to;
         lista = new ArrayList<String>();
         analizadas = new ArrayList<>();
         usadas = new ArrayList<>();
     }
-
+    
     /**
      * Analiza la cancion, separa las letras
      */
@@ -59,9 +60,10 @@ public class Genetic_algorithm {
         analizadas.remove(sacada);
         return sacada;
     }
-
+    
     /**
      * agarra las palabras y recorre la de mas coincidencia
+     *
      * @return
      */
     public Palabra palabra_mas_coincidencia () {
@@ -78,9 +80,10 @@ public class Genetic_algorithm {
         analizadas.remove(mayor);
         return mayor;
     }
-
+    
     /**
      * Reordena las palabras para sacar la mas adecuada
+     *
      * @param palabra
      * @param indices
      */

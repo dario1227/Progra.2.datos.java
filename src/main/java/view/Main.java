@@ -1,22 +1,14 @@
 package view;
 
 import Server.ClientServer;
-import XML.MP3Bytes;
-import XML.XML_parser;
-import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Optional;
 
 
 public class Main extends Application {
@@ -44,7 +36,7 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+    
     }
     
     @Override
@@ -93,41 +85,8 @@ public class Main extends Application {
         mStage = primaryStage;
         mStage.setTitle("Login");
         mStage.setScene(new Scene(root, 400, 300));
-        //mStage.setScene(new Scene(root, 1280, 720));
         mStage.setResizable(false);
         mStage.show();
-        //        ClientServer.Server.send("YOUR MOM GAY");
-        //        ClientServer.Server.receive();
-        // String cosa = XML_parser.getXML_Archive("/home/kenneth/Desktop/Tool - Pushit.mp3");
-        // System.out.print("\n"+cosa);
-        //  ClientServer.Server.send(cosa);
-        //    XML_parser.getXML_Archive("/home/germago/13.mp3", "13.mp3", "Blah", "ISM", "Savant");
-
-
-//        Integer chunknum = 0;
-//        String songNombre = "Tool - H. w Lyrics (HD).mp3";
-//        byte[] test = XML_parser.get_chunk_bytes(songNombre, chunknum.toString());
-//        System.out.println("LARGO: " + test.length);
-//        MP3Bytes mp3Bytes = new MP3Bytes(test, songNombre);
-//        mp3Bytes.play();
-
-//        InputStream stream = new ByteArrayInputStream(test);
-//        System.out.println("STREAM: " + stream.toString());
-//        Clip clip = AudioSystem.getClip();
-//        AudioInputStream buffer = AudioSystem.getAudioInputStream(stream);
-//        clip.open(buffer);
-//        System.out.println("CLIP START/ Buffer: " + buffer.toString());
-//        clip.start();
-
-
-//        File f = new File("/home/germago/13.mp3");
-//        byte[] as = Files.readAllBytes(f.toPath());
-//        System.out.println("LARGO 2: " + as.length);
-//        MP3Bytes m = new MP3Bytes(as, "13.mp3");
-//        if (mp3Bytes.isfinish()) {
-//            System.out.println("TERMINO EL CHUNK 1");
-//            m.play();
-//        }
     }
     
 }

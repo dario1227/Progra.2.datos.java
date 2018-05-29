@@ -19,18 +19,20 @@ public class ClientServer {
         this.clientOutput = new DataOutputStream(socket.getOutputStream());
         send("Connected");
     }
-
+    
     /**
      * envia archivo xml
+     *
      * @param message
      * @throws IOException
      */
     public void send (String message) throws IOException {
         this.clientOutput.write(message.getBytes());
     }
-
+    
     /**
      * Recibe y envia a parsear archivo xml
+     *
      * @return
      * @throws IOException
      */

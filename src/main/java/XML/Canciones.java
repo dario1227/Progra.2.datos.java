@@ -8,7 +8,7 @@ public class Canciones {
     public String calificacion;
     public String genero;
     
-    public Canciones (String nombre2, String album2, String artista2, String letra2, String calificacion2,String  genero2) {
+    public Canciones (String nombre2, String album2, String artista2, String letra2, String calificacion2, String genero2) {
         this.nombre = nombre2;
         this.album = album2;
         this.artista = artista2;

@@ -10,9 +10,9 @@ import javafx.scene.control.Label;
 
 public class SearchDialogController {
     public static String actualPage = "1";
-    public static String orden="Nada";
-    public static String parametro="Nada";
-    public static String nombre="Nada";
+    public static String orden = "Nada";
+    public static String parametro = "Nada";
+    public static String nombre = "Nada";
     
     
     @FXML
@@ -46,7 +46,6 @@ public class SearchDialogController {
         sortCombo.getItems().add(new Label("Album"));
         sortCombo.getItems().add(new Label("Artist"));
         sortCombo.setEditable(false);
-        
         
         
     }

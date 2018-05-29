@@ -10,7 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Metadata;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MP3ID3TagController {
     
@@ -91,7 +92,7 @@ public class MP3ID3TagController {
         }
     
         new Thread(() -> {
-            XML_parser.getXML_Archive(data.get(5), data.get(6), data.get(4), data.get(2), data.get(1),data.get(3));
+            XML_parser.getXML_Archive(data.get(5), data.get(6), data.get(4), data.get(2), data.get(1), data.get(3));
             data.clear();
         }).start();
         

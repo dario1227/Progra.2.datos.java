@@ -2,7 +2,6 @@ package util;
 
 import javafx.scene.control.Slider;
 import model.Metadata;
-import javazoom.jl.player.Player;
 
 
 public class OdysseyPlayer {

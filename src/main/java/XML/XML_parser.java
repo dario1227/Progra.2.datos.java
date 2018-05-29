@@ -113,7 +113,7 @@ public class XML_parser {
             return false;
         }
     }
-
+    
     /**
      * @param method,   hay 4 metodos, Autor,Album,Nombre ,Letra y Nada
      * @param page      inicia desde el numero 1 no de 0
@@ -180,7 +180,7 @@ public class XML_parser {
                     String artista = nodo.getAttribute("Artista");
                     String calificacion = nodo.getAttribute("Calificacion");
                     String genero = nodo.getAttribute("Genero");
-                    lista.add(new Canciones(name, album, artista, letra, calificacion,genero));
+                    lista.add(new Canciones(name, album, artista, letra, calificacion, genero));
                     x++;
                 }
                 return lista;
@@ -485,7 +485,7 @@ public class XML_parser {
     }
     
     public static boolean getXML_Archive (
-            String path, String filename, String letra, String Album, String artista,String genero) {
+            String path, String filename, String letra, String Album, String artista, String genero) {
         try {
             sleepStream();
             String file = getFile(path);
@@ -497,7 +497,7 @@ public class XML_parser {
             root.setAttribute("Operation", "Upload");
             root.setAttribute("Letra", letra);
             root.setAttribute("Album", Album);
-            root.setAttribute("Genero",genero);
+            root.setAttribute("Genero", genero);
             root.setAttribute("Artista", artista);
             Element file_node = doc.createElement("Archive");
             file_node.setAttribute("File", file);
@@ -535,19 +535,21 @@ public class XML_parser {
     }
     
     public static int calcule_actual_page (int porcentage) {
-        long actualbyte = size_actual*porcentage;
+        long actualbyte = size_actual * porcentage;
         int x = 0;
-        long  limite = (long) (size_actual*0.02);
-        while(!(limite*x<=actualbyte)&& !(actualbyte<=limite*x+limite)){
+        long limite = (long) (size_actual * 0.02);
+        while (! (limite * x <= actualbyte) && ! (actualbyte <= limite * x + limite)) {
             x++;
         }
         return x;
     }
     
     private static void sleepStream () throws InterruptedException {
-        
-        Streamer.getInstance().sleep(2000);
     
+        System.out.println("SLEEP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Streamer s = Streamer.getInstance();
+        s.sleep(1500);
+        
     }
     
     
