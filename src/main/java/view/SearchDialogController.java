@@ -68,6 +68,7 @@ public class SearchDialogController {
     void saveSettings (ActionEvent event) {
         String cosa;
         String parametro2 = typeCombo.getValue().getText();
+    
         if (yesRadioBtn.isSelected()) {
             orden = "true";
         } else {

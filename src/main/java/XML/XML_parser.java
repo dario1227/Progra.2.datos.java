@@ -544,15 +544,10 @@ public class XML_parser {
         return x;
     }
     
-    public static void sleepStream () {
+    private static void sleepStream () throws InterruptedException {
         
-        try {
-            Streamer.getInstance();
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        
+        Streamer.getInstance().sleep(2000);
+    
     }
     
     

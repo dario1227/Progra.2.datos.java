@@ -112,8 +112,11 @@ public class AppController {
     void nextSong (ActionEvent event) {
     
         Metadata metadata = tableList.get(++ currentlyPlaying);
-        OdysseyPlayer.getInstance().play(metadata, 0);
-    
+        if (! checkRecommended(metadata)) {
+            OdysseyPlayer.getInstance().play(metadata, 0);
+        } else {
+            //Do nothing
+        }
     }
     
     @FXML
@@ -138,6 +141,9 @@ public class AppController {
             if (treeItem == null) {
                 return;
             }
+            if (checkRecommended(treeItem.getValue())) {
+                return;
+            }
             OdysseyPlayer.getInstance().play(treeItem.getValue(), 0);
             currentlyPlaying = songList.getSelectionModel().getSelectedIndex();
             System.out.println("Is playing after " + OdysseyPlayer.getInstance().isPlaying());
@@ -151,8 +157,11 @@ public class AppController {
     void prevSong (ActionEvent event) {
     
         Metadata metadata = tableList.get(-- currentlyPlaying);
-        OdysseyPlayer.getInstance().play(metadata, 0);
-        
+        if (! checkRecommended(metadata)) {
+            OdysseyPlayer.getInstance().play(metadata, 0);
+        } else {
+            //Do nothing
+        }
     }
     
     @FXML
@@ -273,11 +282,12 @@ public class AppController {
                         page.songs.addAll(newSong);
                         x++;
                     }Metadata Redcomended =  new Metadata();
-                    Redcomended.title="Recomended";
+                    Redcomended.title = "Recommended";
                     Redcomended.lyrics="";
                     page.songs.addAll(Redcomended);
                     canciones = XML_parser.get_songs("Random","1","Random","Random");
                     x=0;
+                    assert canciones != null;
                     while (x < canciones.size()) {
                         Metadata newSong = new Metadata();
                         newSong.title = canciones.get(x).nombre;//PEDIR POR XML
@@ -361,6 +371,10 @@ public class AppController {
         }
 
         
+    }
+    
+    private boolean checkRecommended (Metadata selected) {
+        return selected.title.equals("Recommended");
     }
     
 }
