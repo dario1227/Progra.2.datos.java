@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
+
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/8.0.141" fx:controller="view.MP3ID3TagController">
+            style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.141"
+            fx:controller="view.MP3ID3TagController">
     <children>
         <GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="351.0">
             <columnConstraints>
@@ -127,12 +137,12 @@
                 </JFXTextField>
             </children>
         </GridPane>
-        <HBox layoutX="385.0" layoutY="293.0" prefHeight="48.0" prefWidth="207.0" spacing="40.0">
+        <HBox layoutX="367.0" layoutY="293.0" prefHeight="51.0" prefWidth="225.0" spacing="40.0">
             <children>
-                <JFXButton fx:id="saveBtn" contentDisplay="RIGHT" onAction="#saveChanges"
-                           style="-fx-background-radius: 30;" text="Save">
+                <JFXButton fx:id="saveBtn" buttonType="RAISED" contentDisplay="RIGHT" onAction="#saveChanges"
+                           style="-fx-background-radius: 30; -fx-background-color: #FFFFFF;" text="Save">
                     <graphic>
-                        <FontAwesomeIconView glyphName="CHECK" size="14.0"/>
+                        <FontAwesomeIconView glyphName="CHECK" size="20.0"/>
                     </graphic>
                     <ripplerFill>
                         <LinearGradient endX="1.0" endY="1.0">
@@ -144,10 +154,10 @@
                         </LinearGradient>
                     </ripplerFill>
                 </JFXButton>
-                <JFXButton fx:id="cancelBtn" contentDisplay="RIGHT" onAction="#discardChanges"
-                           style="-fx-background-radius: 30;" text="Cancel">
+                <JFXButton fx:id="cancelBtn" buttonType="RAISED" contentDisplay="RIGHT" onAction="#discardChanges"
+                           style="-fx-background-radius: 30; -fx-background-color: #FFFFFF;" text="Cancel">
                     <graphic>
-                        <FontAwesomeIconView glyphName="CLOSE" size="14.0"/>
+                        <FontAwesomeIconView glyphName="CLOSE" size="20.0"/>
                     </graphic>
                     <ripplerFill>
                         <LinearGradient endX="1.0" endY="1.0">

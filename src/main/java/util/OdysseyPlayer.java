@@ -1,5 +1,6 @@
 package util;
 
+import XML.XML_parser;
 import javafx.scene.control.Slider;
 import model.Metadata;
 
@@ -78,6 +79,11 @@ public class OdysseyPlayer {
     
     public void setSlider (Slider slider) {
         this.slider = slider;
+    }
+    
+    public void forward (int slider) {
+        int chunk = XML_parser.calcule_actual_page(slider / 100);
+        play(currentSong, chunk);
     }
     
     

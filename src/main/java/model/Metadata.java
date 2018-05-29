@@ -5,8 +5,10 @@ import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.images.Artwork;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class Metadata extends RecursiveTreeObject<Metadata> {
     
@@ -17,6 +19,8 @@ public class Metadata extends RecursiveTreeObject<Metadata> {
     public String lyrics = "Blah, Blah, Blah, Blah";
     public String fullpath = "";
     public String filename = "";
+    
+    public Artwork cover;
     
     
     public Metadata () {
@@ -36,6 +40,10 @@ public class Metadata extends RecursiveTreeObject<Metadata> {
             title = tag.getFirst(FieldKey.TITLE);
             if (! tag.getFirst(FieldKey.LYRICS).equals("")) {
                 lyrics = tag.getFirst(FieldKey.LYRICS);
+            }
+    
+            if (tag.getFirstArtwork() != null) {
+                cover = tag.getFirstArtwork();
             }
             
             genre = tag.getFirst(FieldKey.GENRE);

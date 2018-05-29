@@ -368,4 +368,14 @@ public class AppController {
         return selected.title.equals("Recommended");
     }
     
+    @FXML
+    void sliderChanged (MouseEvent event) {
+        OdysseyPlayer.getInstance().forward((int) songSlider.getValue());
+    }
+    
+    @FXML
+    private void openViz () {
+        System.out.println("VIZ");
+    }
+    
 }

@@ -47,7 +47,6 @@ public class Streamer extends Thread {
                     stream.write(decodedAudio);
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
             }
             
             chunk++;
