@@ -36,6 +36,9 @@ public class GeneticController {
     
     //BOTON GUESS
     @FXML
+    /**
+     * Inicia la busqueda
+     */
     void genericSearch (ActionEvent event) {
     
         // String s = genericTextField.getText();
@@ -61,6 +64,7 @@ public class GeneticController {
     
     //BOTON START
     @FXML
+
     void startGame (ActionEvent event) {
         TextInputDialog inputDialog = new TextInputDialog();
         inputDialog.setTitle("Select a Song");

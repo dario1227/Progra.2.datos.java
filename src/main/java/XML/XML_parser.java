@@ -74,21 +74,44 @@ public class XML_parser {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.newDocument();
-            
             Element root = doc.createElement("Root");
             Attr atributo = doc.createAttribute("Operation");
-            atributo.setValue("Log");
+            atributo.setValue("Addfriend");
             root.setAttributeNode(atributo);
-            Element user = doc.createElement("User");
-            user.setAttribute("Enviador", enviador);
-            user.setAttribute("Destinatario", destinatario);
-            root.appendChild(user);
-            return true;
+            root.setAttribute("Enviador", enviador);
+            root.setAttribute("Destinatario", destinatario);
+            doc.appendChild(root);
+            DOMSource domSource = new DOMSource(doc);
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            StringWriter sw = new StringWriter();
+            StreamResult sr = new StreamResult(sw);
+            transformer.transform(domSource, sr);
+            System.out.println(sw.toString());
+            ClientServer.Server.send(sw.toString());
+            String recibido = ClientServer.Server.receive();
+            System.out.print("LOL");
+            InputSource source = new InputSource();
+            source.setCharacterStream(new StringReader(recibido));
+            doc = docBuilder.parse(source);
+            domSource = new DOMSource(doc);
+            transformer = TransformerFactory.newInstance().newTransformer();
+            sw = new StringWriter();
+            sr = new StreamResult(sw);
+            transformer.transform(domSource, sr);
+            System.out.println(sw.toString());
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("Root");
+            System.out.print(nList.getLength());
+            Element rootnode = (Element) nList.item(0);
+            String result = rootnode.getAttribute("Result");
+            System.out.println("");
+            System.out.println(result);
+            return result.contains("true");
         } catch (Exception e) {
             return false;
         }
     }
-    
+
     /**
      * @param method,   hay 4 metodos, Autor,Album,Nombre ,Letra y Nada
      * @param page      inicia desde el numero 1 no de 0
@@ -153,8 +176,8 @@ public class XML_parser {
                     String album = nodo.getAttribute("Album");
                     String artista = nodo.getAttribute("Artista");
                     String calificacion = nodo.getAttribute("Calificacion");
-                    
-                    lista.add(new Canciones(name, album, artista, letra, calificacion));
+                    String genero = nodo.getAttribute("Genero");
+                    lista.add(new Canciones(name, album, artista, letra, calificacion,genero));
                     x++;
                 }
                 return lista;
@@ -459,7 +482,7 @@ public class XML_parser {
     }
     
     public static boolean getXML_Archive (
-            String path, String filename, String letra, String Album, String artista) {
+            String path, String filename, String letra, String Album, String artista,String genero) {
         try {
             String file = getFile(path);
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -470,6 +493,7 @@ public class XML_parser {
             root.setAttribute("Operation", "Upload");
             root.setAttribute("Letra", letra);
             root.setAttribute("Album", Album);
+            root.setAttribute("Genero",genero);
             root.setAttribute("Artista", artista);
             Element file_node = doc.createElement("Archive");
             file_node.setAttribute("File", file);

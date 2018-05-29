@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
-    
+    public static String usuario ;
     
     @FXML
     private JFXPasswordField passwordField;
@@ -39,6 +39,7 @@ public class LoginController {
         if ((user != null) && (pass != null)) {
             if (XML_parser.loginRequest(user, pass)) {
                 AppController.USER = user;
+                usuario = user;
                 openPlayer();
     
                 Stage stage = (Stage) loginBtn.getScene().getWindow();
