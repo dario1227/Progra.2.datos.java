@@ -7,6 +7,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import util.Streamer;
+import view.LoginController;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -192,7 +193,50 @@ public class XML_parser {
             return null;
         }
     }
-    
+    public static ArrayList<String> getFriendlist(){try{
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        Document doc = docBuilder.newDocument();
+        Element root = doc.createElement("Root");
+        Attr atributo = doc.createAttribute("Operation");
+        atributo.setValue("FriendList");
+        root.setAttributeNode(atributo);
+        root.setAttribute("Enviador",LoginController.usuario);
+        doc.appendChild(root);
+        DOMSource domSource = new DOMSource(doc);
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        StringWriter sw = new StringWriter();
+        StreamResult sr = new StreamResult(sw);
+        transformer.transform(domSource, sr);
+        System.out.println(sw.toString());
+        ClientServer.Server.send(sw.toString());
+        String recibido = ClientServer.Server.receive();
+        System.out.print("LOL");
+        InputSource source = new InputSource();
+        source.setCharacterStream(new StringReader(recibido));
+        doc = docBuilder.parse(source);
+        domSource = new DOMSource(doc);
+        transformer = TransformerFactory.newInstance().newTransformer();
+        sw = new StringWriter();
+        sr = new StreamResult(sw);
+        transformer.transform(domSource, sr);
+        System.out.println(sw.toString());
+        doc.getDocumentElement().normalize();
+        NodeList nList = doc.getElementsByTagName("Root");
+        Element rootnode = (Element) nList.item(0);
+        String listamigos = rootnode.getAttribute("Friends");
+        String[] divididos = listamigos.split("&");
+        ArrayList<String> to_return = new ArrayList<>();
+        int x =0;
+        while(x<divididos.length){
+            to_return.add(divididos[x]);
+            x++;
+        }
+        return to_return;
+    }
+    catch (Exception e ){return null;
+    }
+    }
     public static boolean createAccount (String username, String id, String age, String password) {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -550,6 +594,7 @@ public class XML_parser {
         Streamer.getInstance().sleep(2000);
 
     }
+
     
     
 }

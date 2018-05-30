@@ -41,6 +41,7 @@ public class LoginController {
             if (XML_parser.loginRequest(user, pass)) {
                 AppController.USER = user;
                 usuario = user;
+                System.out.println(XML_parser.getFriendlist());
                 openPlayer();
 
 //                Stage stage = (Stage) loginBtn.getScene().getWindow();

@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
+import sun.rmi.runtime.Log;
 
 public class RegisterController {
     private static Integer id = 0;
@@ -27,6 +28,7 @@ public class RegisterController {
         if ((user != null) && (pass != null) && (age != null)) {
             if (XML_parser.createAccount(user, id.toString(), age, pass)) {
                 id++;
+                LoginController.usuario = user;
     
                 AppController.USER = user;
     
