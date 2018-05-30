@@ -60,17 +60,22 @@ public class MP3ID3TagController {
         data.add(metadata.fullpath);
         data.add(metadata.filename);
     
-        byte[] bytes = metadata.cover.getBinaryData();
-        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-        Image img = new Image(in, 200, 200, true, true);
-    
-        if (img.isError()) {
-            img = new Image("util/img/albumsIcon.png", 200, 200, true, true);
-        }
-    
-        coverArtImg.setImage(img);
+        if (metadata.cover.getBinaryData() != null) {
         
-      
+            byte[] bytes = metadata.cover.getBinaryData();
+            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+            Image img = new Image(in, 200, 200, true, true);
+            coverArtImg.setImage(img);
+        
+            if (img.isError()) {
+                img = new Image("util/img/albumsIcon.png", 200, 200, true, true);
+                coverArtImg.setImage(img);
+            }
+        } else {
+            Image img = new Image("util/img/albumsIcon.png", 200, 200, true, true);
+            coverArtImg.setImage(img);
+        }
+        
     }
     
     public Metadata retrieve () {

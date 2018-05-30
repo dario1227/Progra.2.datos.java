@@ -20,6 +20,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.Metadata;
 import util.OdysseyPlayer;
 
@@ -34,10 +35,9 @@ public class AppController {
     
     public static String USER;
     public static AppController instance;
-
-
     TablePages[] tablePages = new TablePages[3];
     ObservableList<Metadata> tableList = FXCollections.observableArrayList();
+    ObservableList<Label> friends = FXCollections.observableArrayList();
     private int currentlyPlaying;
 
     
@@ -54,7 +54,7 @@ public class AppController {
     private JFXSlider songSlider;
     
     @FXML
-    public static JFXListView<String> friendsList;
+    private JFXListView<Label> friendsList = new JFXListView<Label>();
     
     @FXML
     private JFXButton vizButton;
@@ -75,18 +75,26 @@ public class AppController {
     @FXML
     private void initialize () {
     
-        nameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().title));
-
-
-        artistColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().artist));
-
-
-        albumColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().album));
-
-        genreColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().genre));
+        nameColumn.prefWidthProperty().bind(songList.widthProperty().divide(3));
+        nameColumn.setStyle("-fx-alignment: CENTER;");
+        nameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) ->
+                                               new ReadOnlyObjectWrapper<>(param.getValue().getValue().title));
     
-        lyricsColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().lyrics));
+        artistColumn.prefWidthProperty().bind(songList.widthProperty().divide(5));
+        artistColumn.setStyle("-fx-alignment: CENTER;");
+        artistColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) ->
+                                                 new ReadOnlyObjectWrapper<>(param.getValue().getValue().artist));
     
+        albumColumn.prefWidthProperty().bind(songList.widthProperty().divide(4));
+        albumColumn.setStyle("-fx-alignment: CENTER;");
+        albumColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) ->
+                                                new ReadOnlyObjectWrapper<>(param.getValue().getValue().album));
+    
+        genreColumn.prefWidthProperty().bind(songList.widthProperty().divide(5));
+        genreColumn.setStyle("-fx-alignment: CENTER;");
+        genreColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Metadata, String> param) ->
+                                                new ReadOnlyObjectWrapper<>(param.getValue().getValue().genre));
+        
         final TreeItem<Metadata> root = new RecursiveTreeItem<>(tableList, RecursiveTreeObject::getChildren);
     
     
@@ -95,8 +103,11 @@ public class AppController {
         songList.setRoot(root);
         songList.setShowRoot(false);
         songList.setEditable(false);
-        songList.getColumns()
-                .setAll(nameColumn, artistColumn, albumColumn, genreColumn, lyricsColumn);
+        songList.getColumns().setAll(nameColumn, artistColumn, albumColumn, genreColumn);
+        songList.setPlaceholder(new Label("Song library is empty. \n Please UPLOAD new songs"));
+        
+        
+        
         //AQUI ES ESTO
         tablePages[0] = populateTable();
     
@@ -104,7 +115,9 @@ public class AppController {
         songSlider.setMax(100);
         songSlider.setValue(0);
         OdysseyPlayer.getInstance().setSlider(songSlider);
-        
+    
+        friendsList.getItems().add(new Label("Zero Friends :/"));
+    
     }
     
     
@@ -112,9 +125,10 @@ public class AppController {
     
     @FXML
     void nextSong (ActionEvent event) {
-                                    if (currentlyPlaying==tableList.size()){
-                                        return;
-                                    }
+    
+        if (currentlyPlaying == tableList.size()) {
+            return;
+        }
         Metadata metadata = tableList.get(++ currentlyPlaying);
         if (! checkRecommended(metadata)) {
             OdysseyPlayer.getInstance().play(metadata, 0);
@@ -159,7 +173,10 @@ public class AppController {
     
     @FXML
     void prevSong (ActionEvent event) {
-                                   if(currentlyPlaying ==0){  return;  }
+        if (currentlyPlaying == 0) {
+            return;
+        }
+        
         Metadata metadata = tableList.get(-- currentlyPlaying);
         if (! checkRecommended(metadata)) {
             OdysseyPlayer.getInstance().play(metadata, 0);
@@ -198,7 +215,8 @@ public class AppController {
             controller.load(data);
     
             stage.show();
-
+    
+    
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -254,7 +272,7 @@ public class AppController {
         });
         
         altMenu.getItems().add(details);
-        altMenu.show(Main.getmStage(), event.getSceneX(), event.getSceneY());
+        altMenu.show(songList.getScene().getWindow(), event.getSceneX(), event.getSceneY());
     }
     
     
@@ -265,11 +283,10 @@ public class AppController {
         final CountDownLatch latch = new CountDownLatch(1);
         final TablePages[] value = new TablePages[1];
     
-
-        
-            TablePages page = null;
-            try {
-                page = new TablePages();
+    
+        TablePages page = null;
+        try {
+            page = new TablePages();
             
                 ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro, SearchDialogController.actualPage, SearchDialogController.nombre, SearchDialogController.orden,SearchDialogController.sorted);
 //
@@ -310,11 +327,12 @@ public class AppController {
                     value[0] = null;
 
                 }
-            
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
+        
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        
         return value[0];
     
     }
@@ -372,8 +390,8 @@ public class AppController {
                 alert.showAndWait();
             }
         }
-
-
+    
+    
     }
     
     private boolean checkRecommended (Metadata selected) {
@@ -387,7 +405,37 @@ public class AppController {
 
     @FXML
     private void openViz () {
-        System.out.println("VIZ");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Viz.fxml"));
+            Parent root1 = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Visualizer");
+            stage.setScene(new Scene(root1, 400, 300));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
+    
+    @FXML
+    private void addFriendList () {
+        
+        String amigo = "Isaac";
+        String amigo1 = "Kenneth";
+        String amigo2 = "Dario";
+        String amigo3 = "Roger";
+        
+        friends.add(new Label(amigo));
+        friends.add(new Label(amigo1));
+        friends.add(new Label(amigo2));
+        friends.add(new Label(amigo3));
+        
+        //friendsList.getItems().addAll(friends);
+        friendsList.setItems(friends);
+        
+        System.out.println("AGREGAR");
+        
+    }
+    
+    
 }

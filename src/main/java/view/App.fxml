@@ -41,6 +41,11 @@
                         <MaterialDesignIconView glyphName="CHART_ARC" size="30.0"/>
                     </graphic>
                 </JFXButton>
+                <JFXButton layoutX="1233.0" layoutY="10.0" onAction="#addFriendList" text=" ">
+                    <graphic>
+                        <MaterialDesignIconView glyphName="" size="30.0"/>
+                    </graphic>
+                </JFXButton>
             </children>
         </HBox>
     </bottom>
@@ -158,7 +163,8 @@
         <JFXListView BorderPane.alignment="CENTER"/>
     </left>
     <right>
-        <JFXListView fx:id="friendsList" BorderPane.alignment="CENTER"/>
+        <JFXListView fx:id="friendsList" depth="1" style="-fx-background-color: #ffffff; -fx-border-color: GRAY;"
+                     BorderPane.alignment="CENTER"/>
     </right>
     <center>
         <JFXTreeTableView fx:id="songList" onContextMenuRequested="#contextMenu" onMouseClicked="#playSong"

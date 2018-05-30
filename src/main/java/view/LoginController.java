@@ -27,6 +27,7 @@ public class LoginController {
     @FXML
     private JFXButton regBtn;
     
+    
     /**
      * Extrae texto que uno escribe en el user y la pone en password y al mismo tiempo desactiva el
      * boton de login. En el FXML esta para que cuando se de click al boton de login se corra este
@@ -41,9 +42,9 @@ public class LoginController {
                 AppController.USER = user;
                 usuario = user;
                 openPlayer();
-    
-                Stage stage = (Stage) loginBtn.getScene().getWindow();
-                stage.close();
+
+//                Stage stage = (Stage) loginBtn.getScene().getWindow();
+//                stage.close();
             } else {
                 // TODO Error Dialog
             }
@@ -75,7 +76,7 @@ public class LoginController {
     
         try {
             Parent root = FXMLLoader.load(getClass().getResource("App.fxml"));
-            Stage stage = new Stage();
+            Stage stage = Main.getmStage();
             stage.setTitle("Odyssey++");
             stage.setScene(new Scene(root, 1280, 720));
             stage.setResizable(true);
