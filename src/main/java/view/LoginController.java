@@ -11,10 +11,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LoginController {
     public static String usuario;
-    
+    public static ArrayList<String> friends;
     @FXML
     private JFXPasswordField passwordField;
     
@@ -41,7 +42,7 @@ public class LoginController {
             if (XML_parser.loginRequest(user, pass)) {
                 AppController.USER = user;
                 usuario = user;
-                System.out.println(XML_parser.getFriendlist());
+                friends = XML_parser.getFriendlist();
                 openPlayer();
 
 //                Stage stage = (Stage) loginBtn.getScene().getWindow();

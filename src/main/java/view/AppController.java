@@ -117,7 +117,7 @@ public class AppController {
         OdysseyPlayer.getInstance().setSlider(songSlider);
     
         friendsList.getItems().add(new Label("Zero Friends :/"));
-    
+    addFriendList();
     }
     
     
@@ -382,6 +382,8 @@ public class AppController {
                 alert.setHeaderText(null);
                 alert.setContentText("You have a new friend yay");
                 alert.showAndWait();
+                LoginController.friends.add(amigo);
+                addFriendList();
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Friend");
@@ -419,21 +421,24 @@ public class AppController {
     
     @FXML
     private void addFriendList () {
-    
-        for (int i = 0; i < 4; i++) {
-            Label label = new Label("Amigo " + i);
-            friends.add(label);
-        }
+        friends.clear();;
+    ArrayList<String> lista = LoginController.friends;
+    int x = 0;
+            while(x<lista.size()) {
+                Label label = new Label(lista.get(x));
+                friends.add(label);
+                x++;
+            }
         
-        String amigo = "Isaac";
-        String amigo1 = "Kenneth";
-        String amigo2 = "Dario";
-        String amigo3 = "Roger";
-        
-        friends.add(new Label(amigo));
-        friends.add(new Label(amigo1));
-        friends.add(new Label(amigo2));
-        friends.add(new Label(amigo3));
+//        String amigo = "Isaac";
+//        String amigo1 = "Kenneth";
+//        String amigo2 = "Dario";
+//        String amigo3 = "Roger";
+//
+//        friends.add(new Label(amigo));
+//        friends.add(new Label(amigo1));
+//        friends.add(new Label(amigo2));
+//        friends.add(new Label(amigo3));
         
         //friendsList.getItems().addAll(friends);
         friendsList.setItems(friends);

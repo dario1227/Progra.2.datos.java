@@ -193,7 +193,8 @@ public class XML_parser {
             return null;
         }
     }
-    public static ArrayList<String> getFriendlist(){try{
+    public static ArrayList<String> getFriendlist(){
+        try{
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         Document doc = docBuilder.newDocument();
