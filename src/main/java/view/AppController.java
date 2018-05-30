@@ -138,7 +138,9 @@ public class AppController {
     
     @FXML
     void playPauseSong (ActionEvent event) {
-    
+    if(tableList.isEmpty()){
+        return;
+    }
         OdysseyPlayer player = OdysseyPlayer.getInstance();
         if (player.isPlaying()) {
             player.pause();

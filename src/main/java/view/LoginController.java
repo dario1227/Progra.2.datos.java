@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class LoginController {
     public static String usuario;
-    public static ArrayList<String> friends;
+    public static ArrayList<String> friends = new ArrayList<>();
     @FXML
     private JFXPasswordField passwordField;
     
