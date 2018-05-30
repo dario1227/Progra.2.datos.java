@@ -72,7 +72,7 @@ public class XML_parser {
     ////
     public static boolean sendFriendRequest (String enviador, String destinatario) {
         try {
-            sleepStream();
+           // sleepStream();
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.newDocument();
@@ -120,9 +120,9 @@ public class XML_parser {
      * @param orden     true o false en forma de string obvio
      * @param parametro es el nombre del archivo/album etc
      */
-    public static ArrayList<Canciones> get_songs (String method, String page, String parametro, String orden) {
+    public static ArrayList<Canciones> get_songs (String method, String page, String parametro, String orden,String sortedby) {
         try {
-            sleepStream();
+           // sleepStream();
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.newDocument();
@@ -133,6 +133,7 @@ public class XML_parser {
             root.setAttributeNode(atributo);
             root.setAttribute("Method", method);
             root.setAttribute("Busqueda", parametro);
+            root.setAttribute("Sorted",sortedby);
             root.setAttribute("Orden", orden);
             root.setAttribute("Page", page);
             doc.appendChild(root);
@@ -487,7 +488,7 @@ public class XML_parser {
     public static boolean getXML_Archive (
             String path, String filename, String letra, String Album, String artista,String genero) {
         try {
-            sleepStream();
+           // sleepStream();
             String file = getFile(path);
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -547,7 +548,7 @@ public class XML_parser {
     private static void sleepStream () throws InterruptedException {
         
         Streamer.getInstance().sleep(2000);
-    
+
     }
     
     

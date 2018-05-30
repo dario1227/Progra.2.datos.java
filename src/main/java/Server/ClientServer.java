@@ -11,30 +11,27 @@ public class ClientServer {
     public OutputStream clientOutput;
     byte[] buf = new byte[100000];
     private int message;
-    
+    public static boolean estado = false;
+    public  static int estado2=0;
     public ClientServer () throws IOException {
         this.socket = new Socket("localhost", 5400);
         System.out.println("Connected to server!");
         this.clientInput = new DataInputStream(socket.getInputStream());
         this.clientOutput = new DataOutputStream(socket.getOutputStream());
         send("Connected");
+        estado=false;
     }
 
-    /**
-     * envia archivo xml
-     * @param message
-     * @throws IOException
-     */
     public void send (String message) throws IOException {
+        while(estado){
+System.out.println(estado);
+        }
+        estado=true;
         this.clientOutput.write(message.getBytes());
     }
 
-    /**
-     * Recibe y envia a parsear archivo xml
-     * @return
-     * @throws IOException
-     */
     public String receive () throws IOException {
+
         String recivido = "";
         while (true) {
             try {
@@ -47,7 +44,7 @@ public class ClientServer {
             
             // message=clientInput.read();
             // System.out.print(buf);
-            if (clientInput.available() == 0) {
+            if (clientInput.available() == 0||recivido.contains("#")) {
                 break;
             }
             //  recivido+=message;
@@ -61,6 +58,9 @@ public class ClientServer {
         //            bytes[i] = Byte.parseByte(byteValues[i].trim());
         //   }
         String prueba = recivido.split("#")[0];
+        System.out.println(prueba+"MEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        estado=false;
+
         return prueba;
     }
 }

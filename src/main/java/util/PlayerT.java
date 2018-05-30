@@ -30,7 +30,7 @@ public class PlayerT extends Thread {
         paused = false;
         
         try {
-            
+            Thread.sleep(1000);
             byte[] rawBytes = XML_parser.get_chunk_bytes(filenameRequest, initialChunk);
             
             CircularByteBuffer buffer = new CircularByteBuffer(bufferSize);

@@ -42,7 +42,7 @@ public class Streamer extends Thread {
             System.out.println("WHILE CHUNKNUMBER: " + chunkNumber);
             
             try {
-                
+                Thread.sleep(2000);
                 byte[] decodedAudio = XML_parser.get_chunk_bytes(request, chunkNumber);
                 if (! paused) {
                     assert decodedAudio != null;

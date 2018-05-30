@@ -110,7 +110,9 @@ public class AppController {
     
     @FXML
     void nextSong (ActionEvent event) {
-    
+                                    if (currentlyPlaying==tableList.size()){
+                                        return;
+                                    }
         Metadata metadata = tableList.get(++ currentlyPlaying);
         if (! checkRecommended(metadata)) {
             OdysseyPlayer.getInstance().play(metadata, 0);
@@ -155,7 +157,7 @@ public class AppController {
     
     @FXML
     void prevSong (ActionEvent event) {
-    
+                                   if(currentlyPlaying ==0){  return;  }
         Metadata metadata = tableList.get(-- currentlyPlaying);
         if (! checkRecommended(metadata)) {
             OdysseyPlayer.getInstance().play(metadata, 0);
@@ -267,7 +269,7 @@ public class AppController {
             try {
                 page = new TablePages();
             
-                ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro, SearchDialogController.actualPage, SearchDialogController.nombre, SearchDialogController.orden);
+                ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro, SearchDialogController.actualPage, SearchDialogController.nombre, SearchDialogController.orden,SearchDialogController.sorted);
             
                 //RECORRER CANCIONES E IR AGREGANDO
                 if (canciones != null) {
@@ -285,7 +287,7 @@ public class AppController {
                     Redcomended.title = "Recommended";
                     Redcomended.lyrics="";
                     page.songs.addAll(Redcomended);
-                    canciones = XML_parser.get_songs("Random","1","Random","Random");
+                    canciones = XML_parser.get_songs("Random","1","Random","Random","R");
                     x=0;
                     assert canciones != null;
                     while (x < canciones.size()) {
