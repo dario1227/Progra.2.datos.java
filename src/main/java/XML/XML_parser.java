@@ -582,20 +582,14 @@ public class XML_parser {
         }
     }
     
-    public static int calcule_actual_page (int porcentage) {
-        long actualbyte = size_actual * porcentage;
+    public static int calcule_actual_page (double porcentage) {
+        double actualbyte = size_actual * porcentage;
         int x = 0;
         long limite = (long) (size_actual * 0.02);
-        while (! (limite * x <= actualbyte) && ! (actualbyte <= limite * x + limite)) {
+        while (limite * x <= actualbyte) {
             x++;
         }
         return x;
-    }
-    
-    private static void sleepStream () throws InterruptedException {
-        
-        Streamer.getInstance().sleep(2000);
-    
     }
     
     

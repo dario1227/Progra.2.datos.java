@@ -437,7 +437,7 @@ public class AppController {
         }
     }
     
-    @FXML
+    
     private void addFriendList () {
         friends.clear();
         ArrayList<String> lista = LoginController.friends;

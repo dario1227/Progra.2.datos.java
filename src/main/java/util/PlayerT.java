@@ -78,7 +78,7 @@ public class PlayerT extends Thread {
                 if (nBytesRead != - 1) {
                     nBytesWritten = line.write(data, 0, nBytesRead);
                 }
-                currentPercent.setValue(100 * (stream.getChunk() - 2) / 50);
+                currentPercent.setValue(Math.abs(100 * (stream.getChunk() - 2) / 50));
                 
             }
             // Stop
@@ -106,7 +106,7 @@ public class PlayerT extends Thread {
                 e.printStackTrace();
             }
         }
-        return this.pausedChunk - 2;
+        return this.pausedChunk - 1;
     }
     
 }

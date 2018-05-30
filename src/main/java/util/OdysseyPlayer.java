@@ -82,7 +82,9 @@ public class OdysseyPlayer {
     }
     
     public void forward (int slider) {
-        int chunk = XML_parser.calcule_actual_page(slider / 100);
+        Integer i = slider;
+        double d = i.doubleValue();
+        int chunk = XML_parser.calcule_actual_page(d / 100);
         play(currentSong, chunk);
     }
     

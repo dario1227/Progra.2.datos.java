@@ -3,11 +3,13 @@ package view;
 import XML.XML_parser;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,6 +30,9 @@ public class LoginController {
     @FXML
     private JFXButton regBtn;
     
+    @FXML
+    private AnchorPane pane;
+    
     
     /**
      * Extrae texto que uno escribe en el user y la pone en password y al mismo tiempo desactiva el
@@ -40,6 +45,10 @@ public class LoginController {
         String pass = passwordField.getText();
         if ((user != null) && (pass != null)) {
             if (XML_parser.loginRequest(user, pass)) {
+    
+                JFXSnackbar error = new JFXSnackbar(pane);
+                error.show("Success", 1000);
+                
                 AppController.USER = user;
                 usuario = user;
                 friends = XML_parser.getFriendlist();
@@ -48,7 +57,10 @@ public class LoginController {
 //                Stage stage = (Stage) loginBtn.getScene().getWindow();
 //                stage.close();
             } else {
-                // TODO Error Dialog
+    
+                JFXSnackbar error = new JFXSnackbar(pane);
+                error.show("Error", 2000);
+
             }
         }
     

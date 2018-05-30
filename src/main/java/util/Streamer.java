@@ -15,8 +15,6 @@ public class Streamer extends Thread {
     private Integer chunk;
     private boolean paused = false;
     
-    private Streamer () {
-    }
     
     public Streamer (OutputStream stream, String request, String chunkNumber, Integer initialChunk) {
         this.stream = stream;
@@ -25,12 +23,6 @@ public class Streamer extends Thread {
         this.chunk = initialChunk;
     }
     
-    public static Streamer getInstance () {
-        if (instance == null) {
-            instance = new Streamer();
-        }
-        return instance;
-    }
     
     @Override
     public void run () {
@@ -53,7 +45,6 @@ public class Streamer extends Thread {
             chunk++;
         }
     
-        instance = null;
     }
     
     public int pause () {

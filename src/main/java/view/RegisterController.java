@@ -3,13 +3,19 @@ package view;
 import XML.XML_parser;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 
 public class RegisterController {
+    
+    @FXML
+    private AnchorPane pane;
+    
     private static Integer id = 0;
     @FXML
     public JFXTextField regUserText;
@@ -27,6 +33,9 @@ public class RegisterController {
         String age = regAgeText.getText();
         if ((user != null) && (pass != null) && (age != null)) {
             if (XML_parser.createAccount(user, id.toString(), age, pass)) {
+                JFXSnackbar error = new JFXSnackbar(pane);
+                error.show("Success", 1000);
+                
                 id++;
                 LoginController.usuario = user;
     
@@ -37,10 +46,12 @@ public class RegisterController {
     
                 Stage stage = (Stage) createBtn.getScene().getWindow();
                 stage.close();
-                
-                // TODO SUCCESS DIALOG
+    
+    
             } else {
-                // TODO Error Dialog
+                JFXSnackbar error = new JFXSnackbar(pane);
+                error.show("Error", 2000);
+                
             }
         }
     }
