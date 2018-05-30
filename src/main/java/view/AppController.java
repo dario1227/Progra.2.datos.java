@@ -272,7 +272,7 @@ public class AppController {
                 page = new TablePages();
             
                 ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro, SearchDialogController.actualPage, SearchDialogController.nombre, SearchDialogController.orden,SearchDialogController.sorted);
-
+//
                 //RECORRER CANCIONES E IR AGREGANDO
                 if (canciones != null) {
                     int x = 0;
