@@ -4,7 +4,6 @@ import XML.Canciones;
 import XML.XML_parser;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,7 +19,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import model.Metadata;
 import util.OdysseyPlayer;
 
@@ -39,7 +37,9 @@ public class AppController {
     ObservableList<Metadata> tableList = FXCollections.observableArrayList();
     ObservableList<Label> friends = FXCollections.observableArrayList();
     private int currentlyPlaying;
-
+    
+    @FXML
+    private JFXTextArea lyricsArea;
     
     @FXML
     private ImageView playPauseBtn;
@@ -107,7 +107,6 @@ public class AppController {
         songList.setPlaceholder(new Label("Song library is empty. \n Please UPLOAD new songs"));
         
         
-        
         //AQUI ES ESTO
         tablePages[0] = populateTable();
     
@@ -117,7 +116,7 @@ public class AppController {
         OdysseyPlayer.getInstance().setSlider(songSlider);
     
         friendsList.getItems().add(new Label("Zero Friends :/"));
-    addFriendList();
+        addFriendList();
     }
     
     
@@ -162,13 +161,17 @@ public class AppController {
             if (checkRecommended(treeItem.getValue())) {
                 return;
             }
+            if (! treeItem.getValue().lyrics.equals("")) {
+                lyricsArea.setText(treeItem.getValue().lyrics);
+            } else {
+                lyricsArea.setText("Selected Song does not have lyrics maybe Instrumental");
+            }
             OdysseyPlayer.getInstance().play(treeItem.getValue(), 0);
             currentlyPlaying = songList.getSelectionModel().getSelectedIndex();
             System.out.println("Is playing after " + OdysseyPlayer.getInstance().isPlaying());
         }
         
     }
-    
     
     
     @FXML
@@ -260,18 +263,32 @@ public class AppController {
     @FXML
     void contextMenu (ContextMenuEvent event) {
         ContextMenu altMenu = new ContextMenu();
-        MenuItem details = new MenuItem("Details");
+        MenuItem details = new MenuItem("Edit Tags");
         details.setOnAction(event1 -> {
             try {
                 Metadata selected = songList.getSelectionModel().getSelectedItem().getValue();
-                DetailsDialog dialog = new DetailsDialog();
+                EditTagsDialog dialog = new EditTagsDialog();
                 dialog.showAndWait(selected);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         });
+    
+        MenuItem delete = new MenuItem("Delete song");
+        delete.setOnAction(event1 -> {
+            try {
+                Metadata choosen = songList.getSelectionModel().getSelectedItem().getValue();
+                //Metodo que elimina sacando la info de choosen
+                //Ejemplo choosen.title, choosen.album
+                System.out.println("ELIMINAR: " + choosen.title);
+            
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         
         altMenu.getItems().add(details);
+        altMenu.getItems().add(delete);
         altMenu.show(songList.getScene().getWindow(), event.getSceneX(), event.getSceneY());
     }
     
@@ -287,47 +304,48 @@ public class AppController {
         TablePages page = null;
         try {
             page = new TablePages();
-            
-                ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro, SearchDialogController.actualPage, SearchDialogController.nombre, SearchDialogController.orden,SearchDialogController.sorted);
+    
+            ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro, SearchDialogController.actualPage, SearchDialogController.nombre, SearchDialogController.orden, SearchDialogController.sorted);
 //
-                //RECORRER CANCIONES E IR AGREGANDO
-                if (canciones != null) {
-                    int x = 0;
-                    while (x < canciones.size()) {
-                        Metadata newSong = new Metadata();
-                        newSong.title = canciones.get(x).nombre;//PEDIR POR XML
-                        newSong.album = canciones.get(x).album;//PEDIR POR XML
-                        newSong.artist = canciones.get(x).artista;//PEDIR POR XML
-                        newSong.lyrics=canciones.get(x).letra;
-                        newSong.genre = canciones.get(x).genero;
-                        page.songs.addAll(newSong);
-                        x++;
-                    }Metadata Redcomended =  new Metadata();
-                    Redcomended.title = "Recommended";
-                    Redcomended.lyrics="";
-                    page.songs.addAll(Redcomended);
-                    canciones = XML_parser.get_songs("Random","1","Random","Random","R");
-                    x=0;
-                    assert canciones != null;
-                    while (x < canciones.size()) {
-                        Metadata newSong = new Metadata();
-                        newSong.title = canciones.get(x).nombre;//PEDIR POR XML
-                        newSong.album = canciones.get(x).album;//PEDIR POR XML
-                        newSong.artist = canciones.get(x).artista;//PEDIR POR XML
-                        newSong.lyrics=canciones.get(x).letra;
-                        newSong.genre = canciones.get(x).genero;
-
-                        page.songs.addAll(newSong);
-                        x++;
-                    }
-                    value[0] = page;
-                    tableList.addAll(page.songs);
-                    latch.countDown();
-                } else {
-                    value[0] = null;
-
+            //RECORRER CANCIONES E IR AGREGANDO
+            if (canciones != null) {
+                int x = 0;
+                while (x < canciones.size()) {
+                    Metadata newSong = new Metadata();
+                    newSong.title = canciones.get(x).nombre;//PEDIR POR XML
+                    newSong.album = canciones.get(x).album;//PEDIR POR XML
+                    newSong.artist = canciones.get(x).artista;//PEDIR POR XML
+                    newSong.lyrics = canciones.get(x).letra;
+                    newSong.genre = canciones.get(x).genero;
+                    page.songs.addAll(newSong);
+                    x++;
                 }
+                Metadata Redcomended = new Metadata();
+                Redcomended.title = "Recommended";
+                Redcomended.lyrics = "";
+                page.songs.addAll(Redcomended);
+                canciones = XML_parser.get_songs("Random", "1", "Random", "Random", "R");
+                x = 0;
+                assert canciones != null;
+                while (x < canciones.size()) {
+                    Metadata newSong = new Metadata();
+                    newSong.title = canciones.get(x).nombre;//PEDIR POR XML
+                    newSong.album = canciones.get(x).album;//PEDIR POR XML
+                    newSong.artist = canciones.get(x).artista;//PEDIR POR XML
+                    newSong.lyrics = canciones.get(x).letra;
+                    newSong.genre = canciones.get(x).genero;
+            
+                    page.songs.addAll(newSong);
+                    x++;
+                }
+                value[0] = page;
+                tableList.addAll(page.songs);
+                latch.countDown();
+            } else {
+                value[0] = null;
         
+            }
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -404,7 +422,7 @@ public class AppController {
     void sliderChanged (MouseEvent event) {
         OdysseyPlayer.getInstance().forward((int) songSlider.getValue());
     }
-
+    
     @FXML
     private void openViz () {
         try {
@@ -421,29 +439,18 @@ public class AppController {
     
     @FXML
     private void addFriendList () {
-        friends.clear();;
-    ArrayList<String> lista = LoginController.friends;
-    int x = 0;
-            while(x<lista.size()) {
-                Label label = new Label(lista.get(x));
-                friends.add(label);
-                x++;
-            }
+        friends.clear();
+        ArrayList<String> lista = LoginController.friends;
+        int x = 0;
+        while (x < lista.size()) {
+            Label label = new Label(lista.get(x));
+            friends.add(label);
+            x++;
+        }
         
-//        String amigo = "Isaac";
-//        String amigo1 = "Kenneth";
-//        String amigo2 = "Dario";
-//        String amigo3 = "Roger";
-//
-//        friends.add(new Label(amigo));
-//        friends.add(new Label(amigo1));
-//        friends.add(new Label(amigo2));
-//        friends.add(new Label(amigo3));
         
-        //friendsList.getItems().addAll(friends);
         friendsList.setItems(friends);
         
-        System.out.println("AGREGAR");
         
     }
     

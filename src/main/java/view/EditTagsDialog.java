@@ -9,13 +9,13 @@ import model.Metadata;
 
 import java.io.IOException;
 
-public class DetailsDialog {
+public class EditTagsDialog {
     
     private Stage dialog;
     private FXMLLoader loader;
     
-    DetailsDialog () throws IOException {
-        loader = new FXMLLoader(getClass().getResource("MP3ID3Tag.fxml"));
+    EditTagsDialog () throws IOException {
+        loader = new FXMLLoader(getClass().getResource("EditTags.fxml"));
         
         dialog = new Stage();
         dialog.initOwner(Main.getmStage());
@@ -23,14 +23,14 @@ public class DetailsDialog {
         
         Parent window = loader.load();
         
-        Scene scene = new Scene(window, 600, 400);
-        dialog.setTitle("Details");
+        Scene scene = new Scene(window, 400, 470);
+        dialog.setTitle("Edit Tags");
         dialog.setScene(scene);
         dialog.setResizable(false);
     }
     
     public Metadata showAndWait (Metadata metadata) {
-        MP3ID3TagController controller = loader.getController();
+        EditTagsController controller = loader.getController();
         controller.load(metadata);
         dialog.showAndWait();
         return controller.retrieve();

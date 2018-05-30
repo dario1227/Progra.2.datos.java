@@ -17,6 +17,7 @@ public class Streamer extends Thread {
     
     private Streamer () {
     }
+    
     public Streamer (OutputStream stream, String request, String chunkNumber, Integer initialChunk) {
         this.stream = stream;
         this.request = request;

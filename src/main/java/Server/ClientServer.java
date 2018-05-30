@@ -5,33 +5,34 @@ import java.net.Socket;
 
 public class ClientServer {
     public static ClientServer Server;
+    public static boolean estado = false;
+    public static int estado2 = 0;
     private static int userID;
     public Socket socket;
     public InputStream clientInput;
     public OutputStream clientOutput;
     byte[] buf = new byte[100000];
     private int message;
-    public static boolean estado = false;
-    public  static int estado2=0;
+    
     public ClientServer () throws IOException {
         this.socket = new Socket("localhost", 5400);
         System.out.println("Connected to server!");
         this.clientInput = new DataInputStream(socket.getInputStream());
         this.clientOutput = new DataOutputStream(socket.getOutputStream());
         send("Connected");
-        estado=false;
+        estado = false;
     }
-
+    
     public void send (String message) throws IOException {
-        while(estado){
-System.out.println(estado);
+        while (estado) {
+            System.out.println(estado);
         }
-        estado=true;
+        estado = true;
         this.clientOutput.write(message.getBytes());
     }
-
+    
     public String receive () throws IOException {
-
+        
         String recivido = "";
         while (true) {
             try {
@@ -44,7 +45,7 @@ System.out.println(estado);
             
             // message=clientInput.read();
             // System.out.print(buf);
-            if (clientInput.available() == 0||recivido.contains("#")) {
+            if (clientInput.available() == 0 || recivido.contains("#")) {
                 break;
             }
             //  recivido+=message;
@@ -58,9 +59,9 @@ System.out.println(estado);
         //            bytes[i] = Byte.parseByte(byteValues[i].trim());
         //   }
         String prueba = recivido.split("#")[0];
-        System.out.println(prueba+"MEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-        estado=false;
-
+        System.out.println(prueba + "MEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        estado = false;
+        
         return prueba;
     }
 }

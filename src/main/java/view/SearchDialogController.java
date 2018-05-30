@@ -10,10 +10,10 @@ import javafx.scene.control.Label;
 
 public class SearchDialogController {
     public static String actualPage = "1";
-    public static String orden="Nada";
-    public static String parametro="Nada";
-    public static String nombre="Nada";
-    public  static String sorted = "Nada";
+    public static String orden = "Nada";
+    public static String parametro = "Nada";
+    public static String nombre = "Nada";
+    public static String sorted = "Nada";
     
     @FXML
     private JFXTextField searchTextField;
@@ -48,7 +48,6 @@ public class SearchDialogController {
         sortCombo.setEditable(false);
         
         
-        
     }
     
     @FXML
@@ -76,8 +75,9 @@ public class SearchDialogController {
         }
         nombre = searchTextField.getText();
         parametro = metodo_busqueda(parametro2);
-        try{
-    sorted = metodo_busqueda(sortCombo.getValue().getText());}catch(Exception e){
+        try {
+            sorted = metodo_busqueda(sortCombo.getValue().getText());
+        } catch (Exception e) {
             sorted = " ";
         }
         //  ArrayList<Canciones> canciones = XML_parser.get_songs(parametro_parseado, actualPage, busqueda, cosa);

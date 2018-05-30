@@ -7,7 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
-import sun.rmi.runtime.Log;
+
 
 public class RegisterController {
     private static Integer id = 0;

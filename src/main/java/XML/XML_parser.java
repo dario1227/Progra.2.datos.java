@@ -73,7 +73,7 @@ public class XML_parser {
     ////
     public static boolean sendFriendRequest (String enviador, String destinatario) {
         try {
-           // sleepStream();
+            // sleepStream();
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.newDocument();
@@ -114,16 +114,16 @@ public class XML_parser {
             return false;
         }
     }
-
+    
     /**
      * @param method,   hay 4 metodos, Autor,Album,Nombre ,Letra y Nada
      * @param page      inicia desde el numero 1 no de 0
      * @param orden     true o false en forma de string obvio
      * @param parametro es el nombre del archivo/album etc
      */
-    public static ArrayList<Canciones> get_songs (String method, String page, String parametro, String orden,String sortedby) {
+    public static ArrayList<Canciones> get_songs (String method, String page, String parametro, String orden, String sortedby) {
         try {
-           // sleepStream();
+            // sleepStream();
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.newDocument();
@@ -134,7 +134,7 @@ public class XML_parser {
             root.setAttributeNode(atributo);
             root.setAttribute("Method", method);
             root.setAttribute("Busqueda", parametro);
-            root.setAttribute("Sorted",sortedby);
+            root.setAttribute("Sorted", sortedby);
             root.setAttribute("Orden", orden);
             root.setAttribute("Page", page);
             doc.appendChild(root);
@@ -182,7 +182,7 @@ public class XML_parser {
                     String artista = nodo.getAttribute("Artista");
                     String calificacion = nodo.getAttribute("Calificacion");
                     String genero = nodo.getAttribute("Genero");
-                    lista.add(new Canciones(name, album, artista, letra, calificacion,genero));
+                    lista.add(new Canciones(name, album, artista, letra, calificacion, genero));
                     x++;
                 }
                 return lista;
@@ -193,51 +193,53 @@ public class XML_parser {
             return null;
         }
     }
-    public static ArrayList<String> getFriendlist(){
-        try{
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-        Document doc = docBuilder.newDocument();
-        Element root = doc.createElement("Root");
-        Attr atributo = doc.createAttribute("Operation");
-        atributo.setValue("FriendList");
-        root.setAttributeNode(atributo);
-        root.setAttribute("Enviador",LoginController.usuario);
-        doc.appendChild(root);
-        DOMSource domSource = new DOMSource(doc);
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        StringWriter sw = new StringWriter();
-        StreamResult sr = new StreamResult(sw);
-        transformer.transform(domSource, sr);
-        System.out.println(sw.toString());
-        ClientServer.Server.send(sw.toString());
-        String recibido = ClientServer.Server.receive();
-        System.out.print("LOL");
-        InputSource source = new InputSource();
-        source.setCharacterStream(new StringReader(recibido));
-        doc = docBuilder.parse(source);
-        domSource = new DOMSource(doc);
-        transformer = TransformerFactory.newInstance().newTransformer();
-        sw = new StringWriter();
-        sr = new StreamResult(sw);
-        transformer.transform(domSource, sr);
-        System.out.println(sw.toString());
-        doc.getDocumentElement().normalize();
-        NodeList nList = doc.getElementsByTagName("Root");
-        Element rootnode = (Element) nList.item(0);
-        String listamigos = rootnode.getAttribute("Friends");
-        String[] divididos = listamigos.split("&");
-        ArrayList<String> to_return = new ArrayList<>();
-        int x =0;
-        while(x<divididos.length){
-            to_return.add(divididos[x]);
-            x++;
+    
+    public static ArrayList<String> getFriendlist () {
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.newDocument();
+            Element root = doc.createElement("Root");
+            Attr atributo = doc.createAttribute("Operation");
+            atributo.setValue("FriendList");
+            root.setAttributeNode(atributo);
+            root.setAttribute("Enviador", LoginController.usuario);
+            doc.appendChild(root);
+            DOMSource domSource = new DOMSource(doc);
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            StringWriter sw = new StringWriter();
+            StreamResult sr = new StreamResult(sw);
+            transformer.transform(domSource, sr);
+            System.out.println(sw.toString());
+            ClientServer.Server.send(sw.toString());
+            String recibido = ClientServer.Server.receive();
+            System.out.print("LOL");
+            InputSource source = new InputSource();
+            source.setCharacterStream(new StringReader(recibido));
+            doc = docBuilder.parse(source);
+            domSource = new DOMSource(doc);
+            transformer = TransformerFactory.newInstance().newTransformer();
+            sw = new StringWriter();
+            sr = new StreamResult(sw);
+            transformer.transform(domSource, sr);
+            System.out.println(sw.toString());
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("Root");
+            Element rootnode = (Element) nList.item(0);
+            String listamigos = rootnode.getAttribute("Friends");
+            String[] divididos = listamigos.split("&");
+            ArrayList<String> to_return = new ArrayList<>();
+            int x = 0;
+            while (x < divididos.length) {
+                to_return.add(divididos[x]);
+                x++;
+            }
+            return to_return;
+        } catch (Exception e) {
+            return null;
         }
-        return to_return;
     }
-    catch (Exception e ){return null;
-    }
-    }
+    
     public static boolean createAccount (String username, String id, String age, String password) {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -531,9 +533,9 @@ public class XML_parser {
     }
     
     public static boolean getXML_Archive (
-            String path, String filename, String letra, String Album, String artista,String genero) {
+            String path, String filename, String letra, String Album, String artista, String genero) {
         try {
-           // sleepStream();
+            // sleepStream();
             String file = getFile(path);
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -543,7 +545,7 @@ public class XML_parser {
             root.setAttribute("Operation", "Upload");
             root.setAttribute("Letra", letra);
             root.setAttribute("Album", Album);
-            root.setAttribute("Genero",genero);
+            root.setAttribute("Genero", genero);
             root.setAttribute("Artista", artista);
             Element file_node = doc.createElement("Archive");
             file_node.setAttribute("File", file);
@@ -581,10 +583,10 @@ public class XML_parser {
     }
     
     public static int calcule_actual_page (int porcentage) {
-        long actualbyte = size_actual*porcentage;
+        long actualbyte = size_actual * porcentage;
         int x = 0;
-        long  limite = (long) (size_actual*0.02);
-        while(!(limite*x<=actualbyte)&& !(actualbyte<=limite*x+limite)){
+        long limite = (long) (size_actual * 0.02);
+        while (! (limite * x <= actualbyte) && ! (actualbyte <= limite * x + limite)) {
             x++;
         }
         return x;
@@ -593,9 +595,8 @@ public class XML_parser {
     private static void sleepStream () throws InterruptedException {
         
         Streamer.getInstance().sleep(2000);
-
+    
     }
-
     
     
 }

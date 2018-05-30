@@ -69,7 +69,7 @@ public class Genetic_algorithm {
     public Palabra palabra_mas_coincidencia () {
         int largo = analizadas.size();
         int index = 0;
-        if(analizadas.isEmpty()){
+        if (analizadas.isEmpty()) {
             return new Palabra("SE ACABARON");
         }
         Palabra mayor = analizadas.get(0);

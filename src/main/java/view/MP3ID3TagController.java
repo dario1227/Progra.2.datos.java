@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import model.Metadata;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
