@@ -64,7 +64,6 @@ public class GeneticController {
     
     //BOTON START
     @FXML
-
     void startGame (ActionEvent event) {
         TextInputDialog inputDialog = new TextInputDialog();
         inputDialog.setTitle("Select a Song");

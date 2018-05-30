@@ -6,11 +6,15 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Metadata;
 
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MP3ID3TagController {
     
@@ -55,8 +59,18 @@ public class MP3ID3TagController {
     
         data.add(metadata.fullpath);
         data.add(metadata.filename);
+    
+        byte[] bytes = metadata.cover.getBinaryData();
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        Image img = new Image(in, 200, 200, true, true);
+    
+        if (img.isError()) {
+            img = new Image("util/img/albumsIcon.png", 200, 200, true, true);
+        }
+    
+        coverArtImg.setImage(img);
         
-        //TODO setImage(metadata.cover);
+      
     }
     
     public Metadata retrieve () {
@@ -68,6 +82,9 @@ public class MP3ID3TagController {
     void discardChanges (ActionEvent event) {
     
         data.clear();
+        Stage stage = (Stage) cancelBtn.getScene().getWindow();
+        stage.close();
+        
         
     }
     
@@ -91,7 +108,7 @@ public class MP3ID3TagController {
         }
     
         new Thread(() -> {
-            XML_parser.getXML_Archive(data.get(5), data.get(6), data.get(4), data.get(2), data.get(1),data.get(3));
+            XML_parser.getXML_Archive(data.get(5), data.get(6), data.get(4), data.get(2), data.get(1), data.get(3));
             data.clear();
         }).start();
         

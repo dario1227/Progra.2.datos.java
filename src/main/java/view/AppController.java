@@ -34,6 +34,8 @@ public class AppController {
     
     public static String USER;
     public static AppController instance;
+    @FXML
+    public static JFXListView<String> friendsList;
     TablePages[] tablePages = new TablePages[3];
     ObservableList<Metadata> tableList = FXCollections.observableArrayList();
     private int currentlyPlaying;
@@ -196,7 +198,7 @@ public class AppController {
             controller.load(data);
     
             stage.show();
-                
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -270,7 +272,7 @@ public class AppController {
                 page = new TablePages();
             
                 ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro, SearchDialogController.actualPage, SearchDialogController.nombre, SearchDialogController.orden,SearchDialogController.sorted);
-            
+
                 //RECORRER CANCIONES E IR AGREGANDO
                 if (canciones != null) {
                     int x = 0;
@@ -314,6 +316,57 @@ public class AppController {
             }
     
     
+
+        TablePages page = null;
+        try {
+            page = new TablePages();
+
+            ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro, SearchDialogController.actualPage, SearchDialogController.nombre, SearchDialogController.orden);
+
+            //RECORRER CANCIONES E IR AGREGANDO
+            if (canciones != null) {
+                int x = 0;
+                while (x < canciones.size()) {
+                    Metadata newSong = new Metadata();
+                    newSong.title = canciones.get(x).nombre;//PEDIR POR XML
+                    newSong.album = canciones.get(x).album;//PEDIR POR XML
+                    newSong.artist = canciones.get(x).artista;//PEDIR POR XML
+                    newSong.lyrics = canciones.get(x).letra;
+                    newSong.genre = canciones.get(x).genero;
+                    page.songs.addAll(newSong);
+                    x++;
+                }
+                Metadata Redcomended = new Metadata();
+                Redcomended.title = "Recommended";
+                Redcomended.lyrics = "";
+                page.songs.addAll(Redcomended);
+                canciones = XML_parser.get_songs("Random", "1", "Random", "Random");
+                x = 0;
+                assert canciones != null;
+                while (x < canciones.size()) {
+                    Metadata newSong = new Metadata();
+                    newSong.title = canciones.get(x).nombre;//PEDIR POR XML
+                    newSong.album = canciones.get(x).album;//PEDIR POR XML
+                    newSong.artist = canciones.get(x).artista;//PEDIR POR XML
+                    newSong.lyrics = canciones.get(x).letra;
+                    newSong.genre = canciones.get(x).genero;
+
+                    page.songs.addAll(newSong);
+                    x++;
+                }
+                value[0] = page;
+                tableList.addAll(page.songs);
+                latch.countDown();
+            } else {
+                value[0] = null;
+
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
         return value[0];
     
     }
@@ -353,17 +406,17 @@ public class AppController {
         Optional<String> result = dialog.showAndWait();
         
         result.ifPresent(name -> System.out.println("FRIEND name: " + name));
-        if(result.isPresent()){
+        if (result.isPresent()) {
             String amigo = result.get();
-        String enviador = LoginController.usuario;
-       boolean aceptado =  XML_parser.sendFriendRequest(enviador,amigo);
-            if(aceptado){
+            String enviador = LoginController.usuario;
+            boolean aceptado = XML_parser.sendFriendRequest(enviador, amigo);
+            if (aceptado) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Friend");
                 alert.setHeaderText(null);
                 alert.setContentText("You have a new friend yay");
                 alert.showAndWait();
-            }else{
+            } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Friend");
                 alert.setHeaderText(null);
@@ -372,11 +425,21 @@ public class AppController {
             }
         }
 
-        
+
     }
     
     private boolean checkRecommended (Metadata selected) {
         return selected.title.equals("Recommended");
     }
     
+    @FXML
+    void sliderChanged (MouseEvent event) {
+        OdysseyPlayer.getInstance().forward((int) songSlider.getValue());
+    }
+
+    @FXML
+    private void openViz () {
+        System.out.println("VIZ");
+    }
+
 }

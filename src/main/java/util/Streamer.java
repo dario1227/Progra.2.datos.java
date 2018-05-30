@@ -8,17 +8,6 @@ import java.io.OutputStream;
 public class Streamer extends Thread {
     
     private static Streamer instance;
-    
-    private Streamer () {
-    }
-    
-    public static Streamer getInstance () {
-        if (instance == null) {
-            instance = new Streamer();
-        }
-        return instance;
-    }
-    
     private final int totalChunks = 50;
     OutputStream stream;
     String request;
@@ -26,11 +15,20 @@ public class Streamer extends Thread {
     private Integer chunk;
     private boolean paused = false;
     
+    private Streamer () {
+    }
     public Streamer (OutputStream stream, String request, String chunkNumber, Integer initialChunk) {
         this.stream = stream;
         this.request = request;
         this.chunkNumber = chunkNumber;
         this.chunk = initialChunk;
+    }
+    
+    public static Streamer getInstance () {
+        if (instance == null) {
+            instance = new Streamer();
+        }
+        return instance;
     }
     
     @Override
@@ -49,7 +47,6 @@ public class Streamer extends Thread {
                     stream.write(decodedAudio);
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
             }
             
             chunk++;

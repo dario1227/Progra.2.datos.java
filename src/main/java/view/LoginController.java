@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
-    public static String usuario ;
+    public static String usuario;
     
     @FXML
     private JFXPasswordField passwordField;
@@ -72,18 +72,18 @@ public class LoginController {
     // RUN THIS WHEN THE LOGIN IS CORRECT
     public void openPlayer () {
     
-
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("App.fxml"));
-                Stage stage = new Stage();
-                stage.setTitle("Odyssey++");
-                stage.setScene(new Scene(root, 1280, 720));
-                stage.setResizable(true);
-                stage.setOnCloseRequest(e -> Main.exitServer());
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+    
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("App.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Odyssey++");
+            stage.setScene(new Scene(root, 1280, 720));
+            stage.setResizable(true);
+            stage.setOnCloseRequest(e -> Main.exitServer());
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 }
