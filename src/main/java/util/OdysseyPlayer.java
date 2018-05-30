@@ -49,12 +49,18 @@ public class OdysseyPlayer {
         if (pThread != null && pThread.isAlive()) {
             pause();
         }
-        
+        if(chunk==-1){
+            chunk =1;
+        }
         System.out.println("PLAY CHUNK: " + chunk.toString());
         System.out.println("PLAY FILENAME: " + song.filename);
         
         String sChunk = chunk.toString();
-        
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         pThread = new PlayerT(currentSong.title, sChunk);
         pThread.currentPercent.addListener((observable, oldValue, newValue) -> slider.adjustValue(newValue.doubleValue()));
         pThread.start();

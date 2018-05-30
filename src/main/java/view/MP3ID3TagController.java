@@ -58,7 +58,9 @@ public class MP3ID3TagController {
     
         data.add(metadata.fullpath);
         data.add(metadata.filename);
-    
+        if(metadata.cover!=null){
+
+
         if (metadata.cover.getBinaryData() != null) {
         
             byte[] bytes = metadata.cover.getBinaryData();
@@ -73,6 +75,7 @@ public class MP3ID3TagController {
         } else {
             Image img = new Image("util/img/albumsIcon.png", 200, 200, true, true);
             coverArtImg.setImage(img);
+        }
         }
         
     }

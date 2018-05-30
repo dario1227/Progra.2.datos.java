@@ -58,9 +58,9 @@ public class PlayerT extends Thread {
             // Play now.
             rawplay(decodedFormat, din, streaming);
             in.close();
-            
+
             this.pausedChunk = streaming.pause();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
