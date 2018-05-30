@@ -34,8 +34,8 @@ public class AppController {
     
     public static String USER;
     public static AppController instance;
-    @FXML
-    public static JFXListView<String> friendsList;
+
+
     TablePages[] tablePages = new TablePages[3];
     ObservableList<Metadata> tableList = FXCollections.observableArrayList();
     private int currentlyPlaying;
@@ -314,58 +314,6 @@ public class AppController {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-    
-    
-
-        TablePages page = null;
-        try {
-            page = new TablePages();
-
-            ArrayList<Canciones> canciones = XML_parser.get_songs(SearchDialogController.parametro, SearchDialogController.actualPage, SearchDialogController.nombre, SearchDialogController.orden);
-
-            //RECORRER CANCIONES E IR AGREGANDO
-            if (canciones != null) {
-                int x = 0;
-                while (x < canciones.size()) {
-                    Metadata newSong = new Metadata();
-                    newSong.title = canciones.get(x).nombre;//PEDIR POR XML
-                    newSong.album = canciones.get(x).album;//PEDIR POR XML
-                    newSong.artist = canciones.get(x).artista;//PEDIR POR XML
-                    newSong.lyrics = canciones.get(x).letra;
-                    newSong.genre = canciones.get(x).genero;
-                    page.songs.addAll(newSong);
-                    x++;
-                }
-                Metadata Redcomended = new Metadata();
-                Redcomended.title = "Recommended";
-                Redcomended.lyrics = "";
-                page.songs.addAll(Redcomended);
-                canciones = XML_parser.get_songs("Random", "1", "Random", "Random");
-                x = 0;
-                assert canciones != null;
-                while (x < canciones.size()) {
-                    Metadata newSong = new Metadata();
-                    newSong.title = canciones.get(x).nombre;//PEDIR POR XML
-                    newSong.album = canciones.get(x).album;//PEDIR POR XML
-                    newSong.artist = canciones.get(x).artista;//PEDIR POR XML
-                    newSong.lyrics = canciones.get(x).letra;
-                    newSong.genre = canciones.get(x).genero;
-
-                    page.songs.addAll(newSong);
-                    x++;
-                }
-                value[0] = page;
-                tableList.addAll(page.songs);
-                latch.countDown();
-            } else {
-                value[0] = null;
-
-            }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
 
         return value[0];
     
