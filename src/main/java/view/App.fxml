@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXProgressBar?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXToolbar?>
@@ -11,6 +12,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 
@@ -25,29 +27,48 @@
                     <graphic>
                         <MaterialDesignIconView glyphName="SKIP_PREVIOUS" size="30.0"/>
                     </graphic>
+                    <ripplerFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#00bbff"/>
+                                <Stop color="WHITE" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </ripplerFill>
                 </JFXButton>
                 <JFXButton onAction="#playPauseSong" text=" ">
                     <graphic>
                         <MaterialDesignIconView glyphName="PLAY" size="30.0"/>
                     </graphic>
+                    <ripplerFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#00bbff"/>
+                                <Stop color="WHITE" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </ripplerFill>
                 </JFXButton>
                 <JFXButton onAction="#nextSong" text=" ">
                     <graphic>
                         <MaterialDesignIconView glyphName="SKIP_NEXT" size="30.0"/>
                     </graphic>
+                    <ripplerFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop color="#00bbff"/>
+                                <Stop color="WHITE" offset="1.0"/>
+                            </stops>
+                        </LinearGradient>
+                    </ripplerFill>
                 </JFXButton>
                 <JFXSlider fx:id="songSlider" indicatorPosition="RIGHT" onMouseReleased="#sliderChanged"
-                           prefHeight="54.0" prefWidth="1052.0" showTickLabels="true" showTickMarks="true"
+                           prefHeight="40.0" prefWidth="1080.0" showTickLabels="true" showTickMarks="true"
                            style="-fx-background-color: #ffffff;">
                     <HBox.margin>
                         <Insets/>
                     </HBox.margin>
                 </JFXSlider>
-                <JFXButton fx:id="vizButton" layoutX="10.0" layoutY="10.0" onAction="#openViz" text=" ">
-                    <graphic>
-                        <MaterialDesignIconView glyphName="CHART_ARC" size="30.0"/>
-                    </graphic>
-                </JFXButton>
             </children>
             <BorderPane.margin>
                 <Insets bottom="22.0" top="10.0"/>
@@ -65,8 +86,8 @@
                     <ripplerFill>
                         <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
                             <stops>
-                                <Stop color="#0bf5ed"/>
-                                <Stop color="#30f50c" offset="1.0"/>
+                                <Stop color="#20c9c1"/>
+                                <Stop color="#24bf04" offset="1.0"/>
                             </stops>
                         </LinearGradient>
                     </ripplerFill>
@@ -165,12 +186,21 @@
         </JFXToolbar>
     </top>
     <right>
-        <JFXListView fx:id="friendsList" depth="1" style="-fx-background-color: #ffffff; -fx-border-color: GRAY;"
-                     BorderPane.alignment="CENTER">
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-            </padding>
-        </JFXListView>
+        <VBox spacing="20.0" BorderPane.alignment="CENTER">
+            <children>
+                <JFXListView fx:id="friendsList" depth="1" style="-fx-background-color: #ffffff;">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </JFXListView>
+                <JFXProgressBar fx:id="volumeVisualizer" minHeight="-Infinity" minWidth="-Infinity" prefHeight="164.0"
+                                prefWidth="200.0" progress="0.0" style="-fx-background-color: WHITE;">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </JFXProgressBar>
+            </children>
+        </VBox>
     </right>
     <center>
         <JFXTreeTableView fx:id="songList" onContextMenuRequested="#contextMenu" onMouseClicked="#playSong"

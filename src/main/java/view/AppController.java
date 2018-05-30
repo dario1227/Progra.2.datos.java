@@ -4,6 +4,7 @@ import XML.Canciones;
 import XML.XML_parser;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
@@ -21,6 +23,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Metadata;
 import util.OdysseyPlayer;
+import util.VizThread;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +42,9 @@ public class AppController {
     private int currentlyPlaying;
     
     @FXML
+    private JFXProgressBar volumeVisualizer;
+    
+    @FXML
     private JFXTextArea lyricsArea;
     
     @FXML
@@ -54,10 +60,8 @@ public class AppController {
     private JFXSlider songSlider;
     
     @FXML
-    private JFXListView<Label> friendsList = new JFXListView<Label>();
+    private JFXListView<Label> friendsList = new JFXListView<>();
     
-    @FXML
-    private JFXButton vizButton;
     
     
     @FXML
@@ -117,6 +121,9 @@ public class AppController {
     
         friendsList.getItems().add(new Label("Zero Friends :/"));
         addFriendList();
+    
+        VizThread visualizer = new VizThread(OdysseyPlayer.getInstance(), volumeVisualizer);
+        visualizer.start();
     }
     
     
@@ -249,7 +256,7 @@ public class AppController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Genetic.fxml"));
             Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
-            stage.setTitle("Generic Search");
+            stage.setTitle("Genetic Search");
             stage.setScene(new Scene(root1, 600, 400));
             stage.show();
         } catch (Exception e) {
@@ -424,21 +431,6 @@ public class AppController {
     void sliderChanged (MouseEvent event) {
         OdysseyPlayer.getInstance().forward((int) songSlider.getValue());
     }
-    
-    @FXML
-    private void openViz () {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Viz.fxml"));
-            Parent root1 = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Visualizer");
-            stage.setScene(new Scene(root1, 400, 300));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
     
     private void addFriendList () {
         friends.clear();

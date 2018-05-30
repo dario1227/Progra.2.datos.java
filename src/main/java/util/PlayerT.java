@@ -19,6 +19,7 @@ public class PlayerT extends Thread {
     private boolean paused = true;
     private int pausedChunk;
     private int bufferSize = 983040;
+    private double amplitude = 0;
     
     public PlayerT (String filenameRequest, String initialChunk) {
         this.filenameRequest = filenameRequest;
@@ -75,10 +76,15 @@ public class PlayerT extends Thread {
             int nBytesRead = 0, nBytesWritten = 0;
             while (nBytesRead != - 1 && ! paused) {
                 nBytesRead = din.read(data, 0, data.length);
-                if (nBytesRead != - 1) {
-                    nBytesWritten = line.write(data, 0, nBytesRead);
+                if (nBytesRead != - 1) nBytesWritten = line.write(data, 0, nBytesRead);
+                amplitude = 0;
+                for (int j = 0; j < data.length; j = j + 2) {
+                    if (data[j] > data[j + 1])
+                        amplitude = amplitude + data[j] - data[j + 1];
+                    else amplitude = amplitude + data[j + 1] - data[j];
                 }
-                currentPercent.setValue(Math.abs(100 * (stream.getChunk() - 2) / 50));
+                amplitude = amplitude / data.length * 2;
+                currentPercent.setValue(Math.abs(100 * (stream.getChunk() - 2) / 48));
                 
             }
             // Stop
@@ -107,6 +113,10 @@ public class PlayerT extends Thread {
             }
         }
         return this.pausedChunk - 1;
+    }
+    
+    public double getAmplitude () {
+        return amplitude;
     }
     
 }

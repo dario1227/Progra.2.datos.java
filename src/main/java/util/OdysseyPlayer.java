@@ -66,9 +66,9 @@ public class OdysseyPlayer {
         pThread.start();
     }
     
-    public void pause () {
-        currentChunk = pThread.pause();
-    }
+    // public void pause () {
+    // currentChunk = pThread.pause();
+    //}
     
     public void unpause () {
         play(currentSong, currentChunk);
@@ -92,6 +92,25 @@ public class OdysseyPlayer {
         double d = i.doubleValue();
         int chunk = XML_parser.calcule_actual_page(d / 100);
         play(currentSong, chunk);
+    }
+    
+    public void pause () {
+        if (pThread != null) {
+            currentChunk = pThread.pause();
+        }
+    }
+    
+    
+    public boolean isPaused () {
+        return currentSong != null;
+    }
+    
+    public double getAmplitude () {
+        if (this.pThread != null) {
+            return pThread.getAmplitude();
+        } else {
+            return - 1;
+        }
     }
     
     
