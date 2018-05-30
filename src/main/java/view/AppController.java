@@ -419,6 +419,11 @@ public class AppController {
     
     @FXML
     private void addFriendList () {
+    
+        for (int i = 0; i < 4; i++) {
+            Label label = new Label("Amigo " + i);
+            friends.add(label);
+        }
         
         String amigo = "Isaac";
         String amigo1 = "Kenneth";
