@@ -181,8 +181,9 @@
         </JFXTreeTableView>
     </center>
     <left>
-        <JFXTextArea fx:id="lyricsArea" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0"
-                     prefWidth="300.0" promptText="Lyrics Empty" style="-fx-background-color: #ffffff;" wrapText="true"
+        <JFXTextArea fx:id="lyricsArea" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="608.0"
+                     prefWidth="220.0" promptText="Lyrics Empty"
+                     style="-fx-background-color: #ffffff; -fx-border-color: #ffffff;" wrapText="true"
                      BorderPane.alignment="CENTER">
             <focusColor>
                 <LinearGradient endX="1.0" endY="1.0">
