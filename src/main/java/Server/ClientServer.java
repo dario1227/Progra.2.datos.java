@@ -29,6 +29,9 @@ public class ClientServer {
         }
         estado = true;
         this.clientOutput.write(message.getBytes());
+        if(message =="Salir"){
+            estado = false;
+        }
     }
     
     public String receive () throws IOException {

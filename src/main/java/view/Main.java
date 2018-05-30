@@ -30,6 +30,7 @@ public class Main extends Application {
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
         alert.setContentText("Request Server Shutdown");
+
         alert.showAndWait();
         try {
             ClientServer.Server.send("Salir");
