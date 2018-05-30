@@ -36,13 +36,22 @@
                         <MaterialDesignIconView glyphName="SKIP_NEXT" size="30.0"/>
                     </graphic>
                 </JFXButton>
-                <JFXSlider fx:id="songSlider" onMouseReleased="#sliderChanged" prefHeight="54.0" prefWidth="1052.0"/>
+                <JFXSlider fx:id="songSlider" indicatorPosition="RIGHT" onMouseReleased="#sliderChanged"
+                           prefHeight="54.0" prefWidth="1052.0" showTickLabels="true" showTickMarks="true"
+                           style="-fx-background-color: #ffffff;">
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </JFXSlider>
                 <JFXButton fx:id="vizButton" layoutX="10.0" layoutY="10.0" onAction="#openViz" text=" ">
                     <graphic>
                         <MaterialDesignIconView glyphName="CHART_ARC" size="30.0"/>
                     </graphic>
                 </JFXButton>
             </children>
+            <BorderPane.margin>
+                <Insets bottom="22.0" top="10.0"/>
+            </BorderPane.margin>
         </HBox>
     </bottom>
     <top>
